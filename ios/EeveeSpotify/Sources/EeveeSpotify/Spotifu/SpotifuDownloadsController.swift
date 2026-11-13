@@ -40,6 +40,15 @@ import UIKit
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
         cell.textLabel?.text = track.title; cell.detailTextLabel?.text = track.artist
         cell.imageView?.image = UIImage(systemName: "checkmark.circle.fill"); cell.imageView?.tintColor = .systemGreen
+        let more = UIButton(type: .system)
+        more.setImage(UIImage(systemName: "ellipsis"), for: .normal)
+        more.accessibilityLabel = "Действия со скачанной песней"
+        more.showsMenuAsPrimaryAction = true
+        more.menu = UIMenu(children: [UIAction(title: "Удалить из скачанного", image: UIImage(systemName: "trash"), attributes: .destructive) { [weak self] _ in
+            OfflineModel.shared.remove(track); self?.reloadLibrary()
+        }])
+        more.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
+        cell.accessoryView = more
         return cell
     }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
