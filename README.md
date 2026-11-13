@@ -7,7 +7,7 @@ Personal offline music project for iPhone and Mac. GPL-3.0, based on EeveeSpotif
 The deliverable extends existing Spotify on macOS and EeveeSpotify on iPhone, preserving their player and library UI. The SwiftUI app targets are earlier prototypes, not the requested clients; CI no longer distributes them.
 
 - macOS: `desktop/spotifu.js` adds one Download button, registers the resolver library with Spotify's native LocalFilesAPI and stores verified remote-to-local track mappings. Installed Spotify 1.2.70.409 has loaded the extension; authenticated server access and indexing a tagged two-second test tone were observed at runtime. Playback redirection, queue preservation and native offline lyrics are not yet acceptance-tested.
-- iOS: the cover button invokes the automatic resolver and exports tagged audio to Spotify Documents for its native local-file scanner. Settings opens the native local-files route instead of the prototype player. The route, scanner and hooks still require device testing. Automatic remote-to-local routing and offline lyrics in the native player are incomplete.
+- iOS: the cover button invokes the automatic resolver and exports tagged audio to Spotify Documents for its native local-file scanner. Settings opens the native local-files route instead of the prototype player. The route, scanner and hooks still require device testing. Native lyrics now use generation-checked asynchronous loading on track changes, mandatory plain Genius fallback, and a persistent text cache. Automatic remote-to-local audio routing and lyric display for native local-file tracks still require device validation.
 - Resolver: automatic metadata/duration matching and source fallback across YouTube, SoundCloud, Internet Archive and Bandcamp. Audius direct links supported; no automatic Audius search. Availability and matching are not guaranteed.
 
 ## Build and test
@@ -35,6 +35,6 @@ Configure its URL and token once in Spotifu. Use HTTPS for an iPhone connection;
 
 Release source: `https://raw.githubusercontent.com/Danzxz/spotifu/main/source/spotifu.json`
 
-An app enters this source only after its actual release asset exists. An empty source means no release is ready. See GitHub Actions for build status. A successful build is not an on-device acceptance test.
+The source points to the published beta IPA. Add it in SideStore → Sources → +. Release assets also include the macOS integration source archive. See the release notes for tested behavior and remaining device checks; a successful build is not an on-device acceptance test.
 
 Upstream source and original license are retained under `ios/EeveeSpotify`. See `docs/RESEARCH.md` for the initial integration analysis.
