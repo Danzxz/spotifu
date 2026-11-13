@@ -7,9 +7,19 @@
       "name": "Spotifu · Spotify Beta",
       "bundleIdentifier": "com.spotify.client",
       "developerName": "Danzxz / EeveeSpotify contributors",
-      "localizedDescription": "Beta: исправлено обновление лирики при смене песни и быстрых переключениях; обязательный Genius fallback без таймсинка; кеш текста; исправлена классификация рекламных URL после перенаправлений. Работа на iPhone требует проверки. Для скачивания настройте HTTPS URL и токен resolver в Eevee.",
+      "localizedDescription": "Собственное хранилище Spotifu, альбомы, удаление через ⋯ и очередь загрузок. Сборка 918802215. Beta: воспроизведение локального URI требует проверки на iPhone; для скачивания нужен настроенный HTTPS-сервер Spotifu. Массовая загрузка альбома из штатного меню iOS пока не добавлена.",
       "iconURL": "https://raw.githubusercontent.com/Danzxz/spotifu/main/source/icon.png",
       "versions": [
+        {
+          "version": "9.1.88",
+          "buildVersion": "918802215",
+          "date": "2026-11-13T13:55:12.038535+00:00",
+          "localizedDescription": "Собственное хранилище Spotifu, альбомы, удаление через ⋯ и очередь загрузок. Сборка 918802215. Beta: воспроизведение локального URI требует проверки на iPhone; для скачивания нужен настроенный HTTPS-сервер Spotifu. Массовая загрузка альбома из штатного меню iOS пока не добавлена.",
+          "downloadURL": "https://github.com/Danzxz/spotifu/releases/download/ios-downloads-beta-2026.11.13/Spotifu-Spotify.ipa",
+          "size": 139482522,
+          "minOSVersion": "15.0",
+          "sha256": "8839b0896b4bf1311fda31fe33a4264378c42e9f9c3e85a75b28a5492d4c0588"
+        },
         {
           "version": "9.1.88",
           "buildVersion": "918802213",
