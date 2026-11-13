@@ -80,8 +80,8 @@ private func checkUnifiedAdURLPredicates() {
     let sessionSource = readSource("Sources/EeveeSpotify/SessionProtection.x.swift")
 
     let coreAdsBody = body(in: adBlockerSource, after: "class CoreURLSessionAdsKill")
-    require(coreAdsBody.contains("url.isAdRelated"),
-            "CoreURLSessionAdsKill must use url.isAdRelated")
+    require(coreAdsBody.contains("URL.isAdRequest(current: task.currentRequest?.url, original: task.originalRequest?.url)"),
+            "CoreURLSessionAdsKill must classify both redirected and original URLs")
     require(!adBlockerSource.contains("isCoreAdRequest"),
             "EeveeAdBlockerExtended.x.swift must not define a separate isCoreAdRequest predicate")
 
