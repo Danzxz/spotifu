@@ -69,6 +69,9 @@ import SpotifuCore
     public func remove(_ track: OfflineTrack) {
         do {
             if current?.id == track.id { stop() }
+            let documents = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+            let exported = documents.appendingPathComponent("Spotifu-" + track.id + "." + track.audioExtension)
+            if FileManager.default.fileExists(atPath: exported.path) { try FileManager.default.removeItem(at: exported) }
             try library?.remove(track); try reload()
         } catch { self.error = error.localizedDescription }
     }
@@ -183,7 +186,7 @@ import SpotifuCore
             status = candidates.isEmpty ? "Совпадений нет. Можно вставить прямую ссылку источника." : "Выбери нужную запись; совпадение не гарантировано."
         } catch { self.error = error.localizedDescription }
     }
-    public func download(url: String, id: String, title: String, artist: String, duration: Double) async {
+    public func download(url: String, id: String, title: String, artist: String, duration: Double, album: String? = nil) async {
         guard !busy else { return }
         error = nil; status = "Поиск записи…"; busy = true; defer { busy = false }
         do {
@@ -201,7 +204,7 @@ import SpotifuCore
                     guard (response as? HTTPURLResponse)?.statusCode == 200 else { throw URLError(.badServerResponse) }
                     let probe = try AVAudioPlayer(contentsOf: temp)
                     guard let library else { throw CocoaError(.fileWriteUnknown) }
-                    let track = OfflineTrack(id: id.isEmpty ? UUID().uuidString : id, title: title, artist: artist, duration: probe.duration, lyrics: state.lyrics, source: url, audioExtension: "m4a")
+                    let track = OfflineTrack(id: id.isEmpty ? UUID().uuidString : id, title: title, artist: artist, duration: probe.duration, lyrics: state.lyrics, source: url, audioExtension: "m4a", album: album)
                     try library.store(track, audio: temp); try reload()
                     status = state.lyrics == nil ? "Аудио загружено. Текст не найден." : "Аудио и текст сохранены офлайн."
                     return

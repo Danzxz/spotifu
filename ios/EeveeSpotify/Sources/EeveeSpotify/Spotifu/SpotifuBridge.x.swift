@@ -6,6 +6,11 @@ import MediaPlayer
 @objc private protocol SpotifuPauseController { func setPaused(_ paused: Bool) }
 
 @MainActor enum SpotifuBridge {
+    typealias Pending = (id: String, title: String, artist: String, duration: Double, album: String?)
+    static var pending: [Pending] = []
+    static var scheduled = Set<String>()
+    static var processing = false
+    static var downloadStatus = "Нет активных загрузок"
     static weak var controller: NSObject?
     static weak var downloadButton: UIButton?
     static func updateDownloadButton(_ button: UIButton) {
@@ -13,14 +18,14 @@ import MediaPlayer
         let downloaded = metadata().map { info in model.tracks.contains { $0.id == info.id } } ?? false
         button.setImage(UIImage(systemName: downloaded ? "checkmark.circle.fill" : "arrow.down.circle.fill"), for: .normal)
         button.accessibilityLabel = downloaded ? "Загружено в Spotify" : "Скачать в Spotify"
-        button.isEnabled = !model.busy
+        button.isEnabled = true
     }
     static func pauseSpotify() {
         if let controller, controller.responds(to: NSSelectorFromString("setPaused:")) {
             unsafeBitCast(controller, to: SpotifuPauseController.self).setPaused(true)
         }
     }
-    static func metadata() -> (id: String, title: String, artist: String, duration: Double)? {
+    static func metadata() -> Pending? {
         guard let info = MPNowPlayingInfoCenter.default().nowPlayingInfo,
               let title = info[MPMediaItemPropertyTitle] as? String,
               let artist = info[MPMediaItemPropertyArtist] as? String else { return nil }
@@ -29,16 +34,13 @@ import MediaPlayer
         let capturedID = capturedTrackTitle == title && capturedArtistName == artist ? capturedTrackId : nil
         guard let id = externalID ?? capturedID, !id.isEmpty,
               id.count <= 128, id.unicodeScalars.allSatisfy({ CharacterSet.alphanumerics.contains($0) }) else { return nil }
-        return (id, title, artist, (info[MPMediaItemPropertyPlaybackDuration] as? NSNumber)?.doubleValue ?? 0)
+        return (id, title, artist, (info[MPMediaItemPropertyPlaybackDuration] as? NSNumber)?.doubleValue ?? 0, info[MPMediaItemPropertyAlbumTitle] as? String)
     }
     static func openDownloads() {
-        // Route discovered in the 9.1.88 binary; requires device validation.
-        UIApplication.shared.open(URL(string: "spotify:local-files")!, options: [:]) { opened in
-            if !opened {
-                PopUpHelper.showPopUp(message: "Открой Библиотека → Локальные файлы в Spotify. В настройках Spotify должен быть включён доступ к локальным аудиофайлам.", buttonText: "OK")
-            }
-        }
+        let browser = SpotifuDownloadsController(style: .insetGrouped)
+        WindowHelper.shared.present(UINavigationController(rootViewController: browser))
     }
+
     static func configure() {
         let model = OfflineModel.shared
         let alert = UIAlertController(title: "Сервер скачивания", message: "Адрес HTTPS и ключ твоего сервера", preferredStyle: .alert)
@@ -58,24 +60,40 @@ import MediaPlayer
         }
         let model = OfflineModel.shared
         guard !model.token.isEmpty else { configure(); return }
-        guard !model.busy else { return }
+
         if let track = model.tracks.first(where: { $0.id == info.id }) {
-            do {
-                try model.exportToSpotifyDocuments(track)
-                PopUpHelper.showPopUp(message: "Уже загружено в локальные файлы Spotify", buttonText: "OK")
-            } catch { PopUpHelper.showPopUp(message: error.localizedDescription, buttonText: "OK") }
+            let alert = UIAlertController(title: track.title, message: "Уже сохранено в Spotifu", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Удалить из скачанного", style: .destructive) { _ in
+                model.remove(track)
+                if let button = downloadButton { updateDownloadButton(button) }
+            })
+            alert.addAction(UIAlertAction(title: "Отмена", style: .cancel))
+            WindowHelper.shared.present(alert)
             return
         }
+        guard scheduled.insert(info.id).inserted else {
+            PopUpHelper.showPopUp(message: "Эта песня уже в очереди. " + downloadStatus, buttonText: "OK"); return
+        }
+        pending.append(info)
+        guard !processing else { return }
+        processing = true
         Task {
-            defer { if let button = downloadButton { updateDownloadButton(button) } }
-            await model.download(url: "", id: info.id, title: info.title, artist: info.artist, duration: info.duration)
-            if model.error == nil, let track = model.tracks.first(where: { $0.id == info.id }) {
-                do { try model.exportToSpotifyDocuments(track) }
-                catch { model.error = "Не удалось добавить файл в Spotify: " + error.localizedDescription }
+            defer { processing = false; if let button = downloadButton { updateDownloadButton(button) } }
+            while !pending.isEmpty {
+                let item = pending.removeFirst()
+                downloadStatus = "Обрабатывается: " + item.title
+                await model.download(url: "", id: item.id, title: item.title, artist: item.artist, duration: item.duration, album: item.album)
+                if model.error == nil, let track = model.tracks.first(where: { $0.id == item.id }) {
+                    do { try model.exportToSpotifyDocuments(track) }
+                    catch { model.error = "Не удалось добавить файл в Spotify: " + error.localizedDescription }
+                }
+                downloadStatus = model.error.map { "Ошибка: " + item.title + " · " + $0 } ?? "Сохранено: " + item.title
+                scheduled.remove(item.id)
+                if let button = downloadButton { updateDownloadButton(button) }
             }
-            PopUpHelper.showPopUp(message: model.error ?? model.status, buttonText: "OK")
         }
     }
+
     static func attach(to cover: UIView) {
         let tag = 18001991
         if let button = cover.viewWithTag(tag) as? UIButton { updateDownloadButton(button); return }

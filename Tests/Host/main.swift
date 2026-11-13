@@ -7,11 +7,13 @@ defer { try? FileManager.default.removeItem(at: root) }
 let library = try OfflineLibrary(root: root)
 let input = root.appendingPathComponent("input.mp3")
 try Data([1,2,3]).write(to: input)
-let track = OfflineTrack(id: "abc123", title: "Song", artist: "Artist", duration: 123, lyrics: "[00:01.2]Hello", source: "import")
+let track = OfflineTrack(id: "abc123", title: "Song", artist: "Artist", duration: 123, lyrics: "[00:01.2]Hello", source: "import", album: "Album")
 try library.store(track, audio: input)
 let reopened = try OfflineLibrary(root: root)
 let ids = try reopened.tracks().map(\.id)
 assert(ids == ["abc123"])
+let restoredAlbum = try reopened.tracks().first?.album
+assert(restoredAlbum == "Album")
 assertData(try Data(contentsOf: reopened.audioURL(for: track)))
 let bad = OfflineTrack(id: "../escape", title: "x", artist: "x", duration: 0, lyrics: nil, source: "import")
 do { try library.store(bad, audio: input); fatalError("Traversal accepted") } catch {}

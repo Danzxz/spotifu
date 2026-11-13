@@ -4,11 +4,13 @@ public struct OfflineTrack: Codable, Identifiable, Equatable {
     public let id: String
     public var title: String
     public var artist: String
+    public var album: String?
     public var duration: Double
     public var lyrics: String?
     public var source: String
     public var audioExtension: String
-    public init(id: String, title: String, artist: String, duration: Double, lyrics: String?, source: String, audioExtension: String = "mp3") {
+    public init(id: String, title: String, artist: String, duration: Double, lyrics: String?, source: String, audioExtension: String = "mp3", album: String? = nil) {
+        self.album = album
         self.id = id; self.title = title; self.artist = artist; self.duration = duration
         self.lyrics = lyrics; self.source = source; self.audioExtension = audioExtension
     }
