@@ -14,6 +14,10 @@ let ids = try reopened.tracks().map(\.id)
 assert(ids == ["abc123"])
 let restoredAlbum = try reopened.tracks().first?.album
 assert(restoredAlbum == "Album")
+var legacyRecord = try JSONSerialization.jsonObject(with: JSONEncoder().encode(track)) as! [String: Any]
+legacyRecord.removeValue(forKey: "album")
+let legacyTrack = try JSONDecoder().decode(OfflineTrack.self, from: JSONSerialization.data(withJSONObject: legacyRecord))
+assert(legacyTrack.album == nil, "Existing downloaded records remain readable without album metadata")
 assertData(try Data(contentsOf: reopened.audioURL(for: track)))
 let bad = OfflineTrack(id: "../escape", title: "x", artist: "x", duration: 0, lyrics: nil, source: "import")
 do { try library.store(bad, audio: input); fatalError("Traversal accepted") } catch {}
