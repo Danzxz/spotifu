@@ -33,7 +33,8 @@ final class KaraokeBackgroundRenderer: NSObject, MTKViewDelegate {
         // (no Theos/Metal toolchain available), so if this path doesn't
         // exist or doesn't load, check the Makefile's internal-stage
         // Metal compile step first.
-        let metallibPath = "/Library/MobileSubstrate/DynamicLibraries/KaraokeBackgroundShader.metallib"
+        let metallibPath = Bundle.main.path(forResource: "KaraokeBackgroundShader", ofType: "metallib")
+            ?? "/Library/MobileSubstrate/DynamicLibraries/KaraokeBackgroundShader.metallib"
         guard let library = try? device.makeLibrary(filepath: metallibPath),
               let vertexFn = library.makeFunction(name: "karaoke_bg_vertex"),
               let fragmentFn = library.makeFunction(name: "karaoke_bg_fragment") else {
