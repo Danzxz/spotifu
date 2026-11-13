@@ -21,10 +21,24 @@ import MediaPlayer
         return (id, title, artist, (info[MPMediaItemPropertyPlaybackDuration] as? NSNumber)?.doubleValue ?? 0)
     }
     static func openDownloads() {
-        let info = metadata()
-        let view = DownloadsView(title: info?.title ?? "", artist: info?.artist ?? "", trackID: info?.id ?? "", duration: info?.duration ?? 0, beforePlay: pauseSpotify)
-        let host = UIHostingController(rootView: NavigationView { view })
-        WindowHelper.shared.present(host)
+        // Route discovered in the 9.1.88 binary; requires device validation.
+        UIApplication.shared.open(URL(string: "spotify:local-files")!, options: [:]) { opened in
+            if !opened {
+                PopUpHelper.showPopUp(message: "Открой Библиотека → Локальные файлы в Spotify. В настройках Spotify должен быть включён доступ к локальным аудиофайлам.", buttonText: "OK")
+            }
+        }
+    }
+    static func configure() {
+        let model = OfflineModel.shared
+        let alert = UIAlertController(title: "Сервер скачивания", message: "Адрес HTTPS и ключ твоего сервера", preferredStyle: .alert)
+        alert.addTextField { $0.placeholder = "https://…"; $0.text = model.endpoint; $0.autocapitalizationType = .none; $0.keyboardType = .URL }
+        alert.addTextField { $0.placeholder = "Ключ"; $0.text = model.token; $0.isSecureTextEntry = true; $0.autocapitalizationType = .none }
+        alert.addAction(UIAlertAction(title: "Сохранить", style: .default) { _ in
+            model.endpoint = alert.textFields?[0].text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+            model.token = alert.textFields?[1].text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        })
+        alert.addAction(UIAlertAction(title: "Отмена", style: .cancel))
+        WindowHelper.shared.present(alert)
     }
     static func downloadCurrent() {
         guard let info = metadata(), info.duration > 0 else {
@@ -32,12 +46,17 @@ import MediaPlayer
             return
         }
         let model = OfflineModel.shared
+        guard !model.token.isEmpty else { configure(); return }
         guard !model.busy else { return }
         if model.tracks.contains(where: { $0.id == info.id }) {
             PopUpHelper.showPopUp(message: "Уже загружено", buttonText: "OK"); return
         }
         Task {
             await model.download(url: "", id: info.id, title: info.title, artist: info.artist, duration: info.duration)
+            if model.error == nil, let track = model.tracks.first(where: { $0.id == info.id }) {
+                do { try model.exportToSpotifyDocuments(track) }
+                catch { model.error = "Не удалось добавить файл в Spotify: " + error.localizedDescription }
+            }
             PopUpHelper.showPopUp(message: model.error ?? model.status, buttonText: "OK")
         }
     }

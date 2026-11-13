@@ -81,6 +81,7 @@ struct EeveeSettingsView: View {
             Section {
                 Button("Spotifu · Скачанное") { SpotifuBridge.openDownloads() }
                 Button("Скачать текущую песню") { SpotifuBridge.downloadCurrent() }
+                Button("Сервер скачивания") { SpotifuBridge.configure() }
             }
 
             

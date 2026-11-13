@@ -42,6 +42,19 @@ import SpotifuCore
         }
     }
     public func reload() throws { tracks = try library?.tracks() ?? [] }
+    /// Expose tagged files to Spotify's own iOS local-file scanner. Playback
+    /// stays with Spotify; this method never activates an audio session.
+    public func exportToSpotifyDocuments(_ track: OfflineTrack) throws {
+        guard let library else { throw CocoaError(.fileReadUnknown) }
+        let documents = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+        let destination = documents.appendingPathComponent("Spotifu-" + track.id + "." + track.audioExtension)
+        let staging = documents.appendingPathComponent(".spotifu-" + UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: staging) }
+        try FileManager.default.copyItem(at: library.audioURL(for: track), to: staging)
+        if FileManager.default.fileExists(atPath: destination.path) {
+            _ = try FileManager.default.replaceItemAt(destination, withItemAt: staging)
+        } else { try FileManager.default.moveItem(at: staging, to: destination) }
+    }
     public func importFile(_ url: URL, title: String, artist: String, id: String) throws {
         guard let library else { throw CocoaError(.fileWriteUnknown) }
         let scoped = url.startAccessingSecurityScopedResource()
@@ -90,6 +103,8 @@ import SpotifuCore
     public func stop() {
         audio?.stop(); audio = nil; current = nil; playing = false; position = 0
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nil
+        for (command, target) in commandTargets { command.removeTarget(target) }
+        commandTargets.removeAll()
     }
     public func next() {
         guard let current, let index = tracks.firstIndex(where: { $0.id == current.id }), index + 1 < tracks.count else { stop(); return }
@@ -165,11 +180,11 @@ import SpotifuCore
         } catch { self.error = error.localizedDescription }
     }
     public func download(url: String, id: String, title: String, artist: String, duration: Double) async {
-        busy = true; defer { busy = false }
+        error = nil; status = "Поиск записи…"; busy = true; defer { busy = false }
         do {
             struct Job: Decodable { let job: String }
             struct State: Decodable { let status: String; let audio: String?; let lyrics: String?; let error: String? }
-            let job = try JSONDecoder().decode(Job.self, from: await json(path: url.isEmpty ? "auto-download" : "download", body: ["url": url, "title": title, "artist": artist, "duration": duration])).job
+            let job = try JSONDecoder().decode(Job.self, from: await json(path: url.isEmpty ? "auto-download" : "download", body: ["id": id, "url": url, "title": title, "artist": artist, "duration": duration])).job
             for _ in 0..<180 {
                 try Task.checkCancellation()
                 let state = try JSONDecoder().decode(State.self, from: await json(path: "jobs/" + job))

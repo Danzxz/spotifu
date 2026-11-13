@@ -2,20 +2,21 @@
 
 Personal offline music project for iPhone and Mac. GPL-3.0, based on EeveeSpotifyReincarnated (not affiliated with Spotify).
 
-## Current implementation
+## Native integration
 
-- Shared persistent audio/lyrics library, local playback, seek and line-synced lyrics.
-- Automatic multi-source resolver: searches YouTube, SoundCloud, Internet Archive and Bandcamp, checks full candidate metadata and duration before downloading. Refuses unverified matches. Direct Audius URLs supported by yt-dlp; automatic Audius search not yet available.
-- One-tap download button inside the modified Spotify player, plus Eevee settings → Spotifu → Downloads. iOS hook compatibility requires device testing; this is not a claim of verified native offline Spotify playback.
-- Standalone iPhone and Mac clients use the same offline code. The standalone app is an offline library, not a replacement implementation of Spotify streaming.
+The deliverable extends existing Spotify on macOS and EeveeSpotify on iPhone, preserving their player and library UI. The SwiftUI app targets are earlier prototypes, not the requested clients; CI no longer distributes them.
 
-## Build
+- macOS: `desktop/spotifu.js` adds one Download button, registers the resolver library with Spotify's native LocalFilesAPI and stores verified remote-to-local track mappings. Installed Spotify 1.2.70.409 has loaded the extension; authenticated server access and indexing a tagged two-second test tone were observed at runtime. Playback redirection, queue preservation and native offline lyrics are not yet acceptance-tested.
+- iOS: the cover button invokes the automatic resolver and exports tagged audio to Spotify Documents for its native local-file scanner. Settings opens the native local-files route instead of the prototype player. The route, scanner and hooks still require device testing. Automatic remote-to-local routing and offline lyrics in the native player are incomplete.
+- Resolver: automatic metadata/duration matching and source fallback across YouTube, SoundCloud, Internet Archive and Bandcamp. Audius direct links supported; no automatic Audius search. Availability and matching are not guaranteed.
 
-`swift build` builds the Mac executable. `swift test` needs full Xcode. With Command Line Tools, run `bash scripts/test.sh` for the portable core and Python tests.
+## Build and test
 
-For Xcode app bundles: install XcodeGen, run `xcodegen generate`, then build the Spotifu (iOS) or SpotifuMac schemes. CI uploads unsigned IPA and Mac ZIP artifacts. SideStore signs IPA files for your device.
+Run `bash scripts/test.sh` and `node Tests/desktop.test.cjs`. `swift test` requires full Xcode.
 
-Eevee integration: `python3 scripts/sync-ios.py`, then build `ios/EeveeSpotify` using Theos/Orion and an iPhone SDK. The dedicated GitHub workflow rebuilds the tweak and replaces existing Eevee components in a pinned, account-free base IPA. Proprietary Spotify binaries are not stored in git.
+Desktop installation: keep the official Spicetify binary in `.local/spicetify`, then run `python3 scripts/install-desktop.py`. It backs up the existing application, disables theme changes and installs only the extension. Start the resolver with `.local/venv/bin/python scripts/run-server.py`. Private configuration and keys stay under ignored `.local`.
+
+Eevee integration: `python3 scripts/sync-ios.py`, then build `ios/EeveeSpotify` with Theos/Orion and an iPhone SDK. The minimum is iOS 15, matching the pinned Spotify 9.1.88 base. The dedicated workflow rebuilds Eevee components in a pinned base IPA; Spotify binaries are not stored in git. A successful build does not prove native playback compatibility.
 
 ## Resolver
 

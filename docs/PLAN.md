@@ -12,3 +12,7 @@ Goal: fork Eevee with durable offline library and lyrics, shared macOS client, r
 Review focus: wrong recording, corrupt/incomplete downloads, traversal, stale lyrics, offline after restart, duplicate audio engines.
 
 User correction: default download must be ONE TAP with automatic multi-source search, verification, download and identity binding. No candidate picker in normal flow. Ambiguous/unverified candidates fail clearly rather than saving wrong audio. Advanced import is secondary.
+
+## Native UI correction
+
+User requires existing patched Spotify on macOS and Eevee on iPhone, with the native player. Standalone clients are prototypes only and must not be distributed as fulfillment. Desktop uses LocalFilesAPI; iOS exports into Spotify Documents. Native queue-preserving redirection and lyric UI require runtime verification before release.

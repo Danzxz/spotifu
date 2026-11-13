@@ -22,7 +22,7 @@ def match_score(wanted, candidate):
     expected = words(wanted["artist"] + " " + wanted["title"])
     actual = words(candidate.get("title", ""))
     score = len(expected & actual) / max(1, len(expected))
-    versions = {"live", "remix", "cover", "karaoke", "instrumental", "sped", "slowed"}
+    versions = {"live", "remix", "cover", "karaoke", "instrumental", "sped", "slowed", "acoustic", "edit", "remaster", "remastered", "clean", "explicit", "demo", "mix"}
     if (actual & versions) != (expected & versions):
         score *= .3
     duration = wanted.get("duration", 0)
@@ -104,10 +104,12 @@ def search(wanted):
         errors.append({"provider": "Bandcamp", "error": type(error).__name__})
     return {"candidates": sorted(results, key=lambda x: x["score"], reverse=True), "errors": errors}
 
-def lyrics(title, artist):
-    query = urllib.parse.urlencode({"track_name": title, "artist_name": artist})
+def lyrics(title, artist, duration=0):
+    query = urllib.parse.urlencode({"track_name": title, "artist_name": artist, "duration": round(duration)})
     try:
         response = fetch_json("https://lrclib.net/api/get?" + query)
+        if duration and abs((response.get("duration") or 0) - duration) > 2:
+            return None
         return response.get("syncedLyrics") or response.get("plainLyrics")
     except Exception:
         return None

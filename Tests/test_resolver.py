@@ -31,5 +31,10 @@ class ResolverTests(unittest.TestCase):
         self.assertIsNone(resolver.select_verified(wanted, [{"title": "Artist - Song", "duration": 0}]))
         self.assertIsNone(resolver.select_verified({**wanted, "duration": 0}, [right]))
 
+    def test_auto_selection_rejects_unrequested_versions(self):
+        wanted = {"title": "Song", "artist": "Artist", "duration": 200}
+        for suffix in ["acoustic", "radio edit", "remastered", "clean", "instrumental", "demo"]:
+            self.assertIsNone(resolver.select_verified(wanted, [{"title": "Artist Song " + suffix, "duration": 200}]), suffix)
+
 if __name__ == "__main__":
     unittest.main()

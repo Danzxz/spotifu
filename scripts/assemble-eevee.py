@@ -30,8 +30,9 @@ with tempfile.TemporaryDirectory() as temporary:
         else: shutil.copy2(source, destination)
     info_path = app / "Info.plist"
     info = plistlib.loads(info_path.read_bytes())
-    info["CFBundleDisplayName"] = "Spotifu Spotify"
     info["CFBundleShortVersionString"] = "9.1.88"
+    info["UIFileSharingEnabled"] = True
+    info["LSSupportsOpeningDocumentsInPlace"] = True
     info["UIBackgroundModes"] = list(set(info.get("UIBackgroundModes", [])) | {"audio"})
     info_path.write_bytes(plistlib.dumps(info))
     output.parent.mkdir(parents=True, exist_ok=True)
