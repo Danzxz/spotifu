@@ -7,7 +7,14 @@ function findLocalTrack(saved, tracks) {
         track.album?.name === 'Spotifu' &&
         Math.abs((track.duration?.milliseconds || 0) / 1000 - saved.duration) <= 2) || null;
 }
-if (typeof module !== 'undefined') module.exports = {findLocalTrack};
+function downloadRequest(item) {
+    const metadata = item.metadata || {};
+    const artists = item.artists?.items || item.artists || [];
+    return {id: item.uri?.split(':')[2], title:item.name || metadata.title,
+        artist:artists[0]?.name || artists[0]?.profile?.name || metadata.artist_name,
+        duration:(item.duration?.milliseconds || item.duration?.totalMilliseconds || Number(metadata.duration) || 0)/1000};
+}
+if (typeof module !== 'undefined') module.exports = {findLocalTrack, downloadRequest};
 
 if (typeof window !== 'undefined') (async function spotifu() {
     while (!window.Spicetify?.Player || !Spicetify.Playbar || !Spicetify.Platform?.LocalFilesAPI) {
@@ -41,38 +48,127 @@ if (typeof window !== 'undefined') (async function spotifu() {
         }
         Spicetify.LocalStorage.set('spotifu.native-map', JSON.stringify(mappings));
     }
-    const button = new Spicetify.Playbar.Button('Скачать', 'download', async () => {
-        if (busy) return;
-        const item = Spicetify.Player.data?.item;
-        if (!item?.uri?.startsWith('spotify:track:')) { Spicetify.showNotification('Открой песню Spotify'); return; }
-        busy = true; button.disabled = true;
-        try {
-            const metadata = item.metadata || {};
-            const request = {id:item.uri.split(':')[2], title:item.name || metadata.title,
-                artist:item.artists?.[0]?.name || metadata.artist_name,
-                duration:(item.duration?.milliseconds || Number(metadata.duration) || Spicetify.Player.getDuration()) / 1000};
-            const {job} = await api('/auto-download', request);
-            Spicetify.showNotification('Spotifu: ищу и скачиваю…');
-            for (let attempt = 0; attempt < 300; attempt++) {
-                const state = await api('/jobs/' + job);
-                if (state.status === 'failed') throw new Error(state.error);
-                if (state.status === 'ready') {
-                    for (let scan = 0; scan < 10; scan++) {
-                        await indexLibrary();
-                        if (mappings[item.uri]) break;
-                        await new Promise(resolve => setTimeout(resolve, 1000));
-                    }
-                    if (!mappings[item.uri]) throw new Error('Файл скачан, но Spotify ещё не проиндексировал его');
-                    button.icon = 'downloaded'; button.active = true;
-                    Spicetify.showNotification(state.lyrics ? 'Загружено с текстом' : 'Загружено. Текст не найден.');
-                    return;
+    let groups;
+    try { groups = JSON.parse(Spicetify.LocalStorage.get('spotifu.groups') || '{}'); } catch { groups = {}; }
+    const saveGroups = () => Spicetify.LocalStorage.set('spotifu.groups', JSON.stringify(groups));
+    const downloadedMenu = new Spicetify.Menu.SubMenu('Скачанное · Spotifu', [], 'download');
+    downloadedMenu.register();
+    const groupMenus = new Set();
+    function registerGroup(group) {
+        if (groupMenus.has(group.uri)) return;
+        groupMenus.add(group.uri);
+        downloadedMenu.addItem(new Spicetify.Menu.Item(group.name, false, () => {
+            if (group.playlist) Spicetify.Platform.History.push('/playlist/' + group.playlist.split(':')[2]);
+            else Spicetify.showNotification('Пока нет успешно загруженных песен');
+        }, 'download'));
+    }
+    Object.values(groups).forEach(registerGroup);
+    async function downloadOne(item) {
+        const request = downloadRequest(item);
+        if (!request.id || !request.title || !request.artist || !(request.duration > 0)) throw new Error('Не хватает метаданных песни');
+        if (mappings[item.uri]) return mappings[item.uri].uri;
+        const {job} = await api('/auto-download', request);
+        for (let attempt=0; attempt<300; attempt++) {
+            const state = await api('/jobs/' + job);
+            if (state.status === 'failed') throw new Error(state.error);
+            if (state.status === 'ready') {
+                for (let scan=0; scan<20; scan++) {
+                    await indexLibrary();
+                    if (mappings[item.uri]) return mappings[item.uri].uri;
+                    await new Promise(resolve=>setTimeout(resolve,1000));
                 }
-                await new Promise(resolve => setTimeout(resolve, 2000));
+                throw new Error('Файл сохранён, Spotify ещё не проиндексировал его');
             }
-            throw new Error('Загрузка не завершилась вовремя');
-        } catch (error) { Spicetify.showNotification('Spotifu: ' + error.message, true); }
-        finally { busy = false; button.disabled = false; }
+            await new Promise(resolve=>setTimeout(resolve,2000));
+        }
+        throw new Error('Истекло время загрузки');
+    }
+    async function collection(uri) {
+        const items=[];
+        if (uri.startsWith('spotify:album:')) {
+            let total=Infinity;
+            for(let offset=0;offset<total;offset+=50) {
+                const r=await Spicetify.GraphQL.Request(Spicetify.GraphQL.Definitions.queryAlbumTracks,{uri,offset,limit:50});
+                const page=r.data?.albumUnion?.tracksV2;
+                if(!page) throw new Error('Spotify не вернул список песен альбома');
+                total=page.totalCount;
+                items.push(...page.items.map(x=>x.track));
+                if(!page.items.length)break;
+            }
+        } else {
+            let total=Infinity;
+            for(let offset=0;offset<total;offset+=100) {
+                const page=await Spicetify.Platform.PlaylistAPI.getContents(uri,{offset,limit:100});
+                total=page.totalLength;items.push(...page.items.filter(x=>x.type==='track'));
+                if(!page.items.length)break;
+            }
+        }
+        return items;
+    }
+    async function resolveTrack(uri) {
+        const current=Spicetify.Player.data?.item;
+        if(current?.uri===uri) return current;
+        const path=Spicetify.Platform.History.location.pathname;
+        const match=path.match(/^\/(album|playlist)\/([^/]+)/);
+        if(match) {
+            const item=(await collection('spotify:'+match[1]+':'+match[2])).find(x=>x.uri===uri);
+            if(item)return item;
+        }
+        const token=Spicetify.Platform.Session?.accessToken;
+        const r=await fetch('https://api.spotify.com/v1/tracks/'+uri.split(':')[2],{headers:{Authorization:'Bearer '+token}});
+        if(!r.ok)throw new Error('Spotify не отдал метаданные песни ('+r.status+'). Открой её альбом и повтори');
+        const t=await r.json();return {...t,duration:{milliseconds:t.duration_ms}};
+    }
+    async function enqueue(uris) {
+        if(busy){Spicetify.showNotification('Загрузка уже идёт');return;}
+        busy=true;button.disabled=true;
+        try {
+            for(const uri of uris) {
+                const isCollection=/^spotify:(album|playlist):/.test(uri);
+                const items=isCollection?await collection(uri):[await resolveTrack(uri)];
+                const name=isCollection ? (Spicetify.Platform.History.location.pathname.includes(uri.split(':')[2]) ? document.querySelector('h1')?.textContent : null)||uri : items[0].album?.name || items[0].metadata?.album_title || 'Отдельные песни';
+                const groupURI=isCollection?uri:items[0].album?.uri||items[0].metadata?.album_uri||'spotifu:singles';
+                const group=groups[groupURI] ||= {uri:groupURI,name,tracks:{},total:0};
+                group.total=Math.max(group.total,items.length);registerGroup(group);saveGroups();
+                let failed=0;
+                for(let i=0;i<items.length;i++) {
+                    Spicetify.showNotification('Скачивание: '+(i+1)+'/'+items.length+' · '+name);
+                    try {
+                        const local=await downloadOne(items[i]);
+                        if(!group.playlist) {
+                            group.playlist=await Spicetify.Platform.RootlistAPI.createPlaylist('Скачано · '+name,{after:'end'});
+                            if(!group.playlist)throw new Error('Не удалось создать список скачанного');
+                            await Spicetify.Platform.PlaylistAPI.updateDetails(group.playlist,{description:'Локальные загрузки Spotifu · '+groupURI});
+                        }
+                        if(group.tracks[items[i].uri]?.status!=='ready')await Spicetify.Platform.PlaylistAPI.add(group.playlist,[local],{after:'end'});
+                        group.tracks[items[i].uri]={uri:local,status:'ready'};
+                    } catch(error) {failed++;group.tracks[items[i].uri]={status:'failed',error:error.message};}
+                    saveGroups();
+                }
+                Spicetify.showNotification('Загрузка завершена: '+(items.length-failed)+'/'+items.length+(failed?' · ошибок: '+failed:''),failed>0);
+            }
+        }catch(error){Spicetify.showNotification('Spotifu: '+error.message,true);}
+        finally{busy=false;button.disabled=false;}
+    }
+    // Native play requests retain their context/options. Local files must run
+    // on this computer rather than the user's active Spotify Connect phone.
+    const nativePlayer=Spicetify.Player.origin;
+    const originalPlay=nativePlayer.play.bind(nativePlayer);
+    nativePlayer.play=async function(target, context, options) {
+        const mapped=mappings[target?.uri];
+        const next=mapped?{...target,uri:mapped.uri}:target;
+        const local=next?.uri?.startsWith('spotify:local:') || Object.values(groups).some(g=>g.playlist===next?.uri);
+        if(local && Spicetify.Platform.ConnectAPI.getState().activeDevice?.isLocal!==true) {
+            await Spicetify.Platform.ConnectAPI.pullToLocal({interactionId:'spotifu-local-play'});
+        }
+        return originalPlay(next,context,options);
+    };
+    const button = new Spicetify.Playbar.Button('Скачать', 'download', () => {
+        const uri=Spicetify.Player.data?.item?.uri;
+        if(uri?.startsWith('spotify:track:'))enqueue([uri]);
     });
+    new Spicetify.ContextMenu.Item('Скачать', enqueue,
+        uris => uris.length>0 && uris.every(uri=>/^spotify:(track|album|playlist):/.test(uri)), 'download').register();
     Spicetify.Player.addEventListener('songchange', async () => {
         if (redirecting) return;
         const uri = Spicetify.Player.data?.item?.uri;
@@ -87,6 +183,7 @@ if (typeof window !== 'undefined') (async function spotifu() {
         } catch (error) { Spicetify.showNotification('Spotifu: локальное воспроизведение недоступно', true); }
         finally { redirecting = false; }
     });
-    new Spicetify.Menu.Item('Spotifu · Скачанное', false, () => Spicetify.Platform.History.push('/local-files'), 'download').register();
+    new Spicetify.Menu.Item('Локальные файлы компьютера', false, () => Spicetify.Platform.History.push('/local-files'), 'download').register();
+    window.Spotifu = {download:enqueue, get busy(){return busy;}, get groups(){return groups;}};
     try { await indexLibrary(); } catch { /* Cached mappings still work offline. */ }
 })();

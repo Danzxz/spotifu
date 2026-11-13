@@ -12,6 +12,11 @@ class ResolverTests(unittest.TestCase):
             with self.assertRaises(ValueError, msg=url):
                 resolver.validate_media_url(url)
 
+    def test_feature_credit_spelling_does_not_reject_same_recording(self):
+        wanted = {"title":"Low Life (feat. The Weeknd)","artist":"Future","duration":313}
+        found = {"title":"Future - Low Life ft. The Weeknd","duration":313}
+        self.assertIsNotNone(resolver.select_verified(wanted,[found]))
+
     def test_accepts_supported_public_sources(self):
         for url in ["https://www.youtube.com/watch?v=abc", "https://soundcloud.com/artist/song", "https://artist.bandcamp.com/track/song", "https://archive.org/details/item", "https://audius.co/artist/song"]:
             self.assertEqual(resolver.validate_media_url(url), url)

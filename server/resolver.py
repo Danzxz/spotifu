@@ -18,7 +18,7 @@ def validate_media_url(url):
 
 def match_score(wanted, candidate):
     def words(text):
-        return set(re.findall(r"\w+", text.lower()))
+        return set(re.findall(r"\w+", text.lower())) - {"feat", "ft", "featuring"}
     expected = words(wanted["artist"] + " " + wanted["title"])
     actual = words(candidate.get("title", ""))
     score = len(expected & actual) / max(1, len(expected))
@@ -47,7 +47,7 @@ def verify_candidate(wanted, candidate):
     if not info or info.get("is_live") or info.get("_type") == "playlist":
         return None
     candidate = dict(candidate)
-    candidate["title"] = " ".join(filter(None, [info.get("artist") or info.get("uploader"), info.get("track") or info.get("title")]))
+    candidate["title"] = " ".join(filter(None, [info.get("artist") or info.get("uploader"), info.get("track"), info.get("title")]))
     candidate["duration"] = info.get("duration") or 0
     return select_verified(wanted, [candidate])
 

@@ -7,3 +7,6 @@ assert.equal(findLocalTrack(saved,[{...right,name:'Song Live'}]),null);
 assert.equal(findLocalTrack(saved,[{...right,album:{name:'Other'}}]),null);
 assert.equal(findLocalTrack(saved,[{...right,duration:{milliseconds:230000}}]),null);
 console.log('Native Spotify local-track matching tests passed');
+
+const {downloadRequest}=require('../desktop/spotifu.js');
+assert.deepEqual(downloadRequest({uri:'spotify:track:abc',name:'Song',artists:{items:[{profile:{name:'Artist'}}]},duration:{totalMilliseconds:200000}}),{id:'abc',title:'Song',artist:'Artist',duration:200});

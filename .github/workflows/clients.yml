@@ -18,4 +18,6 @@ jobs:
           swift test
           python3 -m unittest discover -s Tests -p 'test_*.py'
       - name: Test desktop native track matching
-        run: node Tests/desktop.test.cjs
+        run: |
+          node Tests/desktop.test.cjs
+          node Tests/desktop-integration.test.cjs
