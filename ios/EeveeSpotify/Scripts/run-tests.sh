@@ -18,8 +18,14 @@ for main_swift in Tests/*/main.swift; do
 
     extra_sources=()
     case "$suite_name" in
+        LyricsRequestCoordinator)
+            extra_sources+=("Sources/EeveeSpotify/Lyrics/Models/LyricsRequestCoordinator.swift")
+            ;;
         BrowsitaSectionStripper)
             extra_sources+=("Sources/EeveeSpotify/Premium/Helpers/BrowsitaSectionStripper.swift")
+            ;;
+        LyricsDiskCache)
+            extra_sources+=("Sources/EeveeSpotify/Lyrics/Models/LyricsDiskCache.swift")
             ;;
         URLAdClassification)
             extra_sources+=("Sources/EeveeSpotify/Shared/Models/Extensions/URL+Extension.swift")
