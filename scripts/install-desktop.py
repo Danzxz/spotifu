@@ -29,11 +29,12 @@ extension = "window.SPOTIFU_CONFIG=" + json.dumps({"endpoint": "http://127.0.0.1
 extension += (root / "desktop/spotifu.js").read_text()
 (configuration / "Extensions/spotifu.js").write_text(extension)
 environment = dict(os.environ, SPICETIFY_CONFIG=str(configuration), SPICETIFY_STATE=str(local / "spicetify-state"))
+has_backup = (local / "spicetify-state/xpui.spa").is_file() and (local / "spicetify-state/Raw").is_dir()
 for arguments in [
     ["config", "spotify_path", str(application / "Contents/Resources"), "prefs_path", str(Path.home() / "Library/Application Support/Spotify/prefs")],
     ["config", "current_theme", "", "inject_css", "0", "replace_colors", "0", "overwrite_assets", "0", "inject_theme_js", "0"],
     ["config", "extensions", "spotifu.js"],
-    ["backup", "apply", "--no-restart"],
+    (["apply", "--no-restart"] if has_backup else ["backup", "apply", "--no-restart"]),
 ]:
     subprocess.run([str(binary), *arguments], env=environment, check=True)
 print("Native Spotify extension installed. Original application backup:", backup)
