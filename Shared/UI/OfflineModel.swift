@@ -166,6 +166,10 @@ import SpotifuCore
     }
     private func json(path: String, body: [String: Any]? = nil) async throws -> Data {
         let (data, response) = try await URLSession.shared.data(for: request(path: path, body: body))
+        if let response = response as? HTTPURLResponse, response.statusCode == 429 {
+            let wait = response.value(forHTTPHeaderField: "Retry-After")
+            throw NSError(domain: "Spotifu", code: 429, userInfo: [NSLocalizedDescriptionKey: "Слишком много запросов. Повтори позже" + (wait.map { " (через " + $0 + " с)" } ?? "")])
+        }
         guard let response = response as? HTTPURLResponse, (200...299).contains(response.statusCode) else {
             throw NSError(domain: "Spotifu", code: 1, userInfo: [NSLocalizedDescriptionKey: String(data: data, encoding: .utf8) ?? "Server error"])
         }
@@ -180,6 +184,7 @@ import SpotifuCore
         } catch { self.error = error.localizedDescription }
     }
     public func download(url: String, id: String, title: String, artist: String, duration: Double) async {
+        guard !busy else { return }
         error = nil; status = "Поиск записи…"; busy = true; defer { busy = false }
         do {
             struct Job: Decodable { let job: String }

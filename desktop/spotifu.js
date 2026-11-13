@@ -17,7 +17,7 @@ function downloadRequest(item) {
 if (typeof module !== 'undefined') module.exports = {findLocalTrack, downloadRequest};
 
 if (typeof window !== 'undefined') (async function spotifu() {
-    while (!window.Spicetify?.Player || !Spicetify.Playbar || !Spicetify.Platform?.LocalFilesAPI) {
+    while (!window.Spicetify?.Player?.origin?.play || !Spicetify.Playbar || !Spicetify.ContextMenu?.Item || !Spicetify.Menu?.SubMenu || !Spicetify.Platform?.LocalFilesAPI) {
         await new Promise(resolve => setTimeout(resolve, 500));
     }
     const configuration = window.SPOTIFU_CONFIG;
@@ -114,10 +114,17 @@ if (typeof window !== 'undefined') (async function spotifu() {
             const item=(await collection('spotify:'+match[1]+':'+match[2])).find(x=>x.uri===uri);
             if(item)return item;
         }
-        const token=Spicetify.Platform.Session?.accessToken;
-        const r=await fetch('https://api.spotify.com/v1/tracks/'+uri.split(':')[2],{headers:{Authorization:'Bearer '+token}});
-        if(!r.ok)throw new Error('Spotify не отдал метаданные песни ('+r.status+'). Открой её альбом и повтори');
-        const t=await r.json();return {...t,duration:{milliseconds:t.duration_ms}};
+        // Liked songs use the native collection service, not public Web API.
+        // Public /v1/tracks was rate-limited (429) even for an already-visible row.
+        if(path.startsWith('/collection/tracks') && Spicetify.Platform.LibraryAPI?.getTracks) {
+            for(let offset=0; ;offset+=100) {
+                const page=await Spicetify.Platform.LibraryAPI.getTracks({offset,limit:100});
+                const item=page.items.find(x=>x.uri===uri);
+                if(item)return item;
+                if(!page.items.length || offset+page.items.length>=page.totalLength)break;
+            }
+        }
+        throw new Error('Не удалось получить данные песни из текущего списка. Открой её альбом и повтори');
     }
     async function collectionName(uri) {
         if(uri.startsWith('spotify:album:')) {
