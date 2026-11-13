@@ -29,6 +29,11 @@ with tempfile.TemporaryDirectory() as temporary:
         elif destination.exists(): destination.unlink()
         if source.is_dir(): shutil.copytree(source, destination)
         else: shutil.copy2(source, destination)
+    # The Theos package stages this beside the tweak; jailed iOS cannot
+    # access that absolute jailbreak directory. Preserve it in the app.
+    shader = next(package.rglob("KaraokeBackgroundShader.metallib"), None)
+    if shader is not None:
+        shutil.copy2(shader, app / "KaraokeBackgroundShader.metallib")
     info_path = app / "Info.plist"
     info = plistlib.loads(info_path.read_bytes())
     info["CFBundleShortVersionString"] = "9.1.88"
