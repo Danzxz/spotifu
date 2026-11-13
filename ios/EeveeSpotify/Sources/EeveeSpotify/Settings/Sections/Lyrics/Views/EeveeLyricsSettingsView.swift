@@ -77,17 +77,9 @@ struct EeveeLyricsSettingsView: View {
     
     @ViewBuilder private func geniusFallbackSection() -> some View {
         Section {
-            Toggle(
-                "genius_fallback".localized,
-                isOn: $viewModel.lyricsOptions.geniusFallback
-            )
+            Text("Genius fallback — всегда включён")
             
-            if viewModel.lyricsOptions.geniusFallback {
-                Toggle(
-                    "show_fallback_reasons".localized,
-                    isOn: $viewModel.lyricsOptions.showFallbackReasons
-                )
-            }
+            Toggle("show_fallback_reasons".localized, isOn: $viewModel.lyricsOptions.showFallbackReasons)
         } footer: {
             Text("genius_fallback_description"
                 .localizeWithFormat(viewModel.lyricsSource.description))

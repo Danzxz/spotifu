@@ -5,7 +5,14 @@ class EeveeLyricsSettingsViewModel: ObservableObject {
     @Published var lyricsSource = UserDefaults.lyricsSource
     
     @Published var lyricsOptions = UserDefaults.lyricsOptions {
-        didSet { UserDefaults.lyricsOptions = lyricsOptions }
+        didSet {
+            UserDefaults.lyricsOptions = lyricsOptions
+            if lyricsOptions.romanization != oldValue.romanization
+                || lyricsOptions.musixmatchLanguage != oldValue.musixmatchLanguage
+                || lyricsOptions.lrclibUrl != oldValue.lrclibUrl {
+                invalidateLyricsForSourceChange()
+            }
+        }
     }
     
     @Published var musixmatchToken = UserDefaults.musixmatchToken

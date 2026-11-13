@@ -107,8 +107,19 @@ final class KaraokePlaybackTracker {
             }
             // Button visibility follows the track, so tell it when the track changes.
             if self.lastTrackId != previousTrackId || self.observedTrackId != previousObservedTrackId {
+                lyricsPlaybackDidChange(trackId: self.lastTrackId)
                 KaraokeLyricsStore.shared.notify()
             }
+        }
+    }
+
+    /// Clears the old identity before a next/previous button dispatches the
+    /// native skip. The next player-state callback supplies the new identity.
+    func prepareForManualSkip() {
+        queue.async {
+            self.lastTrackId = nil; self.observedTrackId = nil
+            lyricsPlaybackDidChange(trackId: nil)
+            KaraokeLyricsStore.shared.notify()
         }
     }
 

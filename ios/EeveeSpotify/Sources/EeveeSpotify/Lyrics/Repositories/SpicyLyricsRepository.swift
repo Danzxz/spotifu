@@ -19,22 +19,10 @@ class SpicyLyricsRepository: LyricsRepository {
 
     // MARK: - Network
 
-    // 503 means the lyrics are still being generated.
-    private static let queuedRetryDelays: [TimeInterval] = {
-        (0 ..< 5).map { attempt in min(10.0, 2.0 * pow(1.5, Double(attempt))) }
-    }()
-
+    // Real-time playback must not wait through a provider's generation queue.
+    // A 503 is a miss for this request and immediately tries Genius fallback.
     private func performQuery(trackId: String, apiKey: String) throws -> (Data, Int) {
-        for (attempt, delay) in ([0.0] + SpicyLyricsRepository.queuedRetryDelays).enumerated() {
-            if delay > 0 {
-                eeveeLog("[EeveeSpotify][SpicyLyrics] %@ queued (503), retrying in %.1fs (attempt %d)", trackId, delay, attempt + 1)
-                Thread.sleep(forTimeInterval: delay)
-            }
-            let (data, httpStatus) = try performRequest(trackId: trackId, apiKey: apiKey)
-            if httpStatus != 503 { return (data, httpStatus) }
-        }
-        eeveeLog("[EeveeSpotify][SpicyLyrics] %@ still queued after all retries", trackId)
-        throw LyricsError.noSuchSong
+        try performRequest(trackId: trackId, apiKey: apiKey)
     }
 
     private func performRequest(trackId: String, apiKey: String) throws -> (Data, Int) {
@@ -188,7 +176,7 @@ class SpicyLyricsRepository: LyricsRepository {
                     uploaderUrl: attribution?["Uploader"]?["url"]?.stringValue,
                     makerName: attribution?["Maker"]?["username"]?.stringValue,
                     makerUrl: attribution?["Maker"]?["url"]?.stringValue
-                )
+                ), generation: query.requestGeneration
             )
         }
 
@@ -274,7 +262,7 @@ class SpicyLyricsRepository: LyricsRepository {
                     uploaderUrl: attribution?["Uploader"]?["url"]?.stringValue,
                     makerName: attribution?["Maker"]?["username"]?.stringValue,
                     makerUrl: attribution?["Maker"]?["url"]?.stringValue
-                )
+                ), generation: query.requestGeneration
             )
         }
 

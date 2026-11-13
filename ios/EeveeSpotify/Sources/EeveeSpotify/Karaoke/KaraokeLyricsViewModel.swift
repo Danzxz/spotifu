@@ -44,7 +44,11 @@ final class KaraokeLyricsViewModel: ObservableObject {
         // The player's own track, not the one a lyrics request last named: Spotify also loads
         // lyrics for songs that haven't started yet.
         let tracker = KaraokePlaybackTracker.shared
-        guard let playing = tracker.playerReportedTrackId() ?? tracker.currentTrackId() else { return }
+        guard let playing = tracker.playerReportedTrackId() ?? tracker.currentTrackId() else {
+            retryWork?.cancel(); retryWork = nil; attempts = 0
+            trackId = nil; apply(nil)
+            return
+        }
 
         let stored = KaraokeLyricsStore.shared.lyrics(forTrackId: playing)
         if playing != trackId {

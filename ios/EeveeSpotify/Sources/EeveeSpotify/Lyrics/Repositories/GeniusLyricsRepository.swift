@@ -8,6 +8,9 @@ class GeniusLyricsRepository: LyricsRepository {
 
     init() {
         let configuration = URLSessionConfiguration.default
+        configuration.timeoutIntervalForRequest = 8
+        configuration.timeoutIntervalForResource = 12
+        configuration.waitsForConnectivity = false
         configuration.httpAdditionalHeaders = [
             "X-Genius-iOS-Version": "6.21.0",
             "X-Genius-Logged-Out": "true",
@@ -44,7 +47,10 @@ class GeniusLyricsRepository: LyricsRepository {
         }
 
         task.resume()
-        semaphore.wait()
+        guard semaphore.wait(timeout: .now() + 13) == .success else {
+            task.cancel()
+            throw URLError(.timedOut)
+        }
 
         if let error = error {
             throw error

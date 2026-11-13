@@ -103,6 +103,14 @@ import MediaPlayer
 // on-device validation against each Spotify release before claiming support.
 class SpotifuControllerHook: ClassHook<NSObject> {
     static let targetName = "SPTNowPlayingPlaybackControllerImplementation"
+    func skipToNextWhileDragging(_ dragging: Bool) {
+        KaraokePlaybackTracker.shared.prepareForManualSkip()
+        orig.skipToNextWhileDragging(dragging)
+    }
+    func skipToPreviousWhileDragging(_ dragging: Bool) {
+        KaraokePlaybackTracker.shared.prepareForManualSkip()
+        orig.skipToPreviousWhileDragging(dragging)
+    }
     func initWithPlayer(_ player: AnyObject?, testManager: AnyObject?, inStreamClient: AnyObject?) -> Target {
         let result = orig.initWithPlayer(player, testManager: testManager, inStreamClient: inStreamClient)
         DispatchQueue.main.async { SpotifuBridge.controller = result }

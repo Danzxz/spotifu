@@ -29,18 +29,22 @@ final class KaraokeLyricsStore {
 
     private let lock = NSLock()
     private var cache: [String: KaraokeLyricsDto] = [:]
+    private var versions: [String: UInt64] = [:]
     private var order: [String] = []
     private let capacity = 8
 
     private init() {}
 
-    func set(trackId: String, lyrics: KaraokeLyricsDto) {
+    func set(trackId: String, lyrics: KaraokeLyricsDto, generation: UInt64? = nil) {
         guard !trackId.isEmpty else { return }
+        if let generation, !canPublishLyrics(trackId: trackId, generation: generation) { return }
         lock.lock()
+        if let generation, let existing = versions[trackId], existing > generation { lock.unlock(); return }
         cache[trackId] = lyrics
+        versions[trackId] = generation
         order.removeAll { $0 == trackId }
         order.append(trackId)
-        if order.count > capacity { cache[order.removeFirst()] = nil }
+        if order.count > capacity { let old = order.removeFirst(); cache[old] = nil; versions[old] = nil }
         lock.unlock()
         notify()
     }
@@ -52,6 +56,7 @@ final class KaraokeLyricsStore {
         guard !trackId.isEmpty else { return }
         lock.lock()
         let hadEntry = cache.removeValue(forKey: trackId) != nil
+        versions[trackId] = nil
         order.removeAll { $0 == trackId }
         lock.unlock()
         if hadEntry { notify() }
@@ -59,13 +64,16 @@ final class KaraokeLyricsStore {
 
     func lyrics(forTrackId trackId: String) -> KaraokeLyricsDto? {
         lock.lock()
-        defer { lock.unlock() }
-        return cache[trackId]
+        let value = cache[trackId]; let generation = versions[trackId]
+        lock.unlock()
+        if let generation, !canPublishLyrics(trackId: trackId, generation: generation) { return nil }
+        return value
     }
 
     func clear() {
         lock.lock()
         cache = [:]
+        versions = [:]
         order = []
         lock.unlock()
         notify()
