@@ -39,12 +39,14 @@ jobs:
       - name: Prepare IPA with rebuilt integration
         env:
           BASE_IPA_URL: ${{ inputs.base_ipa_url }}
+          SPOTIFU_RUN_NUMBER: ${{ github.run_number }}
         run: |
           mkdir -p dist
           curl -fL --retry 2 "$BASE_IPA_URL" -o .local/base.ipa
           echo '1fff261d89e085e11dbf234ae1205c82c42ee144f31b23b92f24631a6cfe688f  .local/base.ipa' | shasum -a 256 -c -
           dpkg-deb -x ios/EeveeSpotify/packages/*.deb .local/deb
-          python3 scripts/assemble-eevee.py .local/base.ipa .local/deb dist/Spotifu-Spotify.ipa
+          SPOTIFU_BUILD_VERSION="$((918802209 + SPOTIFU_RUN_NUMBER))" python3 scripts/assemble-eevee.py .local/base.ipa .local/deb dist/Spotifu-Spotify.ipa
+          python3 scripts/audit-ipa.py dist/Spotifu-Spotify.ipa
       - uses: actions/upload-artifact@v4
         with:
           name: Spotifu-Spotify-integration

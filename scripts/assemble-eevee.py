@@ -5,6 +5,7 @@ import sys
 import tempfile
 import zipfile
 import shutil
+import os
 from pathlib import Path
 
 base, package, output = map(Path, sys.argv[1:])
@@ -31,6 +32,8 @@ with tempfile.TemporaryDirectory() as temporary:
     info_path = app / "Info.plist"
     info = plistlib.loads(info_path.read_bytes())
     info["CFBundleShortVersionString"] = "9.1.88"
+    if os.environ.get("SPOTIFU_BUILD_VERSION"):
+        info["CFBundleVersion"] = os.environ["SPOTIFU_BUILD_VERSION"]
     info["UIFileSharingEnabled"] = True
     info["LSSupportsOpeningDocumentsInPlace"] = True
     info["UIBackgroundModes"] = list(set(info.get("UIBackgroundModes", [])) | {"audio"})
