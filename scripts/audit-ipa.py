@@ -24,6 +24,10 @@ with zipfile.ZipFile(ipa) as archive:
                 dependency = line.strip().split(" (", 1)[0]
                 if dependency.startswith("@rpath/"):
                     relative = dependency.removeprefix("@rpath/")
+                    # iOS 15 provides Swift runtime through the system Swift
+                    # rpath; weak concurrency loads need not be bundled.
+                    if relative.startswith("libswift") and relative.endswith(".dylib"):
+                        continue
                     if not any("Payload/Spotify.app/" + prefix + relative in names for prefix in ("Frameworks/", "")):
                         missing.append(dependency)
                 elif dependency.startswith("/var/jb/"):
