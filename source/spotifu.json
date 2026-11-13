@@ -1,0 +1,9 @@
+{
+  "name": "Spotifu",
+  "identifier": "com.danzxz.spotifu.source",
+  "sourceURL": "https://raw.githubusercontent.com/Danzxz/spotifu/main/source/spotifu.json",
+  "subtitle": "Spotifu for iPhone",
+  "description": "Offline audio and lyrics. Apps appear after successful release builds.",
+  "apps": [],
+  "news": []
+}

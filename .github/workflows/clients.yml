@@ -1,0 +1,38 @@
+name: Build Spotifu clients
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  clients:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+      - name: Test core and resolver
+        run: |
+          swift test
+          python3 -m unittest discover -s Tests -p 'test_*.py'
+      - name: Generate projects
+        run: |
+          brew install xcodegen
+          xcodegen generate
+      - name: Build iOS and macOS clients
+        run: |
+          xcodebuild -project Spotifu.xcodeproj -scheme Spotifu -sdk iphoneos -configuration Release -derivedDataPath build CODE_SIGNING_ALLOWED=NO build
+          xcodebuild -project Spotifu.xcodeproj -scheme SpotifuMac -configuration Release -derivedDataPath build CODE_SIGNING_ALLOWED=NO build
+          mkdir -p dist/Payload
+          cp -R build/Build/Products/Release-iphoneos/Spotifu.app dist/Payload/
+          cd dist
+          zip -qr Spotifu.ipa Payload
+          ditto -c -k --keepParent ../build/Build/Products/Release/SpotifuMac.app SpotifuMac.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Spotifu-clients
+          path: |
+            dist/Spotifu.ipa
+            dist/SpotifuMac.zip

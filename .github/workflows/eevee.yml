@@ -1,0 +1,51 @@
+name: Build Spotify integration
+on:
+  workflow_dispatch:
+    inputs:
+      base_ipa_url:
+        description: Existing Eevee 9.1.88 IPA URL, with no account data
+        required: true
+        default: https://files.catbox.moe/x7l9ca.ipa
+permissions:
+  contents: read
+jobs:
+  tweak:
+    runs-on: macos-15
+    env:
+      THEOS: ${{ github.workspace }}/.local/theos
+      THEOS_PACKAGE_SCHEME: rootless
+      SWIFTPROTOBUF_VERSION: 1.29.0
+    steps:
+      - uses: actions/checkout@v4
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+      - uses: actions/checkout@v4
+        with:
+          repository: theos/theos
+          path: .local/theos
+          submodules: recursive
+      - name: Build tools and shared source
+        run: |
+          brew install make dpkg ldid
+          echo "$(brew --prefix make)/libexec/gnubin" >> "$GITHUB_PATH"
+          python3 scripts/sync-ios.py
+      - name: Test and build Eevee integration
+        working-directory: ios/EeveeSpotify
+        run: |
+          bash Scripts/run-tests.sh
+          make build-eeveeswiftprotobuf
+          make package FINALPACKAGE=1
+      - name: Prepare IPA with rebuilt integration
+        env:
+          BASE_IPA_URL: ${{ inputs.base_ipa_url }}
+        run: |
+          mkdir -p dist
+          curl -fL --retry 2 "$BASE_IPA_URL" -o .local/base.ipa
+          echo '1fff261d89e085e11dbf234ae1205c82c42ee144f31b23b92f24631a6cfe688f  .local/base.ipa' | shasum -a 256 -c -
+          dpkg-deb -x ios/EeveeSpotify/packages/*.deb .local/deb
+          python3 scripts/assemble-eevee.py .local/base.ipa .local/deb dist/Spotifu-Spotify.ipa
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Spotifu-Spotify-integration
+          path: dist/Spotifu-Spotify.ipa

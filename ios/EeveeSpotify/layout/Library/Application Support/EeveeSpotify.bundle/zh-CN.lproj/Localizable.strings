@@ -1,0 +1,526 @@
+/* MARK: Settings */
+
+patching = "补丁";
+lyrics = "歌词";
+customization = "定制";
+experiments = "实验";
+
+common_issues_tip_title = "发现问题？";
+
+common_issues_tip_message = "如果遇到问题，例如无法播放任何歌曲，请查看";
+common_issues_tip_button = "常见问题";
+
+reset_data = "重置数据";
+reset_data_description = "清除缓存数据并重新启动应用程序。";
+
+checking_for_update = "正在检查更新...";
+update_available = "发现可用更新";
+
+restart_is_required_description = "更改后需要重启应用程序。";
+
+// Patching
+
+do_not_patch_premium = "不启用 Premium 补丁";
+patching_description = "该插件会拦截加载用户数据的请求，对其进行反序列化，并实时修改参数。\n\n如果您拥有真实有效的 Premium 订阅，则可以启用“不启用 Premium 补丁”。该插件不会修补数据或限制 Premium 服务器端功能的使用。更改后需要重新启动应用。";
+
+overwrite_configuration = "覆盖配置";
+overwrite_configuration_description = "用转存的 Premium 配置替换远程配置。虽然不能保证一定有效，但可以解决一些问题，如出现广告。";
+
+// Lyrics
+
+do_not_replace_lyrics = "禁用歌词替换";
+lyrics_source = "歌词来源";
+lyrics_source_description = "可以自由选择自己喜欢的歌词来源。\n\nGenius：拥有最优质的歌词，提供最多的歌曲，歌词更新速度最快。但是，不会进行实时同步。\nLRCLIB：最开放的服务，提供实时同步的歌词。但是，它缺少很多歌曲的歌词。\nMusixmatch：Spotify 本身所使用的服务，为很多歌曲提供实时同步的歌词，但需要用户令牌才能使用此来源。";
+lyrics_additional_info = "如果插件无法找到歌曲或处理歌词，将看到 “无法加载这首歌的歌词” 的提示。使用 Genius 时，由于插件搜索歌曲的方式，某些歌词可能会有误。在大多数情况下，它都正常工作。";
+petitlyrics_description = "PetitLyrics：提供大量实时同步的日语歌词和一些国际歌词。";
+
+musixmatch_user_token = "Musixmatch 用户令牌";
+user_token_placeholder = "输入用户令牌或粘贴调试信息";
+
+enter_user_token = "输入用户令牌";
+enter_user_token_message = "为了使用 Musixmatch，需要从官方应用程序中检索你的用户令牌。从 AppStore 下载 Musixmatch，注册后转到 “设置” > “获取帮助” > “复制调试信息”，并将其粘贴在此处。你也可以使用 MitM 提取令牌。";
+
+genius_fallback = "回退到 Genius";
+genius_fallback_description = "如果 %@ 有问题，将使用 Genius 加载歌词。";
+
+show_fallback_reasons = "显示回退原因";
+
+hide_lyrics_on_error = "错误时隐藏";
+hide_lyrics_on_error_description = "如果歌词加载失败，则删除歌词组件。";
+
+romanized_lyrics = "罗马化歌词";
+romanized_lyrics_description = "显示中文、韩语和日语的罗马化歌词。";
+
+musixmatch_language = "Musixmatch 歌词语言";
+musixmatch_language_description = "可以输入两个字母的 Musixmatch 语言代码，并在 Musixmatch 上查看翻译的歌词（如果有）。";
+
+// UI
+
+lyrics_background_color_section = "歌词背景颜色";
+lyrics_background_color_section_description = "如果打开 “原始颜色”，歌词将以 Spotify 的默认颜色显示。\n\n也可以根据提取的曲目封面的颜色设置 “静态颜色” 或 “标准颜色”。颜色标准参数决定深色变浅的程度以及浅色变暗的程度。通常，标准参数越高，看到的颜色越浅。";
+
+display_original_colors = "显示原始颜色";
+
+use_static_color = "使用静态颜色";
+static_color = "静态颜色";
+
+color_normalization_factor = "颜色标准参数";
+dark_popups = "深色弹窗";
+
+
+// Experiments
+
+show_instagram_destination = "显示 Instagram 分享目标";
+show_instagram_destination_description = "始终将 Instagram 作为分享目标，更改需要重启程序。";
+
+livecontainer_sharing = "分享到 LiveContainer";
+livecontainer_sharing_description = "如果不支持所选分享目标，则分享到 LiveContainer 并复制 URL。";
+
+// 杂项设定
+
+miscellaneous = "杂项设定"; 
+clean_share_links = "移除追踪参数"; 
+clean_share_links_description = "清除网址追踪码";
+
+
+/* MARK: Premium PopUps */
+
+have_premium_popup = "看来您有一个真实有效的 Premium 订阅，因此此插件不会修补数据或限制 Premium 服务器端功能的使用。可以在 EeveeSpotify 设置中管理此操作。";
+
+high_audio_quality_popup = "非常高的音频质量是服务器端的，并且无法通过此插件获得。";
+playlist_downloading_popup = "原生播放列表下载是服务器端的，无法通过此插件下载。不过可以下载播客节目。";
+download_local_playlist = "下载本地播放列表";
+
+//
+
+could_not_share_popup = "无法分享到所选目标或 LiveContainer，URL 已复制。";
+
+/* MARK: Lyrics */
+
+fallback_attribute = "回退";
+romanized_attribute = "罗马化";
+
+musixmatch_unauthorized_popup = "由于未授权错误，该插件无法从 Musixmatch 加载歌词。请检查或更新 Musixmatch 令牌。如果使用 iPad，则应从 iPad 版 Musixmatch 应用中获取令牌。";
+musixmatch_restricted_popup = "由于受到限制，该插件无法加载 Musixmatch 的歌词。这可能是由于美国 IP 地址导致的版权问题，因此如果在美国，则应更改它或使用 VPN。";
+
+// Errors Titles
+
+no_such_song = "未找到歌曲";
+musixmatch_restricted = "受限制";
+invalid_musixmatch_token = "未授权";
+decoding_error = "解码错误";
+no_current_track = "无当前曲目";
+unknown_error = "未知错误";
+
+// Instrumental Titles
+
+song_is_instrumental = "此歌曲为纯音乐。";
+let_the_music_play = "让音乐播放…";
+
+// liked songs title, should match official spotify loc
+liked_songs = "喜欢的歌曲";
+
+contributors = "参与者";
+Developement = "开发";
+Localization = "本地化翻译";
+
+request_anonymous_token = "请求匿名令牌";
+request_anonymous_token_description = "点击 “请求匿名令牌” 即可在无需授权的情况下向 Musixmatch 请求令牌。";
+
+lrclib_api = "服务器地址";
+
+// Snapshot of your benefits, should match official spotify loc
+
+ad_free_music_listening = "无广告聆听音乐";
+play_songs_in_any_order = "以任意顺序播放歌曲";
+organize_listening_queue = "整理播放队列";
+
+payment_notice = "EeveeSpotify 已应用补丁来解锁部分高级功能，免费使用。";
+
+true_shuffle = "真实随机播放";
+true_shuffle_dec = "阻止 Spotify 免费版的智能随机播放将推荐曲目混入你的队列。随机播放只会在播放列表内进行。";
+
+sponsorblock = "SponsorBlock (测试版)";
+appIcon = "应用图标";
+
+eevee_inline_subtitle_text = "补丁、歌词、定制和实验";
+
+// Debug
+
+debug_title = "调试";
+export_debug_log = "导出调试日志";
+clear_debug_log = "清除调试日志";
+debug_log_cleared = "调试日志已清除。";
+debug_log_cleared_ok = "确定";
+no_debug_log_found = "未找到调试日志。启用调试日志选项后才会开始记录日志。";
+no_debug_log_found_ok = "确定";
+debug_section_footer = "开启日志记录，然后导出或清除日志。";
+
+// Full reset
+resetButtonTitle = "完全重置";
+resetSubtitle = "清除 Spotify 钥匙串、沙盒目录和应用组容器。强制重新登录。完成后应用退出。";
+resetFooter = "强制重新登录。清除 Spotify 钥匙串、沙盒目录和应用组容器，其他旁加载的应用不受影响。完成后应用退出。";
+
+// App Icon Chooser
+appIconTitle = "选择图标";
+appIconSubtitle = "iOS 会在首次选择时显示确认提示，主屏幕可能需要几秒钟才能刷新。";
+iconSelected = "已选择";
+iconTapToApply = "点击以应用";
+prettifyIconNames = "优化图标名称";
+prettifyIconNamesDescription = "将下划线、连字符和驼峰命名转换为空格";
+
+// SponsorBlock
+categoryOneFooter = "跳过社区标记的播客片段。";
+enableSponsorblock = "启用 SponsorBlock";
+showColoredOverlay = "在进度条上显示彩色覆盖";
+showToast = "跳过时显示提示";
+skipToast = "跳过提示操作按钮（投票 / 撤销 / 隐藏）";
+respectManualSeek = "尊重手动跳转（不要重复跳过）";
+categoriesHeader = "分类";
+categoriesFooter = "关闭 · 显示 · 手动 · 自动。点击色块可修改颜色。";
+
+sponsor_category = "广告";
+selfpromo_category = "无偿/自我推广";
+interaction_category = "互动提醒";
+intro_category = "插曲/开头";
+outro_category = "结尾/鸣谢";
+preview_category = "预告/回顾";
+hook_category = "钩子/问候";
+filler_category = "跑题/填充";
+exclusive_access_category = "独家访问";
+
+action_disabled = "关闭";
+action_show = "显示";
+action_manual = "手动";
+action_auto = "自动";
+
+draftsTitle = "上报与草稿";
+errorNoPodcats = "当前没有正在播放的播客。";
+markSegment = "为当前节目标记片段";
+advancedTitle = "高级";
+howToUseTitle = "使用方法";
+creditsTitle = "致谢";
+creditsSubtitle = "片段数据来自 SponsorBlock 社区（sponsor.ajay.app）。集成移植自 Spot-SponsorBlock 的 Spot-SponsorBlock-Extension。";
+linkButtonTitle = "Spot-SponsorBlock-Extension 在 GitHub 上";
+
+// SponsorBlock reports
+sponsorblock_reports_title = "SponsorBlock 上报";
+sponsorblockIDTitle = "你的 SponsorBlock ID";
+sponsorblockIDFooter = "用于关联你的提交和投票，请将其视为私人密码 —— 不要分享给他人。";
+user_id_copied = "用户 ID 已复制";
+copyButton = "复制";
+regenerateButton = "重新生成";
+draftsTitleSB = "草稿";
+draftsEmpty = "暂无草稿。长按播客进度条以开始标记片段。";
+draftsEpisodeLoc = "节目 %@";
+hidden_locally_header = "本机隐藏（%@）";
+hiddenFooter = "此处的片段不会在本机自动跳过，它们仍然存在于 SponsorBlock 服务器上。";
+hiddenSegmentsEmpty = "暂无隐藏片段。";
+unhideButton = "取消隐藏";
+
+popUpRegenerateTitle = "重新生成用户 ID？";
+popUpRegenerateSubtitle = "你之前的提交和投票将不再关联到你的账户。";
+popUpClearAllButton = "全部清除";
+popUpClearAllTitle = "清除所有隐藏片段？";
+popUpClearAllSubtitle = "这些片段将根据你的分类规则重新被跳过。";
+
+readyButton = "就绪";
+incompleteButton = "未完成";
+editSubmit = "编辑 / 提交";
+discardButton = "丢弃";
+
+// SponsorBlock Advanced
+skipBehaviourTitle = "跳过行为";
+autoSkipSubmissionsTitle = "自动跳过我自己提交的内容";
+logOnlyToggle = "仅记录日志（不实际跳转）";
+serverHeader = "服务器";
+urlText = "URL";
+
+tuningTitle = "微调";
+minSegmentDuration = "最短片段时长：%.1f 秒";
+toastDuration = "提示时长：%.1f 秒";
+
+trackLogSubtitle = "在每首新曲目时，将播客曲目元数据（URI、isPodcast、isVideo 等）转储到调试日志中。仅当 SponsorBlock 未按预期检测到播客时启用。";
+trackLogToggle = "诊断曲目日志";
+resetButtonTrackLog = "重置…";
+
+// SponsorBlock Reset Options Advanced
+resetTitle = "重置哪些内容？";
+resetSubtitle = "各项互不影响。";
+allResetSB = "全部（以上所有内容）";
+regenerateIDSB = "重新生成用户 ID";
+localSubmissionsSB = "我的本地提交（%@）";
+votedRecordsSB = "投票记录（%@）";
+hiddenSegmentsSB = "隐藏片段（%@）";
+draftsCountSB = "草稿（%@）";
+settingsResetSB = "设置（开关 + 分类 + 颜色）";
+
+// SponsorBlock How To Use
+playerGesturesTitle = "播放器上的手势";
+gesturesTitle1 = "长按进度条";
+gesturesDeps1 = "标记片段的起点。在片段末端再次长按以设置结束点并打开提交表单。";
+gesturesTitle2 = "点击进度条上的片段";
+gesturesDeps2 = "投票、更改分类或仅在本机隐藏片段。";
+
+submittingTitle = "提交";
+submittingSectionTitle1 = "提交表单";
+submittingSectionDeps1 = "通过滑块和微调按钮精确调整起点和终点。选择分类后，提交内容将发布到 sponsor.ajay.app。";
+submittingSectionTitle2 = "你的本地提交";
+submittingSectionDeps2 = "在本机上立即自动跳过。服务器发布后即可进行投票。“我的” 标记会标识这些片段。";
+
+skipToastTitle = "跳过提示";
+skipToastSectionTitle1 = "撤销";
+skipToastSectionDeps1 = "跳转回片段起点，该片段本次将完整播放一次。快进再快退可重置状态，使其再次跳过。";
+skipToastSectionTitle2 = "点赞 / 点踩";
+skipToastSectionDeps2 = "👍 会在服务器上记录你的投票。👎 打开菜单可进行点踩、本机隐藏或更改分类。";
+skipToastSectionTitle3 = "完整片段菜单";
+skipToastSectionDeps3 = "与点击进度条上片段的选项相同。";
+
+managingSegmentsTitle = "管理片段";
+managingSegmentsSectionTitle1 = "管理片段…";
+managingSegmentsSectionDeps1 = "长按进度条 → “管理片段” 列出当前节目的所有片段。可投票、隐藏、更改分类，或点击某行以跳转播放。";
+managingSegmentsSectionTitle2 = "上报与草稿";
+managingSegmentsSectionDeps2 = "设置 → “上报与草稿” 中存放你未完成的草稿（未提交的标记）和隐藏的片段。草稿会在应用重启后保留。";
+
+categoriesTitle = "分类";
+categoriesSectionTitle1 = "按分类设置操作";
+categoriesSectionDeps1 = "关闭 = 忽略。显示 = 仅在进度条上标记。手动 = 跳过前询问。自动 = 静默跳过。";
+
+// Support the Project, links to Ko-fi in EeveeSettingsView
+support_the_project = "支持本项目";
+support_the_project_description = "你的支持让这个 tweak 持续更新，也帮 Hysan 给 Elsa 买一份勇气的药剂。";
+
+// Settings overhaul: flags, Liquid Glass, player, features, Spicy Lyrics, debug logging
+flags = "标志";
+flags_search = "搜索标志";
+flags_changed_only = "仅显示已更改";
+flags_auto = "自动";
+flags_on = "开";
+flags_off = "关";
+flags_count = "%d 个标志 · Spotify %@";
+flags_empty = "尚未扫描任何标志。请重启 Spotify，并在几秒后重新打开。";
+flags_restart = "重启以应用";
+flags_reset = "重置所有更改";
+flags_rescan = "重新扫描标志";
+liquid_glass = "Liquid Glass";
+liquid_glass_footer = "iOS 26 原生玻璃效果。重启以应用。";
+liquid_glass_unsupported = "需要 iOS 26。";
+glass_surfaces = "界面元素";
+glass_spotify = "Spotify 玻璃栏和菜单";
+glass_tab_bar = "标签栏";
+glass_now_playing_bar = "正在播放栏";
+tab_bar = "标签栏";
+tab_bar_hide_labels = "隐藏标签文字";
+tab_bar_empty = "使用玻璃标签栏打开一次 Spotify 后，即可列出标签。";
+new_player_design = "新播放器设计";
+new_player_design_footer = "Spotify 尚未发布的面板式播放器、滑块和队列。重启以应用。";
+restart_now = "立即重启";
+tab_bar_editor_hint = "点按标签即可在启动时打开。长按并拖动可重新排序，向上拖动可隐藏。点按已隐藏的标签可将其恢复。";
+settings_group_listening = "聆听";
+settings_group_looks = "外观";
+settings_group_advanced = "高级";
+patching_subtitle = "Premium 补丁";
+lyrics_subtitle = "来源和显示";
+sponsorblock_subtitle = "跳过播客片段";
+customization_subtitle = "歌词颜色和弹窗";
+appIcon_subtitle = "主屏幕图标";
+flags_subtitle = "Spotify 远程标志";
+experiments_subtitle = "未完成的功能";
+miscellaneous_subtitle = "其他所有内容";
+glass_style = "样式";
+spotify_flags = "Spotify 标志";
+npb_subtitle = "着色、封面、设备按钮、标志";
+npb_album_tint = "使用专辑颜色着色";
+npb_round_artwork = "圆形封面";
+npb_hide_connect = "隐藏设备按钮";
+npb_flag_two_lines = "两行曲目信息";
+npb_flag_add_button = "保存按钮";
+npb_flag_queue_badge = "队列徽章";
+npb_flag_resize = "长按并拖动以调整大小";
+npb_flag_video = "迷你播放器中的视频";
+npb_flag_cover_morph = "从栏到封面的动画";
+npb_flag_transitions = "迷你播放器过渡";
+player = "播放器";
+player_subtitle = "背景、玻璃歌词、隐藏部分、标志";
+player_backdrop = "封面背景";
+player_backdrop_subtitle = "使用模糊封面代替纯色";
+player_glass_lyrics = "玻璃歌词";
+player_flag_canvas = "Canvas";
+player_flag_sheet = "面板式播放器";
+player_flag_header = "重新设计的页眉";
+player_flag_slider = "新进度滑块";
+player_flag_sticky = "点按展开固定页眉";
+player_flag_queue_sheet = "队列以面板显示";
+player_flag_connect_sheet = "Connect 以面板显示";
+player_flag_queue_flip = "队列翻转过渡";
+player_flag_play_next = "菜单中的“下一首播放”";
+glass_search = "搜索";
+player_hide_buttons = "在播放器中隐藏";
+player_hide_cards = "隐藏播放器下方的卡片";
+player_part_lyricsPreview = "歌词预览";
+player_part_shuffle = "随机播放";
+player_part_repeat = "重复";
+player_part_addTo = "添加到播放列表";
+player_part_queue = "队列";
+player_part_share = "分享";
+player_part_connect = "连接到设备";
+player_part_lyricsCard = "歌词";
+player_part_aboutArtist = "关于艺人";
+player_part_relatedVideos = "相关视频";
+player_part_songDNA = "SongDNA";
+player_part_liveEvents = "现场活动";
+player_part_exploreArtist = "探索艺人";
+player_part_credits = "制作人员";
+player_part_merch = "周边";
+player_part_recommendations = "推荐";
+player_hide_parts = "隐藏部分";
+player_hide_none = "未隐藏任何内容";
+player_hide_count = "已隐藏 %d 项";
+player_part_allCards = "所有卡片";
+player_part_releaseCountdown = "发行倒计时";
+reset_page = "重置";
+reset_page_title = "将此页面重置为默认设置？";
+glass_home = "主页";
+rounded_artwork = "圆角播放列表封面";
+glass_playlist = "播放列表和专辑";
+playlist_subtitle = "封面、分隔线、页眉部分";
+playlist_footer = "在打开或滚动播放列表时应用。";
+playlist_full_cover = "全宽封面";
+playlist_dividers = "曲目分隔线";
+playlist_hide_find = "隐藏查找栏";
+appearance = "外观";
+appearance_subtitle = "主题、玻璃和布局";
+theme = "主题";
+theme_footer = "重启以应用。";
+amoled = "AMOLED 纯黑";
+accent_color = "强调色";
+home = "主页";
+home_subtitle = "隐藏版块";
+home_hide = "隐藏";
+home_pills = "筛选标签";
+home_shortcuts = "快捷方式网格";
+home_promos = "促销";
+home_previews = "预览";
+home_dj = "DJ";
+block_telemetry = "阻止跟踪";
+block_telemetry_footer = "停用 Firebase、Facebook、Branch 及其他分析 SDK。播放记录仍会出现在“最近播放”中。重启以应用。";
+troubleshooting = "故障排查";
+reset_section = "重置";
+reset_section_footer = "两者完成后都会关闭应用。";
+reset_data_subtitle = "清除缓存";
+full_reset_subtitle = "清除所有内容并退出登录";
+playlist_play = "播放";
+playlist_pause = "暂停";
+spotify_features = "Spotify 功能";
+spotify_features_subtitle = "Spotify 自带的隐藏开关";
+features_playback = "播放";
+features_trim_silence = "裁剪静音";
+features_library = "音乐库";
+features_recents = "最近播放";
+features_recents_sort = "最近播放排序";
+features_sort_playlists = "按最近更新的播放列表排序";
+features_sort_artists = "按最近更新的艺人排序";
+features_denser_rows = "更紧凑的行";
+features_library_settings = "音乐库设置";
+features_library_pro = "Library Pro";
+features_shake_random = "摇一摇随机播放";
+features_lockscreen = "锁屏";
+features_lock_like = "喜欢按钮";
+features_lock_podcast_skip = "播客跳过";
+features_lock_chapters = "章节跳过";
+features_lock_animated = "动态封面";
+features_sleep_timer = "睡眠定时器";
+features_sleep_fade = "淡出";
+features_sleep_one_minute = "1 分钟选项";
+features_home = "主页";
+features_dj_button = "DJ 按钮";
+features_dj_badge = "DJ 测试版徽章";
+features_other = "其他";
+features_local_files = "“文件”中的本地文件";
+features_hide_jam = "隐藏 Jam";
+features_hide_jam_footer = "移除 Jam 入口。重启以应用。";
+block_rating_prompts = "阻止评分提示";
+block_rating_prompts_footer = "不显示 App Store 评价弹窗。重启以应用。";
+spicylyrics_key_invalid = "Spicy Lyrics API 密钥被拒绝";
+spicylyrics_api_key = "Spicy Lyrics API 密钥";
+spicylyrics_api_key_description = "留空则使用内置密钥。";
+lyrics_made_by = "制作者";
+lyrics_uploaded_by = "上传者";
+player_gestures = "手势";
+player_double_tap = "双击封面";
+player_double_tap_off = "关";
+player_double_tap_seek = "快进 10 秒";
+player_double_tap_skip = "跳过曲目";
+player_zones = "区域";
+player_zones_two = "左 · 右";
+player_zones_three = "左 · 中 · 右";
+player_haptics = "控件触感反馈";
+player_haptics_subtitle = "按钮和拖动进度";
+tab_liked_songs = "已点赞";
+tab_downloads = "下载";
+tab_podcasts = "播客";
+tab_queue = "队列";
+tab_custom = "自定义标签";
+tab_custom_footer = "可从标签栏打开任意 Spotify 页面。滑动即可移除。";
+tab_add = "添加标签";
+tab_custom_uri = "自定义 URI";
+tab_custom_title = "标题";
+tab_invalid_uri = "不是 Spotify 链接或 URI";
+artist = "艺人";
+artist_subtitle = "页眉部分";
+artist_verified = "认证徽章";
+artist_listeners = "每月听众";
+artist_tabs = "音乐 / 活动标签";
+playlist_part_description = "描述";
+playlist_part_creator = "创建者行";
+playlist_part_metadata = "时长行";
+playlist_part_pills = "精选标签";
+home_gradient_footer = "更改会实时应用。";
+home_gradient_strength = "强度";
+home_gradient_height = "高度";
+home_gradient_subtle = "轻微";
+home_gradient_medium = "中等";
+home_gradient_bold = "强烈";
+home_gradient_short = "矮";
+home_gradient_tall = "高";
+home_gradient_full = "全屏";
+home_gradient_fade = "渐隐";
+home_gradient_fade_top = "较早";
+home_gradient_fade_mid = "中间";
+home_gradient_fade_low = "较晚";
+home_gradient_pages = "页面";
+home_gradient_page_home = "主页";
+home_gradient_page_library = "音乐库";
+home_gradient_page_search = "搜索";
+background_color = "背景颜色";
+state_on = "开";
+state_off = "关";
+appearance_pages = "页面";
+tab_bar_subtitle = "顺序、启动标签、自定义标签";
+lyrics_written_by = "作词：";
+lyrics_provided_by = "歌词提供方";
+karaoke_section = "自定义歌词视图";
+karaoke_section_footer = "反向会让歌词行从下到上流动，当前行位于屏幕靠下的位置。模糊强度用于控制非当前行的模糊程度。";
+karaoke_alignment = "歌词对齐";
+karaoke_alignment_leading = "左对齐";
+karaoke_alignment_center = "居中";
+karaoke_alignment_trailing = "右对齐";
+karaoke_reversed_direction = "反向";
+episode_header = "第 %@ 集";
+home_gradient_style = "样式";
+home_gradient_style_gradient = "渐变";
+home_gradient_style_solid = "纯色";
+spicylyrics_description = "SpicyLyrics 提供逐字卡拉 OK 歌词。默认使用内置密钥。如果想使用自己的密钥，请前往 Spicy ESR template，然后点击“Sign in”按钮。登录后，同意 Spicy 的 ToS 并点击“Add ESR to my account”。添加完成后，复制生成的密钥，粘贴到 Eevee 歌词部分，然后回到 Spicy 并点击“I have stored it”。接着前往应用页面。";
+spicylyrics_template_link = "Spicy ESR template";
+karaoke_word_synced_button = "自定义歌词视图";
+debug_logging = "调试日志";
+karaoke_enabled = "自定义歌词视图";
+karaoke_blur_intensity = "模糊强度";
+
+/* MARK: Added to match en.lproj */
+
+developer_note = "开发者说明";
+spicylyrics_api_key_placeholder = "输入 Spicy 客户端密钥";
+glass_lyrics_view = "自定义歌词视图";
+lyrics_source_restart_popup = "请重启 Spotify，以便在所有位置使用新的歌词来源。在此之前，已播放过的歌曲会保留旧歌词。";
+restart_later = "稍后";

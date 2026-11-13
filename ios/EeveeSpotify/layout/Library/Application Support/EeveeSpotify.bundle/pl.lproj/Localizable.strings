@@ -1,0 +1,537 @@
+/* MARK: Settings */
+
+patching = "Modyfikacje";
+lyrics = "Teksty utworów";
+customization = "Personalizacja";
+experiments = "Eksperymenty";
+sponsorblock = "SponsorBlock (BETA)";
+appIcon = "Ikona aplikacji";
+
+common_issues_tip_title = "Napotkałeś problem?";
+
+common_issues_tip_message = "Jeśli napotykasz problemy, takie jak brak możliwości odtwarzania utworów, sprawdź";
+common_issues_tip_button = "znane problemy";
+
+reset_data = "Wyczyść pamięć podręczną";
+reset_data_description = "Czyści pamięć cache i ponownie uruchamia aplikację.";
+
+checking_for_update = "Sprawdzanie aktualizacji...";
+update_available = "Dostępna jest aktualizacja";
+
+restart_is_required_description = "Aby zmiany zostały zastosowane, wymagane będzie ponowne uruchomienie aplikacji.";
+
+// Patching
+
+do_not_patch_premium = "Nie używaj łatki premium";
+patching_description = "Łatka przechwytuje żądania danych użytkownika, deserializuje je i modyfikuje parametry w czasie rzeczywistym.
+
+Jeśli masz aktywną subskrypcję premium, możesz włączyć tę opcję. Modyfikacja nie będzie zmieniać żadnych danych ani ograniczać korzystania z funkcji po stronie serwera premium. Po zmianie wymagane jest ponowne uruchomienie aplikacji
+
+%@";
+
+overwrite_configuration = "Nadpisz konfigurację";
+overwrite_configuration_description = "Zastępuje zdalną konfigurację zrzuconą konfiguracją premium. Może to naprawić niektóre problemy, takie jak pojawiające się reklamy, ale nie jest to gwarantowane.";
+
+true_shuffle = "Prawdziwe losowanie";
+true_shuffle_dec = "Blokuje funkcję Smart Shuffle z darmowej wersji Spotify przed dodawaniem polecanych utworów do kolejki. Losowanie pozostaje w obrębie playlisty. ";
+
+// Lyrics
+
+do_not_replace_lyrics = "Nie zastępuj tekstów";												
+lyrics_source = "Źródło tekstów";
+lyrics_source_description = "Możesz wybrać źródło które najbardziej Tobie odpowiada.
+
+Genius: Najlepsza jakość, najczęściej aktualizowane źródło. Nie jest i nigdy nie będzie zsynchronizowane z utworem.
+
+LRCLIB: Najbardziej otwarte źródło, oferuje zsynchronizowane teksty. Brakuje w nim jednak wielu utworów.
+
+Musixmatch: Używane przez Spotify, oferuje zsynchronizowane teksty dla wielu utworów. Wymaga tokenu użytkownika.";
+lyrics_additional_info = "Jeśli EeveeSpotify nie znajdzie utworu lub tekstu, pojawi się komunikat \"Nie udało się załadować tekstu\". Teksty z Genius mogą być błędne z powodu sposobu wyszukiwania utworów. W większości przypadków działa to poprawnie.";
+spicylyrics_description = "SpicyLyrics dostarcza teksty karaoke słowo po słowie. Domyślnie używany jest wbudowany klucz. Jeśli chcesz użyć własnego klucza, przejdź do Spicy ESR template i naciśnij „Sign in”. Po zalogowaniu zaakceptuj ToS Spicy i naciśnij „Add ESR to my account”. Po dodaniu skopiuj wygenerowany klucz, wklej go w sekcji tekstów Eevee, wróć do Spicy i kliknij „I have stored it”. Następnie przejdź do strony aplikacji.";
+petitlyrics_description = "PetitLyrics: Oferuje wiele zsynchronizowanych tekstów japońskich, ale niewiele międzynarodowych.";
+
+musixmatch_user_token = "Token użytkownika Musixmatch";
+user_token_placeholder = "Podaj token lub dane debugowania";
+
+enter_user_token = "Podaj token użytkownika";
+enter_user_token_message = "Aby korzystać z Musixmatch, musisz uzyskać swój token użytkownika z oficjalnej aplikacji. Pobierz Musixmatch z App Store, zarejestruj się, a następnie przejdź do Ustawienia > Uzyskaj pomoc > Kopiuj informacje debugowania i wklej je tutaj. Możesz również wyodrębnić token za pomocą MITM.";
+
+genius_fallback = "Fallback do Genius";
+genius_fallback_description = "Wczytuje tekst z usługi Genius, jeśli wystąpi problem z %@.";
+
+show_fallback_reasons = "Pokaż powody fallback'u";
+
+hide_lyrics_on_error = "Ukryj w przypadku błędu";
+hide_lyrics_on_error_description = "Usuń kartę tekstu piosenki, jeśli nie uda się jej załadować";
+
+romanized_lyrics = "Zromanizowane teksty";
+romanized_lyrics_description = "Wyświetla zromanizowane teksty dla japońskiego, koreańskiego i chińskiego.";
+
+musixmatch_language = "Język tekstów z Musixmatch";
+musixmatch_language_description = "Możesz wprowadzić 2-literowy kod języka Musixmatch. Zobaczysz przetłumaczone teksty Musixmatch, jeśli będą one dostępne.";
+
+// UI
+
+lyrics_background_color_section = "Kolor tła tekstu utworu";
+lyrics_background_color_section_description = "Po włączeniu opcji \"Wyświetlaj oryginalne kolory\", teksty będą wyświetlane w oryginalnych kolorach Spotify dla utworów, które je posiadają.
+
+Możesz ustawić statyczny kolor lub współczynnik normalizacji oparty na kolorze okładki utworu. Współczynnik ten określa stopień rozjaśnienia ciemnych i przyciemnienia jasnych kolorów. Zwykle przy wyższym współczynniku normalizacji kolory będą jaśniejsze.";
+
+display_original_colors = "Wyświetlaj oryginalne kolory";
+
+use_static_color = "Używaj statycznego koloru";
+static_color = "Kolor";
+
+color_normalization_factor = "Współczynnik normalizacji kolorów";
+dark_popups = "Ciemne popup'y";
+
+// Experiments
+
+show_instagram_destination = "Pokaż opcję udostępnienia na Instagramie";
+show_instagram_destination_description = "Zawsze pokazuje opcję wstawienia piosenki na relację na Instagramie %@";
+
+livecontainer_sharing = "Udostępnij do LiveContainer";
+livecontainer_sharing_description = "Umożliwia udostępniane do LiveContainer i skopiuje URL, jeśli wybrane miejsce nie jest obsługiwane.";
+
+
+// Miscellaneous
+
+miscellaneous = "Pozostałe";
+
+clean_share_links = "Oczyść udostępniane linki";
+clean_share_links_description = "Usuwa parametr śledzący \"si\" z udostępnianych linków Spotify, aby nie ujawniały, z jakiego urządzenia lub konta pochodzi link.";
+
+/* MARK: Premium PopUps */
+
+have_premium_popup = "Wygląda na to, że masz aktywną subskrypcję Premium, więc modyfikacja nie będzie zmieniać danych ani ograniczać korzystania z funkcji Premium po stronie serwera. Możesz to zmienić w ustawieniach EeveeSpotify";
+
+high_audio_quality_popup = "Bardzo wysoka jakość dźwięku jest kontrolowana po stronie serwera i nie jest dostępna w tej modyfikacji.";
+playlist_downloading_popup = "Natywne pobieranie playlist jest kontrolowane po stronie serwera i nie jest dostępne w tej modyfikacji. Możesz jednak pobierać odcinki podcastów i lokalne listy odtwarzania";
+download_local_playlist = "Pobierz lokalną playlistę";
+
+//
+
+could_not_share_popup = "Nie udało się udostępnić do wybranego miejsca lub LiveContainer. URL zostało skopiowane";
+
+/* MARK: Lyrics */
+
+fallback_attribute = "Fallback";
+romanized_attribute = "Zromanizowany tekst";
+
+musixmatch_unauthorized_popup = "Modyfikacja nie może załadować tekstów z Musixmatch z powodu błędu autoryzacji. Sprawdź lub zaktualizuj swój token Musixmatch. Jeśli używasz iPada, uzyskaj token z aplikacji Musixmatch na iPady.";
+musixmatch_restricted_popup = "Modyfikacja nie jest w stanie załadować tekstów z Musixmatch, ponieważ są one ograniczone. Jest to prawdopodobnie kwestia praw autorskich ze względu na amerykański adres IP, spróbuj go zmienić, jeśli znajdujesz się w USA lub korzystasz z VPN.";
+
+// Errors Titles
+
+no_such_song = "Nie znaleziono utworu";
+musixmatch_restricted = "Ograniczone";
+invalid_musixmatch_token = "Brak autoryzacji";
+decoding_error = "Błąd dekodowania";
+no_current_track = "Brak instancji piosenki";
+unknown_error = "Nieznany błąd";
+
+// Instrumental Titles
+
+song_is_instrumental = "Ten utwór jest instrumentalny.";
+let_the_music_play = "Niech muzyka trwa";
+
+// liked songs title, should match official spotify loc
+
+liked_songs = "Polubione utwory";
+
+contributors = "Współtwórcy";
+developer_note = "Notatka dewelopera";
+
+request_anonymous_token = "Poproś o anonimowy token";
+request_anonymous_token_description = "Wybierz „Poproś o anonimowy token”, aby zażądać token Musixmatch bez autoryzacji";													   
+
+lrclib_api = "Adres serwera";
+
+// Snapshot of your benefits, should match official spotify loc
+
+ad_free_music_listening = "Słuchanie muzyki bez reklam";
+play_songs_in_any_order = "Odtwarzanie w dowolnej kolejności";
+organize_listening_queue = "Zarządzanie swoją kolejką odtwarzania";
+
+payment_notice = "EeveeSpotify stosuje modyfikacje, aby odblokować niektóre funkcje Premium. Całkowicie za darmo.";
+
+// Debug
+
+debug_title = "Debugowanie";
+export_debug_log = "Eksportuj dziennik debugowania";
+clear_debug_log = "Wyczyść dziennik debugowania";
+debug_log_cleared = "Dziennik debugowania wyczyszczony.";
+debug_log_cleared_ok = "OK";
+no_debug_log_found = "Nie znaleziono dziennika debugowania. Dziennik zaczyna się zapisywać po włączeniu opcji dziennika debugowania.";
+no_debug_log_found_ok = "OK";
+debug_section_footer = "Włącz dziennik, a następnie wyeksportuj go lub wyczyść.";
+
+// Full reset
+resetButtonTitle = "Pełny reset";
+resetSubtitle = "Czyści pęk kluczy Spotify, katalogi piaskownicy i kontenery grup aplikacji. Wymusza ponowne logowanie. Po zakończeniu aplikacja zostanie zamknięta.";
+resetFooter = "Wymusza ponowne logowanie. Czyści wpisy pęku kluczy Spotify, katalogi piaskownicy i kontenery grup aplikacji. Inne aplikacje instalowane poza App Store pozostają nietknięte. Po zakończeniu aplikacja zostanie zamknięta.";
+
+// Settings Bar
+eevee_inline_subtitle_text = "Modyfikacje, teksty utworów, personalizacja i eksperymenty";
+
+// App Icon Chooser
+appIconTitle = "Wybierz ikonę";
+appIconSubtitle = "iOS wyświetli potwierdzenie przy pierwszej zmianie. Odświeżenie ekranu głównego może potrwać kilka sekund.";
+iconSelected = "Wybrano";
+iconTapToApply = "Stuknij, aby zastosować";
+prettifyIconNames = "Upiększ nazwy ikon";
+prettifyIconNamesDescription = "Zamienia podkreślenia, łączniki i camelCase na spacje";
+
+// SponsorBlock
+categoryOneFooter = "Pomija oznaczone przez społeczność segmenty w odcinkach podcastów.";
+enableSponsorblock = "Włącz SponsorBlock";
+showColoredOverlay = "Pokaż kolorową nakładkę na pasku postępu";
+showToast = "Pokaż powiadomienie przy pomijaniu";
+skipToast = "Przyciski akcji powiadomienia pomijania (głos / cofnij / ukryj)";
+respectManualSeek = "Szanuj ręczne przewijanie (nie pomijaj ponownie)";
+categoriesHeader = "Kategorie";
+categoriesFooter = "Wył. · Pokaż · Ręcznie · Auto. Stuknij kolorowe kółko, aby zmienić kolor.";
+
+sponsor_category = "Sponsor";
+selfpromo_category = "Niepłatna/autopromocja";
+interaction_category = "Przypomnienie o interakcji";
+intro_category = "Przerywnik/intro";
+outro_category = "Outro/napisy końcowe";
+preview_category = "Zapowiedź/podsumowanie";
+hook_category = "Zaczepka/powitanie";
+filler_category = "Dygresja/wypełniacz";
+exclusive_access_category = "Dostęp ekskluzywny";
+
+action_disabled = "Wył.";
+action_show = "Pokaż";
+action_manual = "Ręcznie";
+action_auto = "Auto";
+
+draftsTitle = "Zgłoszenia i szkice";
+errorNoPodcats = "Obecnie nie jest odtwarzany żaden podcast.";
+markSegment = "Oznacz segment bieżącego odcinka";
+advancedTitle = "Zaawansowane";
+howToUseTitle = "Jak używać";
+creditsTitle = "Podziękowania";
+creditsSubtitle = "Dane segmentów pochodzą od społeczności SponsorBlock (sponsor.ajay.app). Integracja przeniesiona z rozszerzenia Spot-SponsorBlock-Extension autorstwa Spot-SponsorBlock.";
+linkButtonTitle = "Spot-SponsorBlock-Extension na GitHubie";
+
+// SponsorBlock reports
+sponsorblock_reports_title = "Zgłoszenia SponsorBlock";
+sponsorblockIDTitle = "Twój identyfikator SponsorBlock";
+sponsorblockIDFooter = "Służy do przypisywania Twoich zgłoszeń i głosów. Traktuj go jak prywatne hasło — nie udostępniaj go.";
+user_id_copied = "Skopiowano identyfikator użytkownika";
+copyButton = "Kopiuj";
+regenerateButton = "Wygeneruj ponownie";
+draftsTitleSB = "Szkice";
+draftsEmpty = "Brak szkiców. Przytrzymaj pasek postępu podcastu, aby zacząć oznaczać segment.";
+draftsEpisodeLoc = "Odcinek %@";
+hidden_locally_header = "Ukryte lokalnie (%@)";
+hiddenFooter = "Segmenty tutaj nigdy nie będą automatycznie pomijane na tym urządzeniu. Nadal istnieją na serwerze SponsorBlock.";
+hiddenSegmentsEmpty = "Brak ukrytych segmentów.";
+unhideButton = "Odkryj";
+
+popUpRegenerateTitle = "Wygenerować ponownie identyfikator użytkownika?";
+popUpRegenerateSubtitle = "Istniejące zgłoszenia i głosy nie będą już z Tobą powiązane.";
+popUpClearAllButton = "Wyczyść wszystko";
+popUpClearAllTitle = "Wyczyścić wszystkie ukryte segmenty?";
+popUpClearAllSubtitle = "Zaczną być ponownie pomijane zgodnie z regułami kategorii.";
+
+readyButton = "Gotowe";
+incompleteButton = "Niekompletne";
+editSubmit = "Edytuj / wyślij";
+discardButton = "Odrzuć";
+
+// SponsorBlock Advanced
+skipBehaviourTitle = "Zachowanie pomijania";
+autoSkipSubmissionsTitle = "Automatycznie pomijaj moje zgłoszenia";
+logOnlyToggle = "Tylko zapisuj w dzienniku (bez faktycznego przewijania)";
+serverHeader = "Serwer";
+urlText = "URL";
+
+tuningTitle = "Dostrajanie";
+minSegmentDuration = "Minimalny czas trwania segmentu: %.1fs";
+toastDuration = "Czas wyświetlania powiadomienia: %.1fs";
+
+trackLogSubtitle = "Zapisuje metadane ścieżki podcastu (URI, isPodcast, isVideo itd.) do dziennika debugowania przy każdym nowym utworze. Włącz tylko wtedy, gdy SponsorBlock nie wykrywa oczekiwanego podcastu.";
+trackLogToggle = "Diagnostyczny dziennik ścieżek";
+resetButtonTrackLog = "Resetuj…";
+
+// SponsorBlock Reset Options Advanced
+resetTitle = "Co zresetować?";
+resetSubtitle = "Każda opcja jest niezależna.";
+allResetSB = "Wszystko (wszystkie powyższe)";
+regenerateIDSB = "Wygeneruj ponownie identyfikator użytkownika";
+localSubmissionsSB = "Moje lokalne zgłoszenia (%@)";
+votedRecordsSB = "Oddane głosy (%@)";
+hiddenSegmentsSB = "Ukryte segmenty (%@)";
+draftsCountSB = "Szkic (%@)";
+settingsResetSB = "Ustawienia (przełączniki + kategorie + kolory)";
+
+// SponsorBlock How To Use
+playerGesturesTitle = "Gesty w odtwarzaczu";
+gesturesTitle1 = "Przytrzymaj pasek postępu";
+gesturesDeps1 = "Oznacza początek segmentu. Przytrzymaj ponownie na końcu segmentu, aby ustawić KONIEC i otworzyć formularz zgłoszenia.";
+gesturesTitle2 = "Stuknij segment na pasku";
+gesturesDeps2 = "Zagłosuj, zmień kategorię albo ukryj segment tylko na tym urządzeniu.";
+
+submittingTitle = "Wysyłanie";
+submittingSectionTitle1 = "Formularz zgłoszenia";
+submittingSectionDeps1 = "Suwaki i przyciski korekty pozwalają doprecyzować początek/koniec. Wybierz kategorię. Wysłanie publikuje zgłoszenie na sponsor.ajay.app.";
+submittingSectionTitle2 = "Twoje lokalne zgłoszenia";
+submittingSectionDeps2 = "Są natychmiast automatycznie pomijane na tym urządzeniu. Głosowanie odblokuje się, gdy serwer je opublikuje. Oznacza je plakietka „MOJE”.";
+
+skipToastTitle = "Powiadomienie pomijania";
+skipToastSectionTitle1 = "Cofnij";
+skipToastSectionDeps1 = "Przewija z powrotem do początku segmentu. Tym razem segment zostanie odtworzony. Przewinięcie do przodu i z powrotem resetuje go, więc znów zostanie pominięty.";
+skipToastSectionTitle2 = "Głos w górę / w dół";
+skipToastSectionDeps2 = "👍 zapisuje Twój głos na serwerze. 👎 otwiera menu głosu w dół, ukrycia lokalnego lub zmiany kategorii.";
+skipToastSectionTitle3 = "Pełne menu segmentu";
+skipToastSectionDeps3 = "Te same opcje co po stuknięciu segmentu na pasku postępu.";
+
+managingSegmentsTitle = "Zarządzanie segmentami";
+managingSegmentsSectionTitle1 = "Zarządzaj segmentami…";
+managingSegmentsSectionDeps1 = "Przytrzymaj pasek → „Zarządzaj segmentami” wyświetla każdy segment bieżącego odcinka. Głosuj, ukrywaj, zmieniaj kategorię albo stuknij wiersz, aby przeskoczyć odtwarzacz.";
+managingSegmentsSectionTitle2 = "Zgłoszenia i szkice";
+managingSegmentsSectionDeps2 = "Ustawienia → „Zgłoszenia i szkice” przechowuje robocze szkice (niedokończone oznaczenia) oraz ukryte segmenty. Szkice pozostają po ponownym uruchomieniu.";
+
+categoriesTitle = "Kategorie";
+categoriesSectionTitle1 = "Akcje dla kategorii";
+categoriesSectionDeps1 = "Wył. = ignoruj. Pokaż = tylko rysuj na pasku. Ręcznie = pytaj przed pominięciem. Auto = pomijaj bez pytania.";
+
+// Support the Project, links to Ko-fi in EeveeSettingsView
+support_the_project = "Wesprzyj projekt";
+support_the_project_description = "Twoje wkłady utrzymują ten mod aktualnym i pomagają Hysanowi kupić miksturę odwagi dla Elsy.";
+
+// Settings overhaul: flags, Liquid Glass, player, features, Spicy Lyrics, debug logging
+flags = "Flagi";
+flags_search = "Szukaj flag";
+flags_changed_only = "Tylko zmienione";
+flags_auto = "Auto";
+flags_on = "Wł.";
+flags_off = "Wył.";
+flags_count = "Flagi: %d · Spotify %@";
+flags_empty = "Nie przeskanowano jeszcze flag. Uruchom Spotify ponownie i otwórz go za kilka sekund.";
+flags_restart = "Uruchom ponownie, aby zastosować";
+flags_reset = "Zresetuj wszystkie zmiany";
+flags_rescan = "Przeskanuj flagi ponownie";
+liquid_glass = "Liquid Glass";
+liquid_glass_footer = "Natywne szkło iOS 26. Uruchom ponownie, aby zastosować.";
+liquid_glass_unsupported = "Wymaga iOS 26.";
+glass_surfaces = "Powierzchnie";
+glass_spotify = "Szklane paski i menu Spotify";
+glass_tab_bar = "Pasek kart";
+glass_now_playing_bar = "Pasek odtwarzania";
+tab_bar = "Pasek kart";
+tab_bar_hide_labels = "Ukryj etykiety";
+tab_bar_empty = "Otwórz Spotify raz ze szklanym paskiem kart, aby wyświetlić listę kart.";
+new_player_design = "Nowy wygląd odtwarzacza";
+new_player_design_footer = "Niewydany odtwarzacz w formie arkusza, suwak i kolejka Spotify. Uruchom ponownie, aby zastosować.";
+restart_now = "Uruchom ponownie teraz";
+tab_bar_editor_hint = "Stuknij kartę, aby otwierać ją przy uruchomieniu. Przytrzymaj i przeciągnij, aby zmienić kolejność, przeciągnij w górę, aby ukryć. Stuknij ukrytą kartę, aby ją przywrócić.";
+settings_group_listening = "Słuchanie";
+settings_group_looks = "Wygląd";
+settings_group_advanced = "Zaawansowane";
+patching_subtitle = "Patchowanie Premium";
+lyrics_subtitle = "Źródła i wyświetlanie";
+sponsorblock_subtitle = "Pomijaj fragmenty podcastów";
+customization_subtitle = "Kolory tekstów i wyskakujące okna";
+appIcon_subtitle = "Ikona ekranu głównego";
+flags_subtitle = "Zdalne flagi Spotify";
+experiments_subtitle = "Niedokończone funkcje";
+miscellaneous_subtitle = "Wszystko inne";
+glass_style = "Styl";
+spotify_flags = "Flagi Spotify";
+npb_subtitle = "Odcień, okładka, przycisk urządzenia, flagi";
+npb_album_tint = "Odcień z koloru albumu";
+npb_round_artwork = "Zaokrąglona okładka";
+npb_hide_connect = "Ukryj przycisk urządzenia";
+npb_flag_two_lines = "Dwie linie informacji o utworze";
+npb_flag_add_button = "Przycisk Zapisz";
+npb_flag_queue_badge = "Plakietka kolejki";
+npb_flag_resize = "Przytrzymaj i przeciągnij, aby zmienić rozmiar";
+npb_flag_video = "Wideo w mini odtwarzaczu";
+npb_flag_cover_morph = "Animacja od paska do okładki";
+npb_flag_transitions = "Przejścia mini odtwarzacza";
+player = "Odtwarzacz";
+player_subtitle = "Tło, szklane teksty, ukrywanie elementów, flagi";
+player_backdrop = "Tło z okładki";
+player_backdrop_subtitle = "Rozmyta okładka zamiast jednolitego koloru";
+player_glass_lyrics = "Szklane teksty";
+player_flag_canvas = "Canvas";
+player_flag_sheet = "Odtwarzacz w formie arkusza";
+player_flag_header = "Przeprojektowany nagłówek";
+player_flag_slider = "Nowy suwak postępu";
+player_flag_sticky = "Rozwijaj przypięty nagłówek stuknięciem";
+player_flag_queue_sheet = "Kolejka jako arkusz";
+player_flag_connect_sheet = "Connect jako arkusz";
+player_flag_queue_flip = "Przejście z obrotem kolejki";
+player_flag_play_next = "„Odtwórz jako następny” w menu";
+glass_search = "Szukaj";
+player_hide_buttons = "Ukryj w odtwarzaczu";
+player_hide_cards = "Ukryj karty pod odtwarzaczem";
+player_part_lyricsPreview = "Podgląd tekstu";
+player_part_shuffle = "Losowo";
+player_part_repeat = "Powtarzaj";
+player_part_addTo = "Dodaj do playlisty";
+player_part_queue = "Kolejka";
+player_part_share = "Udostępnij";
+player_part_connect = "Połącz z urządzeniem";
+player_part_lyricsCard = "Tekst";
+player_part_aboutArtist = "O wykonawcy";
+player_part_relatedVideos = "Powiązane filmy";
+player_part_songDNA = "SongDNA";
+player_part_liveEvents = "Wydarzenia na żywo";
+player_part_exploreArtist = "Poznaj wykonawcę";
+player_part_credits = "Twórcy";
+player_part_merch = "Merch";
+player_part_recommendations = "Rekomendacje";
+player_hide_parts = "Ukryj elementy";
+player_hide_none = "Nic nie ukryto";
+player_hide_count = "Ukryto: %d";
+player_part_allCards = "Wszystkie karty";
+player_part_releaseCountdown = "Odliczanie do premiery";
+reset_page = "Resetuj";
+reset_page_title = "Zresetować tę stronę do ustawień domyślnych?";
+glass_home = "Główna";
+rounded_artwork = "Zaokrąglona okładka playlisty";
+glass_playlist = "Playlisty i albumy";
+playlist_subtitle = "Okładka, separatory, elementy nagłówka";
+playlist_footer = "Stosuje się przy otwieraniu lub przewijaniu playlisty.";
+playlist_full_cover = "Okładka na całą szerokość";
+playlist_dividers = "Separatory utworów";
+playlist_hide_find = "Ukryj pasek wyszukiwania";
+appearance = "Wygląd";
+appearance_subtitle = "Motyw, szkło i układ";
+theme = "Motyw";
+theme_footer = "Uruchom ponownie, aby zastosować.";
+amoled = "Czerń AMOLED";
+accent_color = "Kolor akcentu";
+home = "Główna";
+home_subtitle = "Ukryj sekcje";
+home_hide = "Ukryj";
+home_pills = "Filtry";
+home_shortcuts = "Siatka skrótów";
+home_promos = "Promocje";
+home_previews = "Podglądy";
+home_dj = "DJ";
+block_telemetry = "Blokuj śledzenie";
+block_telemetry_footer = "Wyłącza Firebase, Facebook, Branch i inne pakiety SDK analityki. Odtworzenia nadal trafiają do Ostatnich. Uruchom ponownie, aby zastosować.";
+troubleshooting = "Rozwiązywanie problemów";
+reset_section = "Resetuj";
+reset_section_footer = "Obie opcje zamykają aplikację po zakończeniu.";
+reset_data_subtitle = "Czyści pamięć podręczną";
+full_reset_subtitle = "Usuwa wszystko i wylogowuje";
+playlist_play = "Odtwórz";
+playlist_pause = "Pauza";
+spotify_features = "Funkcje Spotify";
+spotify_features_subtitle = "Ukryte przełączniki dostarczane przez Spotify";
+features_playback = "Odtwarzanie";
+features_trim_silence = "Przycinaj ciszę";
+features_library = "Biblioteka";
+features_recents = "Ostatnie";
+features_recents_sort = "Sortowanie ostatnich";
+features_sort_playlists = "Sortuj według ostatnio zaktualizowanych playlist";
+features_sort_artists = "Sortuj według ostatnio zaktualizowanych wykonawców";
+features_denser_rows = "Gęstsze wiersze";
+features_library_settings = "Ustawienia biblioteki";
+features_library_pro = "Library Pro";
+features_shake_random = "Potrząśnij, aby losować";
+features_lockscreen = "Ekran blokady";
+features_lock_like = "Przycisk Lubię to";
+features_lock_podcast_skip = "Pomijanie w podcastach";
+features_lock_chapters = "Pomijanie rozdziałów";
+features_lock_animated = "Animowana okładka";
+features_sleep_timer = "Wyłącznik czasowy";
+features_sleep_fade = "Wyciszanie";
+features_sleep_one_minute = "Opcja 1 minuty";
+features_home = "Główna";
+features_dj_button = "Przycisk DJ";
+features_dj_badge = "Plakietka DJ beta";
+features_other = "Inne";
+features_local_files = "Pliki lokalne w Dokumentach";
+features_hide_jam = "Ukryj Jam";
+features_hide_jam_footer = "Usuwa punkty wejścia do Jam. Uruchom ponownie, aby zastosować.";
+block_rating_prompts = "Blokuj prośby o ocenę";
+block_rating_prompts_footer = "Brak wyskakujących okien z prośbą o recenzję w App Store. Uruchom ponownie, aby zastosować.";
+spicylyrics_key_invalid = "Klucz API Spicy Lyrics odrzucony";
+spicylyrics_api_key = "Klucz API Spicy Lyrics";
+spicylyrics_api_key_description = "Zostaw puste, aby użyć wbudowanego klucza.";
+lyrics_made_by = "Autor";
+lyrics_uploaded_by = "Przesłał";
+player_gestures = "Gesty";
+player_double_tap = "Podwójne stuknięcie okładki";
+player_double_tap_off = "Wył.";
+player_double_tap_seek = "Przewiń o 10 s";
+player_double_tap_skip = "Pomiń utwór";
+player_zones = "Strefy";
+player_zones_two = "Lewa · Prawa";
+player_zones_three = "Lewa · Środek · Prawa";
+player_haptics = "Wibracje elementów sterujących";
+player_haptics_subtitle = "Przyciski i przewijanie";
+tab_liked_songs = "Polubione";
+tab_downloads = "Pobrane";
+tab_podcasts = "Podcasty";
+tab_queue = "Kolejka";
+tab_custom = "Własne karty";
+tab_custom_footer = "Otwórz dowolną stronę Spotify z paska kart. Przesuń, aby usunąć.";
+tab_add = "Dodaj kartę";
+tab_custom_uri = "Własny URI";
+tab_custom_title = "Tytuł";
+tab_invalid_uri = "To nie jest link ani URI Spotify";
+artist = "Wykonawca";
+artist_subtitle = "Elementy nagłówka";
+artist_verified = "Plakietka weryfikacji";
+artist_listeners = "Miesięczni słuchacze";
+artist_tabs = "Karty Muzyka / Wydarzenia";
+playlist_part_description = "Opis";
+playlist_part_creator = "Wiersz twórcy";
+playlist_part_metadata = "Wiersz czasu trwania";
+playlist_part_pills = "Plakietki kuracji";
+home_gradient_footer = "Zmiany są stosowane na żywo.";
+home_gradient_strength = "Siła";
+home_gradient_height = "Wysokość";
+home_gradient_subtle = "Subtelna";
+home_gradient_medium = "Średnia";
+home_gradient_bold = "Mocna";
+home_gradient_short = "Niska";
+home_gradient_tall = "Wysoka";
+home_gradient_full = "Pełny ekran";
+home_gradient_fade = "Zanikanie";
+home_gradient_fade_top = "Wcześnie";
+home_gradient_fade_mid = "Środek";
+home_gradient_fade_low = "Późno";
+home_gradient_pages = "Strony";
+home_gradient_page_home = "Główna";
+home_gradient_page_library = "Biblioteka";
+home_gradient_page_search = "Szukaj";
+background_color = "Kolor tła";
+state_on = "Wł.";
+state_off = "Wył.";
+appearance_pages = "Strony";
+tab_bar_subtitle = "Kolejność, karta startowa, własne karty";
+lyrics_written_by = "Autorzy tekstu:";
+lyrics_provided_by = "Tekst dostarczył";
+karaoke_section = "Własny widok tekstów";
+karaoke_section_footer = "Odwrócony kierunek przesuwa wiersze od dołu do góry, a aktywny wiersz znajduje się niżej na ekranie. Intensywność rozmycia określa, jak bardzo rozmyte są nieaktywne wiersze.";
+karaoke_alignment = "Wyrównanie tekstu";
+karaoke_alignment_leading = "Do lewej";
+karaoke_alignment_center = "Do środka";
+karaoke_alignment_trailing = "Do prawej";
+karaoke_reversed_direction = "Odwrócony kierunek";
+episode_header = "Odcinek %@";
+home_gradient_style = "Styl";
+home_gradient_style_gradient = "Gradient";
+home_gradient_style_solid = "Jednolity";
+spicylyrics_template_link = "Spicy ESR template";
+karaoke_word_synced_button = "Własny widok tekstów";
+debug_logging = "Dziennik debugowania";
+karaoke_enabled = "Własny widok tekstów";
+karaoke_blur_intensity = "Intensywność rozmycia";
+
+/* MARK: Added to match en.lproj */
+
+spicylyrics_api_key_placeholder = "Wpisz klucz klienta Spicy";
+glass_lyrics_view = "Własny widok tekstów";
+lyrics_source_restart_popup = "Uruchom Spotify ponownie, aby nowe źródło tekstów było używane wszędzie. Utwory odtworzone wcześniej zachowają dotychczasowe teksty do tego czasu.";
+restart_later = "Później";

@@ -1,0 +1,532 @@
+/* MARK: Settings */
+
+patching = "Bản vá";
+lyrics = "Lời bài hát";
+customization = "Tùy biến";
+experiments = "Thử nghiệm";
+sponsorblock = "SponsorBlock (BETA)";
+appIcon = "Biểu tượng ứng dụng";
+
+common_issues_tip_title = "Gặp sự cố?";
+
+common_issues_tip_message = "Nếu bạn đang gặp sự cố, chẳng hạn như không thể phát bất kỳ bài hát nào, hãy ghé qua";
+common_issues_tip_button = "Các sự cố thường gặp";
+
+reset_data = "Đặt lại dữ liệu";
+reset_data_description = "Xóa dữ liệu bộ nhớ đệm và khởi động lại ứng dụng.";
+
+checking_for_update = "Đang kiểm tra bản cập nhật...";
+update_available = "Có bản cập nhật mới";
+
+restart_is_required_description = "Cần phải khởi động lại ứng dụng sau khi thay đổi.";
+
+// Patching
+
+do_not_patch_premium = "Không vá Premium";
+patching_description = "EeveeSpotify chặn các yêu cầu tải dữ liệu người dùng, giải tuần tự hóa và sửa đổi các tham số trong thời gian thực.
+
+Nếu bạn đã đăng ký Premium, bạn có thể bật Không vá Premium. Bản vá sẽ không can thiệp vào dữ liệu hoặc hạn chế việc sử dụng các tính năng Premium phía máy chủ (server-sided).
+
+%@";
+
+overwrite_configuration = "Ghi đè cấu hình";
+overwrite_configuration_description = "Thay thế cấu hình từ xa (remote configuration) bằng cấu hình Premium đã được trích xuất. Cấu hình này xác định hầu hết các tham số UI/UX và có thể hữu ích, mặc dù nó có thể gây ra lỗi.";
+
+true_shuffle = "Trộn bài truyền thống";
+true_shuffle_dec = "Chặn tính năng Trộn bài thông minh của gói miễn phí Spotify. Việc trộn bài sẽ chỉ diễn ra trong danh sách phát.";
+
+// Lyrics
+
+do_not_replace_lyrics = "Không thay thế lời bài hát";
+lyrics_source = "Nguồn lời bài hát";
+lyrics_source_description = "Bạn có thể chọn nguồn lời bài hát mà bạn thích.
+
+Genius: Cung cấp lời bài hát có chất lượng tốt nhất, hỗ trợ nhiều bài hát nhất và cập nhật lời bài hát nhanh nhất, tuy nhiên lời bài hát sẽ không được đồng bộ thời gian (time-synced).
+
+LRCLIB: Dịch vụ mã nguồn mở, cung cấp lời bài hát đồng bộ thời gian. Tuy nhiên, nguồn này thiếu lời cho nhiều bài hát.
+
+Musixmatch: Dịch vụ mà Spotify sử dụng. Cung cấp lời bài hát khớp thời gian cho nhiều bài hát, nhưng bạn sẽ cần token người dùng để sử dụng nguồn này.";
+lyrics_additional_info = "Nếu EeveeSpotify không thể tìm thấy bài hát hoặc xử lý lời bài hát, bạn sẽ thấy thông báo \"Không thể tải lời bài hát cho bài hát này\". Lời bài hát có thể bị sai đối với một số bài hát khi sử dụng Genius do cách bản vá tìm kiếm bài hát. Tôi đã tối ưu để nó hoạt động tốt trong hầu hết các trường hợp.";
+petitlyrics_description = "PetitLyrics: Cung cấp nhiều lời bài hát tiếng Nhật và một số bài hát quốc tế đồng bộ thời gian.";
+
+musixmatch_user_token = "Mã token người dùng Musixmatch";
+user_token_placeholder = "Nhập mã token người dùng hoặc dán thông tin gỡ lỗi";
+
+enter_user_token = "Nhập mã token người dùng";
+enter_user_token_message = "Để sử dụng Musixmatch, bạn cần lấy mã token người dùng từ ứng dụng chính thức. Vui lòng tải ứng dụng Musixmatch từ App Store, đăng ký, sau đó vào Cài đặt > Nhận trợ giúp > Sao chép thông tin gỡ lỗi, và dán vào đây. Bạn cũng có thể trích xuất mã token bằng cách sử dụng MITM.";
+
+genius_fallback = "Dự phòng bằng Genius";
+genius_fallback_description = "Sử dụng lời bài hát từ Genius nếu có sự cố với %@.";
+
+show_fallback_reasons = "Hiển thị lý do dự phòng";
+
+hide_lyrics_on_error = "Ẩn khi gặp lỗi";
+hide_lyrics_on_error_description = "Gỡ bỏ thành phần lời bài hát nếu lời bài hát không tải được.";
+
+romanized_lyrics = "Lời bài hát phiên âm (Romanized)";
+romanized_lyrics_description = "Hiển thị lời bài hát phiên âm cho tiếng Nhật, tiếng Hàn và tiếng Trung.";
+
+musixmatch_language = "Ngôn ngữ lời bài hát Musixmatch";
+musixmatch_language_description = "Bạn có thể nhập mã ngôn ngữ gồm 2 chữ cái của Musixmatch và xem lời bài hát đã được dịch trên Musixmatch nếu có sẵn.";
+
+// UI
+
+lyrics_background_color_section = "Màu nền lời bài hát";
+lyrics_background_color_section_description = "Nếu bạn bật Hiển thị màu gốc, lời bài hát sẽ xuất hiện theo màu sắc gốc của Spotify đối với các bài hát có sẵn màu đó.
+
+Bạn có thể đặt một màu tĩnh hoặc một hệ số chuẩn hóa dựa trên màu ảnh bìa của bài hát được trích xuất. Hệ số này quyết định mức độ làm sáng các màu tối và làm tối các màu sáng. Nhìn chung, bạn sẽ thấy các màu sáng hơn với hệ số chuẩn hóa cao hơn.";
+
+display_original_colors = "Hiển thị màu gốc";
+
+use_static_color = "Sử dụng màu tĩnh";
+static_color = "Màu tĩnh";
+
+color_normalization_factor = "Hệ số chuẩn hóa màu";
+dark_popups = "Cửa sổ bật lên tối màu";
+
+// Experiments
+
+show_instagram_destination = "Hiển thị điểm đến Instagram";
+show_instagram_destination_description = "Luôn hiển thị điểm đến chia sẻ trên Instagram. %@";
+
+livecontainer_sharing = "Chia sẻ lên LiveContainer";
+livecontainer_sharing_description = "Chia sẻ lên LiveContainer và sao chép URL nếu điểm đến đã chọn không được hỗ trợ.";
+
+/* MARK: Premium PopUps */
+
+have_premium_popup = "Có vẻ như bạn có một đăng ký gói Premium đang hoạt động, vì vậy bản vá sẽ không can thiệp vào dữ liệu hoặc hạn chế việc sử dụng các tính năng Premium phía máy chủ. Bạn có thể quản lý điều này trong phần cài đặt EeveeSpotify.";
+
+high_audio_quality_popup = "Chất lượng âm thanh rất cao do phía máy chủ quản lý và không khả dụng với bản vá này.";
+playlist_downloading_popup = "Tính năng tải xuống danh sách phát gốc do phía máy chủ quản lý và không khả dụng với bản vá này. Tuy nhiên, bạn vẫn có thể tải xuống các tập podcast và danh sách phát cục bộ.";
+download_local_playlist = "Tải xuống danh sách phát cục bộ";
+
+//
+
+could_not_share_popup = "Không thể chia sẻ tới điểm đến đã chọn hoặc LiveContainer. URL đã được sao chép.";
+
+/* MARK: Lyrics */
+
+fallback_attribute = "Dự phòng";
+romanized_attribute = "Phiên âm";
+
+musixmatch_unauthorized_popup = "Bản vá không thể tải lời bài hát từ Musixmatch do lỗi Không được phép (Unauthorized). Vui lòng kiểm tra hoặc cập nhật mã token Musixmatch của bạn. Nếu bạn sử dụng iPad, bạn nên lấy mã token từ ứng dụng Musixmatch dành cho iPad.";
+musixmatch_restricted_popup = "Bản vá không thể tải lời bài hát từ Musixmatch vì chúng bị hạn chế. Đây có thể là vấn đề bản quyền do địa chỉ IP của Mỹ, vì vậy bạn nên thay đổi nó nếu bạn đang ở Mỹ hoặc sử dụng VPN.";
+
+// Errors Titles
+
+no_such_song = "Không tìm thấy bài hát";
+musixmatch_restricted = "Bị hạn chế";
+invalid_musixmatch_token = "Không được phép";
+decoding_error = "Lỗi giải mã";
+no_current_track = "Không có phiên bài hát";
+unknown_error = "Lỗi không xác định";
+
+// Instrumental Titles
+
+song_is_instrumental = "Bài hát này là nhạc không lời.";
+let_the_music_play = "Hãy để âm nhạc vang lên...";
+
+// liked songs title, should match official spotify loc
+
+liked_songs = "Bài hát đã thích";
+
+contributors = "Người đóng góp";
+
+request_anonymous_token = "Yêu cầu mã token ẩn danh";
+request_anonymous_token_description = "Nhấn “Yêu cầu mã token ẩn danh” để yêu cầu một mã token từ Musixmatch mà không cần ủy quyền.";
+
+lrclib_api = "Địa chỉ máy chủ";
+
+// Snapshot of your benefits, should match official spotify loc
+
+ad_free_music_listening = "Nghe nhạc không quảng cáo";
+play_songs_in_any_order = "Phát nhạc theo thứ tự bất kỳ";
+organize_listening_queue = "Sắp xếp danh sách chờ nghe";
+
+payment_notice = "EeveeSpotify áp dụng các bản vá để mở khóa một số tính năng Premium. Nó hoàn toàn miễn phí.";
+
+// Debug
+
+debug_title = "Gỡ lỗi";
+export_debug_log = "Xuất nhật ký gỡ lỗi";
+clear_debug_log = "Xóa nhật ký gỡ lỗi";
+debug_log_cleared = "Đã xóa nhật ký gỡ lỗi.";
+debug_log_cleared_ok = "OK";
+no_debug_log_found = "Không tìm thấy nhật ký gỡ lỗi. Nhật ký bắt đầu ghi khi bật tùy chọn ghi nhật ký gỡ lỗi.";
+no_debug_log_found_ok = "OK";
+debug_section_footer = "Bật ghi nhật ký, sau đó xuất hoặc xóa nhật ký.";
+
+// Full reset
+resetButtonTitle = "Đặt lại toàn bộ";
+resetSubtitle = "Xóa chuỗi khóa Spotify (keychain), các thư mục hộp cát (sandbox) và các bộ chứa nhóm ứng dụng (app-group). Cần phải đăng nhập lại. Ứng dụng sẽ thoát sau khi hoàn tất.";
+resetFooter = "Cần phải đăng nhập lại. Xóa các mục chuỗi khóa Spotify, thư mục hộp cát và bộ chứa nhóm ứng dụng. Các ứng dụng được sideload khác không bị ảnh hưởng. Ứng dụng sẽ thoát sau khi hoàn tất.";
+
+// Settings Bar
+eevee_inline_subtitle_text = "Bản vá, lời bài hát, tùy biến và thử nghiệm";
+
+// App Icon Chooser
+appIconTitle = "Chọn biểu tượng";
+appIconSubtitle = "iOS sẽ hiển thị một pop up xác nhận trong lần đầu tiên. Màn hình chính có thể mất vài giây để cập nhật.";
+iconSelected = "Đã chọn";
+iconTapToApply = "Nhấn để áp dụng";
+
+// SponsorBlock
+categoryOneFooter = "Bỏ qua các đoạn do cộng đồng đánh dấu trong các tập podcast.";
+enableSponsorblock = "Bật SponsorBlock";
+showColoredOverlay = "Hiển thị lớp phủ màu trên thanh tiến trình";
+showToast = "Hiển thị thông báo khi bỏ qua";
+skipToast = "Các nút hành động trên thông báo bỏ qua (bình chọn / hoàn tác / ẩn)";
+respectManualSeek = "Tôn trọng việc tua thủ công (không bỏ qua lại)";
+categoriesHeader = "Các danh mục";
+categoriesFooter = "Tắt · Hiển thị · Thủ công · Tự động. Nhấn vào vòng tròn màu để thay đổi.";
+
+sponsor_category = "Nhà tài trợ";
+selfpromo_category = "Tự quảng cáo/Không trả phí";
+interaction_category = "Nhắc nhở tương tác";
+intro_category = "Đoạn nhạc chuyển tiếp/Mở đầu";
+outro_category = "Kết thúc/Danh sách người thực hiện";
+preview_category = "Xem trước/Tóm tắt";
+hook_category = "Điểm thu hút/Lời chào hỏi";
+filler_category = "Nói lạc đề/Nội dung ngoài lề";
+exclusive_access_category = "Quyền truy cập độc quyền";
+
+action_disabled = "Tắt";
+action_show = "Hiển thị";
+action_manual = "Thủ công";
+action_auto = "Tự động";
+
+draftsTitle = "Báo cáo & bản nháp";
+errorNoPodcats = "Hiện tại không có podcast nào đang phát.";
+markSegment = "Đánh dấu phân đoạn cho tập hiện tại";
+advancedTitle = "Nâng cao";
+howToUseTitle = "Hướng dẫn sử dụng";
+creditsTitle = "Lời cảm ơn";
+creditsSubtitle = "Dữ liệu phân đoạn từ cộng đồng SponsorBlock (sponsor.ajay.app). Tích hợp được chuyển cổng từ Spot-SponsorBlock-Extension bởi Spot-SponsorBlock.";
+linkButtonTitle = "Spot-SponsorBlock-Extension trên GitHub";
+
+// SponsorBlock reports
+sponsorblock_reports_title = "Báo cáo SponsorBlock";
+sponsorblockIDTitle = "ID SponsorBlock của bạn";
+sponsorblockIDFooter = "Được sử dụng để ghi nhận các đóng góp và bình chọn của bạn. Hãy coi đây như một mật khẩu riêng tư — đừng chia sẻ nó.";
+user_id_copied = "Đã sao chép ID người dùng";
+copyButton = "Sao chép";
+regenerateButton = "Tạo lại";
+draftsTitleSB = "Bản nháp";
+draftsEmpty = "Không có bản nháp. Nhấn giữ thanh tiến trình podcast để bắt đầu đánh dấu một phân đoạn.";
+draftsEpisodeLoc = "Tập %@";
+hidden_locally_header = "Bị ẩn cục bộ (%@)";
+hiddenFooter = "Các phân đoạn ở đây sẽ không bao giờ tự động bỏ qua trên thiết bị này. Chúng vẫn tồn tại trên máy chủ SponsorBlock.";
+hiddenSegmentsEmpty = "Không có phân đoạn bị ẩn.";
+unhideButton = "Hủy ẩn";
+
+popUpRegenerateTitle = "Tạo lại ID người dùng?";
+popUpRegenerateSubtitle = "Các đóng góp và bình chọn hiện tại của bạn sẽ không còn được liên kết với bạn nữa.";
+popUpClearAllButton = "Xóa tất cả";
+popUpClearAllTitle = "Xóa tất cả các phân đoạn bị ẩn?";
+popUpClearAllSubtitle = "Chúng sẽ bị bỏ qua một lần nữa theo quy tắc danh mục của bạn.";
+
+readyButton = "Sẵn sàng";
+incompleteButton = "Chưa hoàn thành";
+editSubmit = "Chỉnh sửa / Gửi";
+discardButton = "Hủy bỏ";
+
+// SponsorBlock Advanced
+skipBehaviourTitle = "Hành vi bỏ qua";
+autoSkipSubmissionsTitle = "Tự động bỏ qua các đóng góp của chính tớ";
+logOnlyToggle = "Chỉ ghi nhật ký (không thực sự tua)";
+serverHeader = "Máy chủ";
+urlText = "URL";
+
+tuningTitle = "Tinh chỉnh";
+minSegmentDuration = "Thời lượng phân đoạn tối thiểu: %.1fs";
+toastDuration = "Thời lượng thông báo: %.1fs";
+
+trackLogSubtitle = "Xuất siêu dữ liệu của bản nhạc podcast (URI, isPodcast, isVideo, v.v.) sang nhật ký gỡ lỗi mỗi khi có bản nhạc mới. Chỉ bật khi SponsorBlock không phát hiện ra podcast mà bạn mong đợi.";
+trackLogToggle = "Nhật ký bản nhạc chẩn đoán";
+resetButtonTrackLog = "Đặt lại…";
+
+// SponsorBlock Reset Options Advanced
+resetTitle = "Đặt lại những gì?";
+resetSubtitle = "Mỗi mục là độc lập.";
+allResetSB = "Mọi thứ (tất cả các mục trên)";
+regenerateIDSB = "Tạo lại ID người dùng";
+localSubmissionsSB = "Các đóng góp cục bộ của tớ (%@)";
+votedRecordsSB = "Các bản ghi đã bình chọn (%@)";
+hiddenSegmentsSB = "Các phân đoạn bị ẩn (%@)";
+draftsCountSB = "Bản nháp (%@)";
+settingsResetSB = "Cài đặt (các nút bật tắt + danh mục + màu sắc)";
+
+// SponsorBlock How To Use
+playerGesturesTitle = "Cử chỉ trên trình phát";
+gesturesTitle1 = "Nhấn giữ thanh tiến trình";
+gesturesDeps1 = "Đánh dấu điểm bắt đầu của một phân đoạn. Nhấn giữ một lần nữa tại điểm kết thúc của phân đoạn để đặt KẾT THÚC và mở biểu mẫu gửi.";
+gesturesTitle2 = "Nhấn vào một phân đoạn trên thanh";
+gesturesDeps2 = "Bình chọn, thay đổi danh mục hoặc ẩn một phân đoạn chỉ trên thiết bị này.";
+
+submittingTitle = "Đang gửi";
+submittingSectionTitle1 = "Biểu mẫu gửi";
+submittingSectionDeps1 = "Các thanh trượt + nút nhích nhẹ để tinh chỉnh điểm bắt đầu/kết thúc. Chọn một danh mục. Gửi bài đăng đến sponsor.ajay.app.";
+submittingSectionTitle2 = "Các đóng góp cục bộ của bạn";
+submittingSectionDeps2 = "Được bỏ qua ngay lập tức trên thiết bị này. Tính năng bình chọn sẽ mở khóa sau khi máy chủ phát hành chúng. Huy hiệu 'MINE' sẽ đánh dấu chúng.";
+
+skipToastTitle = "Thông báo bỏ qua";
+skipToastSectionTitle1 = "Hoàn tác";
+skipToastSectionDeps1 = "Tua lại về điểm bắt đầu phân đoạn. Phân đoạn sẽ phát hết qua lần này. Tua tiến + lùi sẽ đặt lại phân đoạn đó để nó tự động bỏ qua lại.";
+skipToastSectionTitle2 = "Bình chọn thích / Không thích";
+skipToastSectionDeps2 = "👍 ghi lại bình chọn của bạn trên máy chủ. 👎 mở một menu để bình chọn không thích, ẩn cục bộ hoặc thay đổi danh mục.";
+skipToastSectionTitle3 = "Menu phân đoạn đầy đủ";
+skipToastSectionDeps3 = "Các tùy chọn tương tự như khi nhấn vào phân đoạn trên thanh tiến trình.";
+
+managingSegmentsTitle = "Quản lý các phân đoạn";
+managingSegmentsSectionTitle1 = "Quản lý phân đoạn…";
+managingSegmentsSectionDeps1 = "Nhấn giữ thanh tiến trình ➔ 'Quản lý phân đoạn' liệt kê mọi phân đoạn cho tập hiện tại. Bình chọn, ẩn, thay đổi danh mục hoặc nhấn vào một hàng để chuyển trình phát đến đó.";
+managingSegmentsSectionTitle2 = "Báo cáo & bản nháp";
+managingSegmentsSectionDeps2 = "Cài đặt ➔ 'Báo cáo & bản nháp' lưu giữ các bản nháp đang tiến hành của bạn (các dấu chưa hoàn thiện) và các phân đoạn bị ẩn của bạn. Các bản nháp vẫn tồn tại qua các lần khởi chạy.";
+
+categoriesTitle = "Các danh mục";
+categoriesSectionTitle1 = "Hành động theo từng danh mục";
+categoriesSectionDeps1 = "Tắt = bỏ qua. Hiển thị = chỉ vẽ trên thanh tiến trình. Thủ công = nhắc trước khi bỏ qua. Tự động = bỏ qua trong im lặng.";
+
+// Support the Project, links to Ko-fi in EeveeSettingsView
+support_the_project = "Hỗ trợ dự án";
+support_the_project_description = "Đóng góp của bạn giúp tweak này được cập nhật và giúp Hysan mua một lọ thuốc dũng cảm cho Elsa.";
+
+// Settings overhaul: flags, Liquid Glass, player, features, Spicy Lyrics, debug logging
+flags = "Cờ";
+flags_search = "Tìm cờ";
+flags_changed_only = "Chỉ mục đã thay đổi";
+flags_auto = "Tự động";
+flags_on = "Bật";
+flags_off = "Tắt";
+flags_count = "%d cờ · Spotify %@";
+flags_empty = "Chưa quét cờ nào. Hãy khởi động lại Spotify và mở lại sau vài giây.";
+flags_restart = "Khởi động lại để áp dụng";
+flags_reset = "Đặt lại mọi thay đổi";
+flags_rescan = "Quét lại cờ";
+liquid_glass = "Liquid Glass";
+liquid_glass_footer = "Kính gốc của iOS 26. Khởi động lại để áp dụng.";
+liquid_glass_unsupported = "Cần iOS 26.";
+glass_surfaces = "Bề mặt";
+glass_spotify = "Thanh và menu kính của Spotify";
+glass_tab_bar = "Thanh tab";
+glass_now_playing_bar = "Thanh đang phát";
+tab_bar = "Thanh tab";
+tab_bar_hide_labels = "Ẩn nhãn";
+tab_bar_empty = "Mở Spotify một lần với thanh tab kính để liệt kê các tab.";
+new_player_design = "Thiết kế trình phát mới";
+new_player_design_footer = "Trình phát dạng tờ, thanh trượt và hàng đợi chưa phát hành của Spotify. Khởi động lại để áp dụng.";
+restart_now = "Khởi động lại ngay";
+tab_bar_editor_hint = "Chạm vào một tab để mở khi khởi chạy. Nhấn giữ và kéo để sắp xếp lại, kéo lên để ẩn. Chạm vào tab đã ẩn để đưa nó trở lại.";
+settings_group_listening = "Nghe nhạc";
+settings_group_looks = "Giao diện";
+settings_group_advanced = "Nâng cao";
+patching_subtitle = "Bản vá Premium";
+lyrics_subtitle = "Nguồn và hiển thị";
+sponsorblock_subtitle = "Bỏ qua các đoạn podcast";
+customization_subtitle = "Màu lời bài hát và cửa sổ bật lên";
+appIcon_subtitle = "Biểu tượng màn hình chính";
+flags_subtitle = "Cờ từ xa của Spotify";
+experiments_subtitle = "Tính năng chưa hoàn thiện";
+miscellaneous_subtitle = "Mọi thứ khác";
+glass_style = "Kiểu";
+spotify_flags = "Cờ Spotify";
+npb_subtitle = "Tông màu, ảnh bìa, nút thiết bị, cờ";
+npb_album_tint = "Nhuộm theo màu album";
+npb_round_artwork = "Ảnh bìa bo tròn";
+npb_hide_connect = "Ẩn nút thiết bị";
+npb_flag_two_lines = "Hai dòng thông tin bài hát";
+npb_flag_add_button = "Nút Lưu";
+npb_flag_queue_badge = "Huy hiệu hàng đợi";
+npb_flag_resize = "Nhấn giữ và kéo để đổi kích thước";
+npb_flag_video = "Video trong trình phát mini";
+npb_flag_cover_morph = "Hiệu ứng từ thanh sang ảnh bìa";
+npb_flag_transitions = "Chuyển cảnh trình phát mini";
+player = "Trình phát";
+player_subtitle = "Nền, lời bài hát kính, ẩn thành phần, cờ";
+player_backdrop = "Nền ảnh bìa";
+player_backdrop_subtitle = "Ảnh bìa làm mờ thay cho màu trơn";
+player_glass_lyrics = "Lời bài hát kính";
+player_flag_canvas = "Canvas";
+player_flag_sheet = "Trình phát dạng tờ";
+player_flag_header = "Tiêu đề được thiết kế lại";
+player_flag_slider = "Thanh tiến trình mới";
+player_flag_sticky = "Chạm để mở rộng tiêu đề cố định";
+player_flag_queue_sheet = "Hàng đợi dạng tờ";
+player_flag_connect_sheet = "Connect dạng tờ";
+player_flag_queue_flip = "Hiệu ứng lật hàng đợi";
+player_flag_play_next = "\"Phát tiếp theo\" trong menu";
+glass_search = "Tìm kiếm";
+player_hide_buttons = "Ẩn trên trình phát";
+player_hide_cards = "Ẩn thẻ bên dưới trình phát";
+player_part_lyricsPreview = "Xem trước lời bài hát";
+player_part_shuffle = "Trộn bài";
+player_part_repeat = "Lặp lại";
+player_part_addTo = "Thêm vào playlist";
+player_part_queue = "Hàng đợi";
+player_part_share = "Chia sẻ";
+player_part_connect = "Kết nối với thiết bị";
+player_part_lyricsCard = "Lời bài hát";
+player_part_aboutArtist = "Về nghệ sĩ";
+player_part_relatedVideos = "Video liên quan";
+player_part_songDNA = "SongDNA";
+player_part_liveEvents = "Sự kiện trực tiếp";
+player_part_exploreArtist = "Khám phá nghệ sĩ";
+player_part_credits = "Thông tin ghi công";
+player_part_merch = "Merch";
+player_part_recommendations = "Đề xuất";
+player_hide_parts = "Ẩn thành phần";
+player_hide_none = "Không ẩn gì";
+player_hide_count = "Đã ẩn %d";
+player_part_allCards = "Tất cả thẻ";
+player_part_releaseCountdown = "Đếm ngược phát hành";
+reset_page = "Đặt lại";
+reset_page_title = "Đặt lại trang này về mặc định?";
+glass_home = "Trang chủ";
+rounded_artwork = "Bìa playlist bo tròn";
+glass_playlist = "Playlist và album";
+playlist_subtitle = "Ảnh bìa, đường phân cách, thành phần tiêu đề";
+playlist_footer = "Áp dụng khi bạn mở hoặc cuộn một playlist.";
+playlist_full_cover = "Ảnh bìa toàn chiều rộng";
+playlist_dividers = "Đường phân cách bài hát";
+playlist_hide_find = "Ẩn thanh tìm kiếm";
+appearance = "Giao diện";
+appearance_subtitle = "Chủ đề, kính và bố cục";
+theme = "Chủ đề";
+theme_footer = "Khởi động lại để áp dụng.";
+amoled = "Đen AMOLED";
+accent_color = "Màu nhấn";
+home = "Trang chủ";
+home_subtitle = "Ẩn các mục";
+home_hide = "Ẩn";
+home_pills = "Nút lọc";
+home_shortcuts = "Lưới lối tắt";
+home_promos = "Khuyến mãi";
+home_previews = "Xem trước";
+home_dj = "DJ";
+block_telemetry = "Chặn theo dõi";
+block_telemetry_footer = "Chặn Firebase, Facebook, Branch và các SDK phân tích khác. Lượt phát vẫn được ghi vào Gần đây. Khởi động lại để áp dụng.";
+troubleshooting = "Khắc phục sự cố";
+reset_section = "Đặt lại";
+reset_section_footer = "Cả hai đều đóng ứng dụng khi hoàn tất.";
+reset_data_subtitle = "Xóa bộ nhớ đệm";
+full_reset_subtitle = "Xóa mọi thứ và đăng xuất";
+playlist_play = "Phát";
+playlist_pause = "Tạm dừng";
+spotify_features = "Tính năng Spotify";
+spotify_features_subtitle = "Các công tắc ẩn mà Spotify đi kèm";
+features_playback = "Phát lại";
+features_trim_silence = "Cắt khoảng lặng";
+features_library = "Thư viện";
+features_recents = "Gần đây";
+features_recents_sort = "Sắp xếp gần đây";
+features_sort_playlists = "Sắp xếp theo playlist cập nhật gần đây";
+features_sort_artists = "Sắp xếp theo nghệ sĩ cập nhật gần đây";
+features_denser_rows = "Hàng dày hơn";
+features_library_settings = "Cài đặt thư viện";
+features_library_pro = "Library Pro";
+features_shake_random = "Lắc để phát ngẫu nhiên";
+features_lockscreen = "Màn hình khóa";
+features_lock_like = "Nút Thích";
+features_lock_podcast_skip = "Bỏ qua trong podcast";
+features_lock_chapters = "Bỏ qua chương";
+features_lock_animated = "Ảnh bìa động";
+features_sleep_timer = "Hẹn giờ ngủ";
+features_sleep_fade = "Giảm dần âm lượng";
+features_sleep_one_minute = "Tùy chọn 1 phút";
+features_home = "Trang chủ";
+features_dj_button = "Nút DJ";
+features_dj_badge = "Huy hiệu DJ beta";
+features_other = "Khác";
+features_local_files = "Tệp cục bộ trong Documents";
+features_hide_jam = "Ẩn Jam";
+features_hide_jam_footer = "Gỡ các điểm vào Jam. Khởi động lại để áp dụng.";
+block_rating_prompts = "Chặn yêu cầu đánh giá";
+block_rating_prompts_footer = "Không có cửa sổ bật lên đánh giá App Store. Khởi động lại để áp dụng.";
+spicylyrics_key_invalid = "Khóa API Spicy Lyrics bị từ chối";
+spicylyrics_api_key = "Khóa API Spicy Lyrics";
+spicylyrics_api_key_description = "Để trống để dùng khóa tích hợp.";
+lyrics_made_by = "Tạo bởi";
+lyrics_uploaded_by = "Tải lên bởi";
+player_gestures = "Cử chỉ";
+player_double_tap = "Chạm đúp ảnh bìa";
+player_double_tap_off = "Tắt";
+player_double_tap_seek = "Tua 10 giây";
+player_double_tap_skip = "Bỏ qua bài hát";
+player_zones = "Vùng";
+player_zones_two = "Trái · Phải";
+player_zones_three = "Trái · Giữa · Phải";
+player_haptics = "Phản hồi xúc giác của điều khiển";
+player_haptics_subtitle = "Nút và kéo thanh tua";
+tab_liked_songs = "Bài hát đã thích";
+tab_downloads = "Tải xuống";
+tab_podcasts = "Podcast";
+tab_queue = "Hàng đợi";
+tab_custom = "Tab tùy chỉnh";
+tab_custom_footer = "Mở bất kỳ trang Spotify nào từ thanh tab. Vuốt để xóa.";
+tab_add = "Thêm tab";
+tab_custom_uri = "URI tùy chỉnh";
+tab_custom_title = "Tiêu đề";
+tab_invalid_uri = "Không phải liên kết hoặc URI Spotify";
+artist = "Nghệ sĩ";
+artist_subtitle = "Thành phần tiêu đề";
+artist_verified = "Huy hiệu xác minh";
+artist_listeners = "Người nghe hằng tháng";
+artist_tabs = "Tab Nhạc / Sự kiện";
+playlist_part_description = "Mô tả";
+playlist_part_creator = "Dòng người tạo";
+playlist_part_metadata = "Dòng thời lượng";
+playlist_part_pills = "Nhãn tuyển chọn";
+home_gradient_footer = "Thay đổi được áp dụng ngay.";
+home_gradient_strength = "Cường độ";
+home_gradient_height = "Chiều cao";
+home_gradient_subtle = "Nhẹ";
+home_gradient_medium = "Vừa";
+home_gradient_bold = "Đậm";
+home_gradient_short = "Thấp";
+home_gradient_tall = "Cao";
+home_gradient_full = "Toàn màn hình";
+home_gradient_fade = "Mờ dần";
+home_gradient_fade_top = "Sớm";
+home_gradient_fade_mid = "Giữa";
+home_gradient_fade_low = "Muộn";
+home_gradient_pages = "Trang";
+home_gradient_page_home = "Trang chủ";
+home_gradient_page_library = "Thư viện";
+home_gradient_page_search = "Tìm kiếm";
+background_color = "Màu nền";
+state_on = "Bật";
+state_off = "Tắt";
+appearance_pages = "Trang";
+tab_bar_subtitle = "Thứ tự, tab khởi chạy, tab tùy chỉnh";
+lyrics_written_by = "Sáng tác:";
+lyrics_provided_by = "Lời bài hát được cung cấp bởi";
+karaoke_section = "Chế độ xem lời bài hát tùy chỉnh";
+karaoke_section_footer = "Hướng ngược khiến các dòng chạy từ dưới lên trên, dòng đang hát nằm thấp hơn trên màn hình. Cường độ làm mờ điều chỉnh mức độ mờ của các dòng không hoạt động.";
+karaoke_alignment = "Căn lề lời bài hát";
+karaoke_alignment_leading = "Trái";
+karaoke_alignment_center = "Giữa";
+karaoke_alignment_trailing = "Phải";
+karaoke_reversed_direction = "Hướng ngược";
+episode_header = "Tập %@";
+home_gradient_style = "Kiểu";
+home_gradient_style_gradient = "Chuyển màu";
+home_gradient_style_solid = "Đơn sắc";
+spicylyrics_description = "SpicyLyrics cung cấp lời karaoke từng từ. Mặc định sử dụng khóa tích hợp. Nếu muốn dùng khóa riêng, hãy vào Spicy ESR template rồi nhấn nút \"Sign in\". Sau khi đăng nhập, đồng ý với ToS của Spicy và nhấn \"Add ESR to my account\". Sau khi được thêm, sao chép khóa đã tạo, dán vào phần lời bài hát của Eevee, rồi quay lại Spicy và nhấp \"I have stored it\". Sau đó vào trang ứng dụng.";
+spicylyrics_template_link = "Spicy ESR template";
+karaoke_word_synced_button = "Chế độ xem lời bài hát tùy chỉnh";
+debug_logging = "Ghi nhật ký gỡ lỗi";
+karaoke_enabled = "Chế độ xem lời bài hát tùy chỉnh";
+karaoke_blur_intensity = "Cường độ làm mờ";
+
+/* MARK: Added to match en.lproj */
+
+miscellaneous = "Khác";
+clean_share_links = "Làm sạch liên kết chia sẻ";
+clean_share_links_description = "Xóa các tham số theo dõi khỏi liên kết được chia sẻ.";
+developer_note = "Ghi chú của nhà phát triển";
+prettifyIconNames = "Làm đẹp tên biểu tượng";
+prettifyIconNamesDescription = "Chuyển dấu gạch dưới, dấu gạch ngang và camelCase thành khoảng trắng";
+spicylyrics_api_key_placeholder = "Nhập khóa client Spicy";
+glass_lyrics_view = "Chế độ xem lời bài hát tùy chỉnh";
+lyrics_source_restart_popup = "Khởi động lại Spotify để nguồn lời bài hát mới được dùng ở mọi nơi. Các bài đã phát trước đó sẽ giữ lời cũ cho đến khi đó.";
+restart_later = "Để sau";

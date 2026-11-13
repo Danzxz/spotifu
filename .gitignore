@@ -1,0 +1,12 @@
+.local/
+.build/
+.DS_Store
+__pycache__/
+*.pyc
+*.ipa
+*.dmg
+*.deb
+ios/EeveeSpotify/.theos/
+ios/EeveeSpotify/packages/
+ios/EeveeSpotify/Sources/EeveeSpotify/SpotifuShared/
+*.xcodeproj/

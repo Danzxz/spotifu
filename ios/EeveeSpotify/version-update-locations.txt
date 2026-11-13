@@ -1,0 +1,22 @@
+EeveeSpotify Version Update Locations
+=====================================
+
+When bumping the version, update these 2 files:
+
+1. control
+   - Line 3: Version: X.X.X
+   - Example: Version: 7.0.0
+
+2. Sources/EeveeSpotify/Tweak.x.swift
+   - static let version = "X.X.X"     (version shown in settings + debug log)
+   - static let buildNumber = "N"     (shown as "v7.0.0 (build N)" in settings
+                                       and written to the debug log header;
+                                       reset to "1" on a major version bump)
+   - Example: version = "7.0.0", buildNumber = "1"
+
+Both must match for consistent versioning across:
+- .deb packages (control)
+- Tweak runtime + settings display (Tweak.x.swift)
+
+Note: build-ipa-local.sh does NOT need editing — it greps the version straight
+out of `control` (line 31) to name the output IPA.

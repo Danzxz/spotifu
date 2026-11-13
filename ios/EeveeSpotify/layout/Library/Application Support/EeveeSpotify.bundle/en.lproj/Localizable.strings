@@ -1,0 +1,535 @@
+/* MARK: Settings */
+
+patching = "Patching";
+lyrics = "Lyrics";
+customization = "Customization";
+experiments = "Experiments";
+sponsorblock = "SponsorBlock (BETA)";
+appIcon = "App Icon";
+
+common_issues_tip_title = "Having Trouble?";
+
+common_issues_tip_message = "If you are facing an issue, such as being unable to play any songs, check out";
+common_issues_tip_button = "Common Issues";
+
+reset_data = "Reset Data";
+reset_data_description = "Clear cached data and restart the app.";
+
+checking_for_update = "Checking for Update...";
+update_available = "Update Available";
+
+restart_is_required_description = "App restart is required after changing.";
+
+// Patching
+
+do_not_patch_premium = "Do Not Patch Premium";
+patching_description = "EeveeSpotify intercepts requests to load user data, deserializes it, and modifies the parameters in real-time.
+
+If you have an active Premium subscription, you can turn on Do Not Patch Premium. The tweak won't patch the data or restrict the use of Premium server-sided features.
+
+%@";
+
+overwrite_configuration = "Overwrite Configuration";
+overwrite_configuration_description = "Replace remote configuration with the dumped Premium one. This configuration defines most UI/UX parameters and may be helpful, although it could cause issues.";
+
+true_shuffle = "True Shuffle";
+true_shuffle_dec = "Blocks Spotify's free-tier Smart Shuffle from mixing recommended tracks into your queue. Shuffle stays inside the playlist. ";
+
+// Lyrics
+
+do_not_replace_lyrics = "Do Not Replace Lyrics";
+lyrics_source = "Lyrics Source";
+lyrics_source_description = "You can select the lyrics source you prefer.
+
+Genius: Offers the best quality lyrics, provides the most songs, and updates lyrics the fastest. Does not and will never be time-synced.
+
+LRCLIB: The most open service, offering time-synced lyrics. However, it lacks lyrics for many songs.
+
+Musixmatch: The service Spotify uses. Provides time-synced lyrics for many songs, but you'll need a user token to use this source.";
+lyrics_additional_info = "If EeveeSpotify is unable to find a song or process the lyrics, you'll see a \"Couldn't load the lyrics for this song\" message. The lyrics might be wrong for some songs when using Genius due to how the tweak searches songs. I've made it work in most cases.";
+spicylyrics_description = "SpicyLyrics provides word-by-word karaoke lyrics. A built-in key is used by default. If you want to use your own key, go to Spicy ESR template, then press the Sign in button. After you sign in, agree to the ToS of Spicy and press Add ESR to my account. After it's added, copy the generated key, paste it into the Eevee lyrics section, then go back to Spicy and click I have stored it. Go to the apps page.";
+petitlyrics_description = "PetitLyrics: Offers plenty of time-synced Japanese and some international lyrics.";
+
+musixmatch_user_token = "Musixmatch User Token";
+user_token_placeholder = "Enter User Token or Paste Debug Info";
+
+enter_user_token = "Enter User Token";
+enter_user_token_message = "In order to use Musixmatch, you need to retrieve your user token from the official app. Download Musixmatch from the App Store, sign up, then go to Settings > Get help > Copy debug info, and paste it here. You can also extract the token using MITM.";
+
+genius_fallback = "Genius Fallback";
+genius_fallback_description = "Load lyrics from Genius if there is a problem with %@.";
+
+show_fallback_reasons = "Show Fallback Reasons";
+
+hide_lyrics_on_error = "Hide on Error";
+hide_lyrics_on_error_description = "Remove the lyrics component if lyrics fail to load.";
+
+romanized_lyrics = "Romanized Lyrics";
+romanized_lyrics_description = "Display romanized lyrics for Japanese, Korean, and Chinese.";
+
+musixmatch_language = "Musixmatch Lyrics Language";
+musixmatch_language_description = "You can enter a 2-letter Musixmatch language code and see translated lyrics on Musixmatch if they are available.";
+
+karaoke_word_synced_button = "Custom Lyrics view";
+
+// UI
+
+lyrics_background_color_section = "Lyrics Background Color";
+lyrics_background_color_section_description = "If you turn on Display Original Colors, the lyrics will appear in the original Spotify colors for tracks that have them.
+
+You can set a static color or a normalization factor based on the extracted track cover's color. This factor determines how much dark colors are lightened and light colors are darkened. Generally, you will see lighter colors with a higher normalization factor.";
+
+display_original_colors = "Display Original Colors";
+
+use_static_color = "Use Static Color";
+static_color = "Static Color";
+
+color_normalization_factor = "Color Normalization Factor";
+dark_popups = "Dark PopUps";
+
+// Experiments
+
+show_instagram_destination = "Show Instagram Destination";
+show_instagram_destination_description = "Always show the Instagram share destination. %@";
+
+livecontainer_sharing = "Share to LiveContainer";
+livecontainer_sharing_description = "Share to LiveContainer and copy the URL if the selected destination is not supported.";
+
+
+// Miscellaneous
+
+miscellaneous = "Miscellaneous";
+
+clean_share_links = "Clean Share Links";
+clean_share_links_description = "Removes tracking parameters from shared links.";
+
+/* MARK: Premium PopUps */
+
+have_premium_popup = "It looks like you have an active Premium subscription, so the tweak won't patch the data or restrict the use of Premium server-sided features. You can manage this in the EeveeSpotify settings.";
+
+high_audio_quality_popup = "Very high audio quality is server-sided and is not available with this tweak.";
+playlist_downloading_popup = "Native playlist downloading is server-sided and is not available with this tweak. You can download podcast episodes and local playlists though.";
+download_local_playlist = "Download local playlist";
+
+//
+
+could_not_share_popup = "Couldn’t share to the selected destination or LiveContainer. The URL has been copied.";
+
+/* MARK: Lyrics */
+
+fallback_attribute = "Fallback";
+romanized_attribute = "Romanized";
+
+musixmatch_unauthorized_popup = "The tweak is unable to load lyrics from Musixmatch due to Unauthorized error. Please check or update your Musixmatch token. If you use an iPad, you should get the token from the Musixmatch app for iPad.";
+musixmatch_restricted_popup = "The tweak is unable to load lyrics from Musixmatch because they are restricted. It's likely a copyright issue due to the US IP address, so you should change it if you're in the US or use a VPN.";
+
+// Errors Titles
+
+no_such_song = "No Song Found";
+musixmatch_restricted = "Restricted";
+invalid_musixmatch_token = "Unauthorized";
+decoding_error = "Decoding Error";
+no_current_track = "No Track Instance";
+unknown_error = "Unknown Error";
+
+// Instrumental Titles
+
+song_is_instrumental = "This song is instrumental.";
+let_the_music_play = "Let the music play...";
+
+// liked songs title, should match official spotify loc
+
+liked_songs = "Liked songs";
+
+contributors = "Contributors";
+developer_note = "Developer's Note";
+
+support_the_project = "Support the Project";
+support_the_project_description = "Fuel late-night code";
+
+request_anonymous_token = "Request Anonymous Token";
+request_anonymous_token_description = "Tap “Request Anonymous Token” to request a token from Musixmatch without authorization.";
+
+lrclib_api = "Server Address";
+
+// Snapshot of your benefits, should match official spotify loc
+
+ad_free_music_listening = "Ad-free music listening";
+play_songs_in_any_order = "Play songs in any order";
+organize_listening_queue = "Organize listening queue";
+
+payment_notice = "EeveeSpotify applies patches to unlock certain Premium features. It's free.";
+
+// Debug
+
+debug_title = "Debug";
+export_debug_log = "Export Debug Log";
+clear_debug_log = "Clear Debug Log";
+debug_log_cleared = "Debug log cleared.";
+debug_log_cleared_ok = "OK";
+no_debug_log_found = "No debug log found. The log starts recording when the debug logging option is enabled.";
+no_debug_log_found_ok = "OK";
+debug_section_footer = "Turn on logging, then export or clear the log.";
+
+// Full reset
+resetButtonTitle = "Full Reset";
+resetSubtitle = "Wipes Spotify keychain, sandbox dirs, and app-group containers. Forces re-login. App exits when done.";
+resetFooter = "Force re-login. Wipes Spotify keychain entries, sandbox dirs, and app-group containers. Other sideloaded apps untouched. App exits when done.";
+
+// Settings Bar
+eevee_inline_subtitle_text = "Patching, lyrics, customization, and experiments";
+
+// App Icon Chooser
+appIconTitle = "Choose Icon";
+appIconSubtitle = "iOS shows a confirmation the first time. The home screen may take a few seconds to refresh.";
+iconSelected = "Selected";
+iconTapToApply = "Tap to apply";
+prettifyIconNames = "Prettify Icon Names";
+prettifyIconNamesDescription = "Converts underscores, hyphens, and camelCase into spaces";
+
+// SponsorBlock
+categoryOneFooter = "Skips community-marked segments in podcast episodes.";
+enableSponsorblock = "Enable SponsorBlock";
+showColoredOverlay = "Show colored overlay on progress bar";
+showToast = "Show toast when skipping";
+skipToast = "Skip-toast action buttons (vote / undo / hide)";
+respectManualSeek = "Respect manual seek (don't re-skip)";
+categoriesHeader = "Categories";
+categoriesFooter = "Off · Show · Manual · Auto. Tap the color circle to change.";
+
+sponsor_category = "Sponsor";
+selfpromo_category = "Unpaid/Self Promotion";
+interaction_category = "Interaction Reminder";
+intro_category = "Intermission/Intro";
+outro_category = "Outro/Credits";
+preview_category = "Preview/Recap";
+hook_category = "Hook/Greetings";
+filler_category = "Tangent/Filler";
+exclusive_access_category = "Exclusive Access";
+
+action_disabled = "Off";
+action_show = "Show";
+action_manual = "Manual";
+action_auto = "Auto";
+
+draftsTitle = "Reporting & drafts";
+errorNoPodcats = "No podcast is currently playing.";
+markSegment = "Mark segment for current episode";
+advancedTitle = "Advanced";
+howToUseTitle = "How to use";
+creditsTitle = "Credits";
+creditsSubtitle = "Segment data from the SponsorBlock community (sponsor.ajay.app). Integration ported from Spot-SponsorBlock-Extension by Spot-SponsorBlock.";
+linkButtonTitle = "Spot-SponsorBlock-Extension on GitHub";
+
+// SponsorBlock reports
+sponsorblock_reports_title = "SponsorBlock Reports";
+sponsorblockIDTitle = "Your SponsorBlock ID";
+sponsorblockIDFooter = "Used to attribute your submissions and votes. Treat as a private password — don't share it.";
+user_id_copied = "User ID copied";
+copyButton = "Copy";
+regenerateButton = "Regenerate";
+draftsTitleSB = "Drafts";
+draftsEmpty = "No drafts. Long-press the podcast progress bar to start marking a segment.";
+draftsEpisodeLoc = "Episode %@";
+hidden_locally_header = "Hidden locally (%@)";
+hiddenFooter = "Segments here are never auto-skipped on this device. They still exist on the SponsorBlock server.";
+hiddenSegmentsEmpty = "No hidden segments.";
+unhideButton = "Unhide";
+
+popUpRegenerateTitle = "Regenerate user ID?";
+popUpRegenerateSubtitle = "Your existing submissions and votes will no longer be linked to you.";
+popUpClearAllButton = "Clear all";
+popUpClearAllTitle = "Clear all hidden segments?";
+popUpClearAllSubtitle = "They will skip again according to your category rules.";
+
+readyButton = "Ready";
+incompleteButton = "Incomplete";
+editSubmit = "Edit / Submit";
+discardButton = "Discard";
+
+// SponsorBlock Advanced
+skipBehaviourTitle = "Skipping behavior";
+autoSkipSubmissionsTitle = "Auto-skip my own submissions";
+logOnlyToggle = "Log only (don't actually seek)";
+serverHeader = "Server";
+urlText = "URL";
+
+tuningTitle = "Tuning";
+minSegmentDuration = "Min segment duration: %.1fs";
+toastDuration = "Toast duration: %.1fs";
+
+trackLogSubtitle = "Dumps podcast track metadata (URI, isPodcast, isVideo, etc.) to the debug log on each new track. Enable only when SponsorBlock isn't detecting a podcast you expect.";
+trackLogToggle = "Diagnostic track log";
+resetButtonTrackLog = "Reset…";
+
+// SponsorBlock Reset Options Advanced
+resetTitle = "Reset what?";
+resetSubtitle = "Each is independent.";
+allResetSB = "Everything (all of the above)";
+regenerateIDSB = "Regenerate user ID";
+localSubmissionsSB = "My local submissions (%@)";
+votedRecordsSB = "Voted records (%@)";
+hiddenSegmentsSB = "Hidden segments (%@)";
+draftsCountSB = "Draft (%@)";
+settingsResetSB = "Settings (toggles + categories + colors)";
+
+// SponsorBlock How To Use
+playerGesturesTitle = "Gestures on the player";
+gesturesTitle1 = "Long-press the progress bar";
+gesturesDeps1 = "Mark a segment start. Long-press again at the end of the segment to set END and open the submission form.";
+gesturesTitle2 = "Tap a segment on the bar";
+gesturesDeps2 = "Vote, change category, or hide a segment on this device only.";
+
+submittingTitle = "Submitting";
+submittingSectionTitle1 = "Submission form";
+submittingSectionDeps1 = "Sliders + nudge buttons fine-tune start/end. Pick a category. Submit posts to sponsor.ajay.app.";
+submittingSectionTitle2 = "Your local submissions";
+submittingSectionDeps2 = "Auto-skipped on this device immediately. Voting unlocks once the server publishes them. The 'MINE' badge marks them.";
+
+skipToastTitle = "Skip toast";
+skipToastSectionTitle1 = "Undo";
+skipToastSectionDeps1 = "Seeks back to segment start. The segment plays through this once. Forward + back resets it so it re-skips.";
+skipToastSectionTitle2 = "Upvote / Downvote";
+skipToastSectionDeps2 = "👍 records your vote on the server. 👎 opens a menu to downvote, hide locally, or change category.";
+skipToastSectionTitle3 = "Full segment menu";
+skipToastSectionDeps3 = "Same options as tapping the segment on the progress bar.";
+
+managingSegmentsTitle = "Managing segments";
+managingSegmentsSectionTitle1 = "Manage segments…";
+managingSegmentsSectionDeps1 = "Long-press the bar → 'Manage segments' lists every segment for the current episode. Vote, hide, change category, or tap a row to jump the player.";
+managingSegmentsSectionTitle2 = "Reporting & drafts";
+managingSegmentsSectionDeps2 = "Settings → 'Reporting & drafts' holds your in-progress drafts (unfinished marks) and your hidden segments. Drafts persist across launches.";
+
+categoriesTitle = "Categories";
+categoriesSectionTitle1 = "Per-category actions";
+categoriesSectionDeps1 = "Off = ignore. Show = draw on the bar only. Manual = prompt before skipping. Auto = skip silently.";
+
+flags = "Flags";
+flags_search = "Search flags";
+flags_changed_only = "Changed only";
+flags_auto = "Auto";
+flags_on = "On";
+flags_off = "Off";
+flags_count = "%d flags · Spotify %@";
+flags_empty = "No flags scanned yet. Restart Spotify and reopen in a few seconds.";
+flags_restart = "Restart to apply";
+flags_reset = "Reset all changes";
+flags_rescan = "Rescan flags";
+
+liquid_glass = "Liquid Glass";
+liquid_glass_footer = "Native iOS 26 glass. Restart to apply.";
+liquid_glass_unsupported = "Needs iOS 26.";
+glass_surfaces = "Surfaces";
+glass_spotify = "Spotify glass bars & menus";
+glass_tab_bar = "Tab bar";
+glass_now_playing_bar = "Now playing bar";
+tab_bar = "Tab bar";
+tab_bar_hide_labels = "Hide labels";
+tab_bar_empty = "Open Spotify once with the glass tab bar to list tabs.";
+new_player_design = "New player design";
+new_player_design_footer = "Spotify's unreleased sheet player, slider and queue. Restart to apply.";
+restart_now = "Restart now";
+
+tab_bar_editor_hint = "Tap a tab to open on launch. Hold and drag to reorder, drag up to hide. Tap a hidden tab to bring it back.";
+settings_group_listening = "Listening";
+settings_group_looks = "Looks";
+settings_group_advanced = "Advanced";
+patching_subtitle = "Premium patching";
+lyrics_subtitle = "Sources and display";
+sponsorblock_subtitle = "Skip podcast segments";
+customization_subtitle = "Lyrics colors and popups";
+appIcon_subtitle = "Home screen icon";
+flags_subtitle = "Spotify remote flags";
+experiments_subtitle = "Unfinished features";
+miscellaneous_subtitle = "Everything else";
+glass_style = "Style";
+spotify_flags = "Spotify flags";
+npb_subtitle = "Tint, artwork, device button, flags";
+npb_album_tint = "Tint with album color";
+npb_round_artwork = "Round artwork";
+npb_hide_connect = "Hide device button";
+npb_flag_two_lines = "Two lines of track info";
+npb_flag_add_button = "Save button";
+npb_flag_queue_badge = "Queue badge";
+npb_flag_resize = "Hold and drag to resize";
+npb_flag_video = "Video in mini player";
+npb_flag_cover_morph = "Bar to cover art animation";
+npb_flag_transitions = "Mini player transitions";
+player = "Player";
+player_subtitle = "Backdrop, glass lyrics, hide parts, flags";
+player_backdrop = "Artwork background";
+player_backdrop_subtitle = "Blurred cover instead of flat color";
+player_glass_lyrics = "Glass lyrics";
+player_flag_canvas = "Canvas";
+player_flag_sheet = "Sheet style player";
+player_flag_header = "Redesigned header";
+player_flag_slider = "New progress slider";
+player_flag_sticky = "Expand sticky header on tap";
+player_flag_queue_sheet = "Queue as a sheet";
+player_flag_connect_sheet = "Connect as a sheet";
+player_flag_queue_flip = "Queue flip transition";
+player_flag_play_next = "Play next in menus";
+glass_search = "Search";
+player_hide_buttons = "Hide on player";
+player_hide_cards = "Hide cards below player";
+player_part_lyricsPreview = "Lyrics preview";
+player_part_shuffle = "Shuffle";
+player_part_repeat = "Repeat";
+player_part_addTo = "Add to playlist";
+player_part_queue = "Queue";
+player_part_share = "Share";
+player_part_connect = "Connect to a device";
+player_part_lyricsCard = "Lyrics";
+player_part_aboutArtist = "About the artist";
+player_part_relatedVideos = "Related videos";
+player_part_songDNA = "SongDNA";
+player_part_liveEvents = "Live events";
+player_part_exploreArtist = "Explore the artist";
+player_part_credits = "Credits";
+player_part_merch = "Merch";
+player_part_recommendations = "Recommendations";
+player_hide_parts = "Hide parts";
+player_hide_none = "Nothing hidden";
+player_hide_count = "%d hidden";
+player_part_allCards = "All cards";
+player_part_releaseCountdown = "Release countdown";
+reset_page = "Reset";
+reset_page_title = "Reset this page to defaults?";
+glass_home = "Home";
+rounded_artwork = "Rounded playlist cover art";
+glass_playlist = "Playlists & albums";
+playlist_subtitle = "Cover, dividers, header parts";
+playlist_footer = "Applies as you open or scroll a playlist.";
+playlist_full_cover = "Full-width cover";
+playlist_dividers = "Track dividers";
+playlist_hide_find = "Hide find bar";
+appearance = "Appearance";
+appearance_subtitle = "Theme, glass and layout";
+theme = "Theme";
+theme_footer = "Restart to apply.";
+amoled = "AMOLED black";
+accent_color = "Accent color";
+home = "Home";
+home_subtitle = "Hide sections";
+home_hide = "Hide";
+home_pills = "Filter pills";
+home_shortcuts = "Shortcuts grid";
+home_promos = "Promos";
+home_previews = "Previews";
+home_dj = "DJ";
+block_telemetry = "Block tracking";
+block_telemetry_footer = "Stops Firebase, Facebook, Branch and other analytics SDKs. Plays still reach Recents. Restart to apply.";
+troubleshooting = "Troubleshooting";
+reset_section = "Reset";
+reset_section_footer = "Both close the app when done.";
+reset_data_subtitle = "Clears caches";
+full_reset_subtitle = "Wipes everything, signs you out";
+playlist_play = "Play";
+playlist_pause = "Pause";
+spotify_features = "Spotify Features";
+spotify_features_subtitle = "Hidden switches Spotify ships";
+features_playback = "Playback";
+features_trim_silence = "Trim silence";
+features_library = "Library";
+features_recents = "Recents";
+features_recents_sort = "Recents sort";
+features_sort_playlists = "Sort by recently updated playlists";
+features_sort_artists = "Sort by recently updated artists";
+features_denser_rows = "Denser rows";
+features_library_settings = "Library settings";
+features_library_pro = "Library Pro";
+features_shake_random = "Shake for random";
+features_lockscreen = "Lock Screen";
+features_lock_like = "Like button";
+features_lock_podcast_skip = "Skip on podcasts";
+features_lock_chapters = "Chapter skip";
+features_lock_animated = "Animated artwork";
+features_sleep_timer = "Sleep Timer";
+features_sleep_fade = "Fade out";
+features_sleep_one_minute = "1 minute option";
+features_home = "Home";
+features_dj_button = "DJ button";
+features_dj_badge = "DJ beta badge";
+features_other = "Other";
+features_local_files = "Local files in Documents";
+features_hide_jam = "Hide Jam";
+features_hide_jam_footer = "Removes Jam entry points. Restart to apply.";
+block_rating_prompts = "Block rating prompts";
+block_rating_prompts_footer = "No App Store review popups. Restart to apply.";
+spicylyrics_key_invalid = "Spicy Lyrics API key rejected";
+spicylyrics_api_key = "Spicy Lyrics API Key";
+spicylyrics_api_key_placeholder = "Enter the Spicy client key";
+spicylyrics_api_key_description = "Leave empty to use the built-in key.";
+lyrics_made_by = "Made by";
+lyrics_uploaded_by = "Uploaded by";
+player_gestures = "Gestures";
+player_double_tap = "Double tap artwork";
+player_double_tap_off = "Off";
+player_double_tap_seek = "Seek 10s";
+player_double_tap_skip = "Skip track";
+player_zones = "Zones";
+player_zones_two = "Left · Right";
+player_zones_three = "Left · Center · Right";
+player_haptics = "Control haptics";
+player_haptics_subtitle = "Buttons and scrubbing";
+tab_liked_songs = "Liked";
+tab_downloads = "Downloads";
+tab_podcasts = "Podcasts";
+tab_queue = "Queue";
+tab_custom = "Custom tabs";
+tab_custom_footer = "Open any Spotify page from the tab bar. Swipe to remove.";
+tab_add = "Add tab";
+tab_custom_uri = "Custom URI";
+tab_custom_title = "Title";
+tab_invalid_uri = "Not a Spotify link or URI";
+artist = "Artist";
+artist_subtitle = "Header parts";
+artist_verified = "Verified badge";
+artist_listeners = "Monthly listeners";
+artist_tabs = "Music / Events tabs";
+playlist_part_description = "Description";
+playlist_part_creator = "Creator row";
+playlist_part_metadata = "Duration line";
+playlist_part_pills = "Curation pills";
+home_gradient_footer = "Changes apply live.";
+home_gradient_strength = "Strength";
+home_gradient_height = "Height";
+home_gradient_subtle = "Subtle";
+home_gradient_medium = "Medium";
+home_gradient_bold = "Bold";
+home_gradient_short = "Short";
+home_gradient_tall = "Tall";
+home_gradient_full = "Full screen";
+home_gradient_fade = "Fade";
+home_gradient_fade_top = "Early";
+home_gradient_fade_mid = "Middle";
+home_gradient_fade_low = "Late";
+home_gradient_pages = "Pages";
+home_gradient_page_home = "Home";
+home_gradient_page_library = "Library";
+home_gradient_page_search = "Search";
+background_color = "Background color";
+state_on = "On";
+state_off = "Off";
+appearance_pages = "Pages";
+tab_bar_subtitle = "Order, launch tab, custom tabs";
+lyrics_written_by = "Written by:";
+lyrics_provided_by = "Lyrics provided by";
+karaoke_section = "Custom Lyrics View";
+karaoke_section_footer = "Reversed direction flows lines bottom-to-top, with the active line lower on screen. Blur intensity controls how blurred inactive lines appear.";
+karaoke_alignment = "Lyrics alignment";
+karaoke_alignment_leading = "Left";
+karaoke_alignment_center = "Center";
+karaoke_alignment_trailing = "Right";
+karaoke_reversed_direction = "Reversed direction";
+episode_header = "Episode %@";
+home_gradient_style = "Style";
+home_gradient_style_gradient = "Gradient";
+home_gradient_style_solid = "Solid";
+spicylyrics_template_link = "Spicy ESR template";
+debug_logging = "Debug Logging";
+karaoke_enabled = "Custom lyrics view";
+karaoke_blur_intensity = "Blur intensity";
+glass_lyrics_view = "Custom lyrics view";
+lyrics_source_restart_popup = "Restart Spotify so the new lyrics source is used everywhere. Songs you already played keep their old lyrics until then.";
+restart_later = "Later";
