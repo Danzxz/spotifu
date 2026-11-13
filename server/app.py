@@ -137,6 +137,13 @@ class Handler(BaseHTTPRequestHandler):
             if not 0 < length <= 16384:
                 raise ValueError("Invalid request size")
             request = json.loads(self.rfile.read(length))
+            if self.path == "/remove-download":
+                track_id = request.get("id")
+                if not isinstance(track_id, str) or not track_id.isascii() or not track_id.isalnum() or len(track_id) > 128:
+                    raise ValueError("Invalid track identity")
+                (LIBRARY / (track_id + ".m4a")).unlink(missing_ok=True)
+                (LIBRARY / (track_id + ".json")).unlink(missing_ok=True)
+                return self.send_json({"removed": track_id})
             if not all(isinstance(request.get(k), str) and 0 < len(request[k]) <= 500 for k in ["title", "artist"]):
                 raise ValueError("Title and artist required")
             if self.path == "/search":

@@ -47,6 +47,18 @@ class ServerTests(unittest.TestCase):
         except urllib.error.HTTPError as error:
             return error.code, error.read()
 
+    def test_remove_download_only_affects_owned_library_files(self):
+        (app.LIBRARY / 'owned.m4a').write_bytes(b'audio')
+        (app.LIBRARY / 'owned.json').write_text('{}')
+        unrelated = Path(temporary.name) / 'personal.m4a'
+        unrelated.write_bytes(b'personal')
+        self.assertEqual(self.request('/remove-download', {'id':'../personal'})[0],400)
+        self.assertTrue(unrelated.exists())
+        self.assertEqual(self.request('/remove-download', {'id':'owned'})[0],200)
+        self.assertFalse((app.LIBRARY/'owned.m4a').exists())
+        self.assertFalse((app.LIBRARY/'owned.json').exists())
+        self.assertTrue(unrelated.exists())
+
     def test_requires_authentication(self):
         self.assertEqual(self.request("/jobs/" + "a"*32, authorized=False)[0], 401)
 

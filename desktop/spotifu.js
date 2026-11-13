@@ -23,10 +23,21 @@ if (typeof window !== 'undefined') (async function spotifu() {
     const configuration = window.SPOTIFU_CONFIG;
     if (!configuration?.token) { Spicetify.showNotification('Spotifu: сервер загрузки ещё не настроен', true); return; }
     const localAPI = Spicetify.Platform.LocalFilesAPI;
+    const allLocalTracks=localAPI.getTracks.bind(localAPI);
+    function isDownloaded(uri){return !!mappings[uri] || Object.values(mappings).some(m=>m.uri===uri);}
+    function computerView(){return Spicetify.Platform.History.location.search?.includes('spotifu=computer');}
+    localAPI.getTracks=async(...args)=>{
+        const tracks=await allLocalTracks(...args);
+        return computerView()?tracks:tracks.filter(t=>isDownloaded(t.uri));
+    };
     let busy = false;
     let redirecting = false;
     let mappings;
     try { mappings = JSON.parse(Spicetify.LocalStorage.get('spotifu.native-map') || '{}'); } catch { mappings = {}; }
+    let scannedTotal=localAPI._totalLength || 0;
+    Object.defineProperty(localAPI,'_totalLength',{configurable:true,
+        get:()=>computerView()?scannedTotal:new Set(Object.values(mappings).map(m=>m.uri)).size,
+        set:value=>{scannedTotal=value;}});
     async function api(path, body) {
         const response = await fetch(configuration.endpoint + path, {
             method: body ? 'POST' : 'GET',
@@ -41,7 +52,9 @@ if (typeof window !== 'undefined') (async function spotifu() {
         const library = await api('/library');
         localAPI.setIsEnabled(true);
         await localAPI.addFolder({path: library.folder});
-        const tracks = await localAPI.getTracks();
+        const tracks = await allLocalTracks();
+        const savedIDs=new Set(library.tracks.map(t=>'spotify:track:'+t.id));
+        for(const uri of Object.keys(mappings))if(!savedIDs.has(uri))delete mappings[uri];
         for (const saved of library.tracks) {
             const local = findLocalTrack(saved, tracks);
             if (local) mappings['spotify:track:' + saved.id] = {uri:local.uri, lyrics:saved.lyrics, title:saved.title, artist:saved.artist};
@@ -51,6 +64,7 @@ if (typeof window !== 'undefined') (async function spotifu() {
     let groups;
     try { groups = JSON.parse(Spicetify.LocalStorage.get('spotifu.groups') || '{}'); } catch { groups = {}; }
     const saveGroups = () => Spicetify.LocalStorage.set('spotifu.groups', JSON.stringify(groups));
+    new Spicetify.Menu.Item('Скачанное · Все песни',false,()=>Spicetify.Platform.History.push('/local-files?spotifu=downloads'),'download').register();
     const downloadedMenu = new Spicetify.Menu.SubMenu('Скачанное · Spotifu', [], 'download');
     downloadedMenu.register();
     const groupMenus = new Set();
@@ -204,8 +218,34 @@ if (typeof window !== 'undefined') (async function spotifu() {
         const uri=Spicetify.Player.data?.item?.uri;
         if(uri?.startsWith('spotify:track:'))enqueue([uri]);
     });
+    async function removeDownloads(uris) {
+        try {
+            for(const uri of uris) {
+                const remote=mappings[uri]?uri:Object.keys(mappings).find(k=>mappings[k].uri===uri);
+                if(!remote)continue;
+                const local=mappings[remote].uri;
+                await api('/remove-download',{id:remote.split(':')[2]});
+                delete mappings[remote];
+                for(const group of Object.values(groups)) {
+                    const had=group.tracks[remote]?.status==='ready';
+                    delete group.tracks[remote];
+                    if(had && group.playlist) {
+                        try { await Spicetify.Platform.PlaylistAPI.remove(group.playlist,[{uid:'',uri:local}]); }
+                        catch { Spicetify.showNotification('Файл удалён; список Spotify обновится при подключении',true); }
+                    }
+                }
+                // Deleted files become unavailable in native playlists; never
+                // delete arbitrary computer files or unrelated library entries.
+                Spicetify.LocalStorage.set('spotifu.native-map',JSON.stringify(mappings));saveGroups();
+            }
+            Spicetify.showNotification('Удалено из скачанного Spotifu');
+            if(Spicetify.Platform.History.location.pathname==='/local-files')Spicetify.Platform.History.push('/local-files?spotifu=downloads');
+        }catch(error){Spicetify.showNotification(error.message,true);}
+    }
     new Spicetify.ContextMenu.Item('Скачать', enqueue,
-        uris => uris.length>0 && uris.every(uri=>/^spotify:(track|album|playlist):/.test(uri)), 'download').register();
+        uris => uris.length>0 && uris.every(uri=>/^spotify:(track|album|playlist):/.test(uri)) && !uris.every(isDownloaded), 'download').register();
+    new Spicetify.ContextMenu.Item('Удалить из скачанного', removeDownloads,
+        uris => uris.length>0 && uris.every(isDownloaded), 'trash').register();
     Spicetify.Player.addEventListener('songchange', async () => {
         if (redirecting) return;
         const uri = Spicetify.Player.data?.item?.uri;
@@ -220,7 +260,7 @@ if (typeof window !== 'undefined') (async function spotifu() {
         } catch (error) { Spicetify.showNotification('Spotifu: локальное воспроизведение недоступно', true); }
         finally { redirecting = false; }
     });
-    new Spicetify.Menu.Item('Локальные файлы компьютера', false, () => Spicetify.Platform.History.push('/local-files'), 'download').register();
-    window.Spotifu = {download:enqueue, get busy(){return busy;}, get status(){return lastStatus;}, get queued(){return pending.length;}, get groups(){return groups;}};
+    new Spicetify.Menu.Item('Локальные файлы компьютера', false, () => Spicetify.Platform.History.push('/local-files?spotifu=computer'), 'download').register();
+    window.Spotifu = {download:enqueue, remove:removeDownloads, get busy(){return busy;}, get status(){return lastStatus;}, get queued(){return pending.length;}, get groups(){return groups;}};
     try { await indexLibrary(); } catch { /* Cached mappings still work offline. */ }
 })();
