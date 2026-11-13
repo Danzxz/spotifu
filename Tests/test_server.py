@@ -6,6 +6,7 @@ import sys
 import tempfile
 import threading
 import unittest
+from unittest.mock import patch
 import urllib.request
 import urllib.error
 
@@ -15,6 +16,14 @@ os.environ["SPOTIFU_DATA"] = temporary.name
 import app
 
 class ServerTests(unittest.TestCase):
+    def test_audio_probe_rejects_preview_even_with_matching_provider_metadata(self):
+        path = Path(temporary.name) / "probe.m4a"
+        path.write_bytes(b"audio")
+        with patch.object(app.subprocess, "check_output", return_value=b"30.0\n"):
+            with self.assertRaises(ValueError): app.probe_audio(path, 205)
+        with patch.object(app.subprocess, "check_output", return_value=b"205.3\n"):
+            self.assertEqual(app.probe_audio(path, 205), 205.3)
+
     @classmethod
     def setUpClass(cls):
         app.TOKEN = "test-secret-only-not-a-production-token"

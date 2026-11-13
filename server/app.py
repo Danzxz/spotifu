@@ -2,6 +2,7 @@
 import argparse
 import hmac
 import json
+import math
 import os
 import secrets
 import shutil
@@ -22,6 +23,19 @@ LOCK = threading.Lock()
 SLOTS = threading.BoundedSemaphore(2)
 LIBRARY = ROOT / "library"
 LIBRARY.mkdir(exist_ok=True)
+
+def probe_audio(path, expected_duration):
+    if not path.is_file() or not 0 < path.stat().st_size <= 100 * 1024 * 1024:
+        raise ValueError("Invalid audio size")
+    duration = float(subprocess.check_output([
+        "ffprobe", "-v", "error", "-show_entries", "format=duration",
+        "-of", "default=noprint_wrappers=1:nokey=1", str(path)
+    ], timeout=15, stderr=subprocess.DEVNULL).strip())
+    if not math.isfinite(duration) or duration <= 0:
+        raise ValueError("Invalid audio duration")
+    if expected_duration and abs(duration - expected_duration) > max(2, expected_duration * .015):
+        raise ValueError("Downloaded audio duration does not match the requested recording")
+    return duration
 
 def download(job_id, request):
     folder = ROOT / job_id
@@ -48,6 +62,7 @@ def download(job_id, request):
                 }) as ydl:
                     ydl.extract_info(validate_media_url(candidate["url"]), download=True)
                 if (folder / "audio.m4a").stat().st_size:
+                    candidate["duration"] = probe_audio(folder / "audio.m4a", request.get("duration", 0))
                     chosen = candidate
                     break
             except Exception:

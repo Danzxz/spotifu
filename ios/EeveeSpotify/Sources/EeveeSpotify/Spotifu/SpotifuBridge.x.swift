@@ -7,6 +7,14 @@ import MediaPlayer
 
 @MainActor enum SpotifuBridge {
     static weak var controller: NSObject?
+    static weak var downloadButton: UIButton?
+    static func updateDownloadButton(_ button: UIButton) {
+        let model = OfflineModel.shared
+        let downloaded = metadata().map { info in model.tracks.contains { $0.id == info.id } } ?? false
+        button.setImage(UIImage(systemName: downloaded ? "checkmark.circle.fill" : "arrow.down.circle.fill"), for: .normal)
+        button.accessibilityLabel = downloaded ? "Загружено в Spotify" : "Скачать в Spotify"
+        button.isEnabled = !model.busy
+    }
     static func pauseSpotify() {
         if let controller, controller.responds(to: NSSelectorFromString("setPaused:")) {
             unsafeBitCast(controller, to: SpotifuPauseController.self).setPaused(true)
@@ -15,9 +23,12 @@ import MediaPlayer
     static func metadata() -> (id: String, title: String, artist: String, duration: Double)? {
         guard let info = MPNowPlayingInfoCenter.default().nowPlayingInfo,
               let title = info[MPMediaItemPropertyTitle] as? String,
-              let artist = info[MPMediaItemPropertyArtist] as? String,
-              let id = capturedTrackId, !id.isEmpty,
-              capturedTrackTitle == title, capturedArtistName == artist else { return nil }
+              let artist = info[MPMediaItemPropertyArtist] as? String else { return nil }
+        let external = info[MPNowPlayingInfoPropertyExternalContentIdentifier] as? String
+        let externalID = external.flatMap { $0.hasPrefix("spotify:track:") ? String($0.dropFirst(14)) : nil }
+        let capturedID = capturedTrackTitle == title && capturedArtistName == artist ? capturedTrackId : nil
+        guard let id = externalID ?? capturedID, !id.isEmpty,
+              id.count <= 128, id.unicodeScalars.allSatisfy({ CharacterSet.alphanumerics.contains($0) }) else { return nil }
         return (id, title, artist, (info[MPMediaItemPropertyPlaybackDuration] as? NSNumber)?.doubleValue ?? 0)
     }
     static func openDownloads() {
@@ -48,10 +59,15 @@ import MediaPlayer
         let model = OfflineModel.shared
         guard !model.token.isEmpty else { configure(); return }
         guard !model.busy else { return }
-        if model.tracks.contains(where: { $0.id == info.id }) {
-            PopUpHelper.showPopUp(message: "Уже загружено", buttonText: "OK"); return
+        if let track = model.tracks.first(where: { $0.id == info.id }) {
+            do {
+                try model.exportToSpotifyDocuments(track)
+                PopUpHelper.showPopUp(message: "Уже загружено в локальные файлы Spotify", buttonText: "OK")
+            } catch { PopUpHelper.showPopUp(message: error.localizedDescription, buttonText: "OK") }
+            return
         }
         Task {
+            defer { if let button = downloadButton { updateDownloadButton(button) } }
             await model.download(url: "", id: info.id, title: info.title, artist: info.artist, duration: info.duration)
             if model.error == nil, let track = model.tracks.first(where: { $0.id == info.id }) {
                 do { try model.exportToSpotifyDocuments(track) }
@@ -62,8 +78,9 @@ import MediaPlayer
     }
     static func attach(to cover: UIView) {
         let tag = 18001991
-        guard cover.viewWithTag(tag) == nil else { return }
+        if let button = cover.viewWithTag(tag) as? UIButton { updateDownloadButton(button); return }
         let button = UIButton(type: .system)
+        downloadButton = button
         button.tag = tag
         button.setImage(UIImage(systemName: "arrow.down.circle.fill"), for: .normal)
         button.accessibilityLabel = "Скачать в Spotifu"
@@ -72,6 +89,7 @@ import MediaPlayer
         button.layer.cornerRadius = 22
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addAction(UIAction { _ in downloadCurrent() }, for: .touchUpInside)
+        updateDownloadButton(button)
         cover.addSubview(button)
         NSLayoutConstraint.activate([
             button.trailingAnchor.constraint(equalTo: cover.trailingAnchor, constant: -12),
