@@ -134,9 +134,28 @@ if (typeof window !== 'undefined') (async function spotifu() {
         const r=await Spicetify.Platform.PlaylistAPI.getMetadata(uri);
         return r.name || uri;
     }
-    async function enqueue(uris) {
-        if(busy){Spicetify.showNotification('Загрузка уже идёт');return;}
-        busy=true;button.disabled=true;
+    const pending=[];
+    const scheduled=new Set();
+    let draining=null;
+    let lastStatus='Нет активных загрузок';
+    const queueMenu=new Spicetify.Menu.Item('Загрузки: нет активных',false,()=>Spicetify.showNotification(lastStatus),'download');
+    queueMenu.register();
+    function status(text) {
+        lastStatus=text;
+        queueMenu.name='Загрузки: '+text;
+        button.label=text;
+    }
+    function enqueue(uris) {
+        for(const uri of uris)if(!scheduled.has(uri)){pending.push(uri);scheduled.add(uri);}
+        if(draining){status(lastStatus+' · в очереди: '+pending.length);return draining;}
+        draining=(async()=>{
+            try{while(pending.length){const uri=pending.shift();try{await processBatch([uri]);}finally{scheduled.delete(uri);}}}
+            finally{draining=null;}
+        })();
+        return draining;
+    }
+    async function processBatch(uris) {
+        busy=true;
         try {
             for(const uri of uris) {
                 const isCollection=/^spotify:(album|playlist):/.test(uri);
@@ -147,7 +166,8 @@ if (typeof window !== 'undefined') (async function spotifu() {
                 group.total=Math.max(group.total,items.length);registerGroup(group);saveGroups();
                 let failed=0;
                 for(let i=0;i<items.length;i++) {
-                    Spicetify.showNotification('Скачивание: '+(i+1)+'/'+items.length+' · '+name);
+                    status('Обрабатывается '+(i+1)+' из '+items.length+' · '+items[i].name);
+                    Spicetify.showNotification(lastStatus);
                     try {
                         const local=await downloadOne(items[i]);
                         if(!group.playlist) {
@@ -157,10 +177,12 @@ if (typeof window !== 'undefined') (async function spotifu() {
                         }
                         if(group.tracks[items[i].uri]?.status!=='ready')await Spicetify.Platform.PlaylistAPI.add(group.playlist,[local],{after:'end'});
                         group.tracks[items[i].uri]={uri:local,status:'ready'};
-                    } catch(error) {failed++;group.tracks[items[i].uri]={status:'failed',error:error.message};}
+                        status('Сохранено: '+items[i].name);
+                    } catch(error) {failed++;group.tracks[items[i].uri]={status:'failed',error:error.message};status('Ошибка: '+items[i].name+' · '+error.message);}
                     saveGroups();
                 }
-                Spicetify.showNotification('Загрузка завершена: '+(items.length-failed)+'/'+items.length+(failed?' · ошибок: '+failed:''),failed>0);
+                status('Сохранено '+(items.length-failed)+' из '+items.length+(failed?' · ошибок: '+failed:''));
+                Spicetify.showNotification(lastStatus,failed>0);
             }
         }catch(error){Spicetify.showNotification('Spotifu: '+error.message,true);}
         finally{busy=false;button.disabled=false;}
@@ -199,6 +221,6 @@ if (typeof window !== 'undefined') (async function spotifu() {
         finally { redirecting = false; }
     });
     new Spicetify.Menu.Item('Локальные файлы компьютера', false, () => Spicetify.Platform.History.push('/local-files'), 'download').register();
-    window.Spotifu = {download:enqueue, get busy(){return busy;}, get groups(){return groups;}};
+    window.Spotifu = {download:enqueue, get busy(){return busy;}, get status(){return lastStatus;}, get queued(){return pending.length;}, get groups(){return groups;}};
     try { await indexLibrary(); } catch { /* Cached mappings still work offline. */ }
 })();
