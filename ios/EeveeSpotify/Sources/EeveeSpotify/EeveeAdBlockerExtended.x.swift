@@ -76,7 +76,7 @@ func findTweakClass(_ name: String) -> AnyClass? {
     guard total > 0 else { return nil }
     let buf = UnsafeMutablePointer<AnyClass>.allocate(capacity: Int(total))
     defer { buf.deallocate() }
-    let n = objc_getClassList(AutoreleasingUnsafeMutablePointer<AnyClass>(buf), total)
+    let n = min(total, objc_getClassList(AutoreleasingUnsafeMutablePointer<AnyClass>(buf), total))
     for i in 0..<Int(n) {
         let raw = UnsafeRawPointer(buf).load(fromByteOffset: i * MemoryLayout<UnsafeRawPointer>.size,
                                               as: UnsafeRawPointer.self)
@@ -471,8 +471,8 @@ class CoreURLSessionAdsKill: ClassHook<NSObject> {
         didReceiveResponse response: URLResponse,
         completionHandler handler: @escaping (URLSession.ResponseDisposition) -> Void
     ) {
-        if let url = task.currentRequest?.url ?? task.originalRequest?.url, url.isAdRelated {
-            adlog("core request \(url.host ?? "?")\(url.path)")
+        if URL.isAdRequest(current: task.currentRequest?.url, original: task.originalRequest?.url) {
+            adlog("core ad request (including redirected originals)")
             handler(.cancel)
             return
         }

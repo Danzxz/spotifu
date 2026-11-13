@@ -1,6 +1,10 @@
 import Foundation
 
 extension URL {
+    static func isAdRequest(current: URL?, original: URL?) -> Bool {
+        current?.isAdRelated == true || original?.isAdRelated == true
+    }
+
     var isLyrics: Bool {
         self.path.contains("color-lyrics/v2")
     }
@@ -83,7 +87,7 @@ extension URL {
         }
         
         // Block ad-logic (Marquee, in-stream ads)
-        if path.contains("/ad-logic/") {
+        if path.contains("/ad-logic/") || path.hasSuffix("/ad-logic") {
             return true
         }
         

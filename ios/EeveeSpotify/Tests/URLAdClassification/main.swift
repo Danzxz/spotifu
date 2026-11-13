@@ -50,3 +50,7 @@ require(!url("https://spclient.wg.spotify.com/decipher/agent/v1/FetchMessage").i
         "non-pendragon FetchMessage paths must not be blocked")
 
 print("URL ad classification regression tests passed")
+
+require(URL.isAdRequest(current: url("https://cdn.example.org/creative.mp3"), original: url("https://spclient.wg.spotify.com/ads/v3/ads")), "redirected ad must retain original request classification")
+require(url("https://spclient.wg.spotify.com/ad-logic").isAdRelated, "ad-logic root must be blocked")
+require(!URL.isAdRequest(current: url("https://audio.spotifycdn.com/music"), original: nil), "ordinary audio must remain available")
