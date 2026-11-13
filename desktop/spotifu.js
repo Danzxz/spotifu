@@ -119,6 +119,14 @@ if (typeof window !== 'undefined') (async function spotifu() {
         if(!r.ok)throw new Error('Spotify не отдал метаданные песни ('+r.status+'). Открой её альбом и повтори');
         const t=await r.json();return {...t,duration:{milliseconds:t.duration_ms}};
     }
+    async function collectionName(uri) {
+        if(uri.startsWith('spotify:album:')) {
+            const r=await Spicetify.GraphQL.Request(Spicetify.GraphQL.Definitions.getAlbumNameAndTracks,{uri,offset:0,limit:1});
+            return r.data?.albumUnion?.name || uri;
+        }
+        const r=await Spicetify.Platform.PlaylistAPI.getMetadata(uri);
+        return r.name || uri;
+    }
     async function enqueue(uris) {
         if(busy){Spicetify.showNotification('Загрузка уже идёт');return;}
         busy=true;button.disabled=true;
@@ -126,7 +134,7 @@ if (typeof window !== 'undefined') (async function spotifu() {
             for(const uri of uris) {
                 const isCollection=/^spotify:(album|playlist):/.test(uri);
                 const items=isCollection?await collection(uri):[await resolveTrack(uri)];
-                const name=isCollection ? (Spicetify.Platform.History.location.pathname.includes(uri.split(':')[2]) ? document.querySelector('h1')?.textContent : null)||uri : items[0].album?.name || items[0].metadata?.album_title || 'Отдельные песни';
+                const name=isCollection ? await collectionName(uri) : items[0].album?.name || items[0].metadata?.album_title || 'Отдельные песни';
                 const groupURI=isCollection?uri:items[0].album?.uri||items[0].metadata?.album_uri||'spotifu:singles';
                 const group=groups[groupURI] ||= {uri:groupURI,name,tracks:{},total:0};
                 group.total=Math.max(group.total,items.length);registerGroup(group);saveGroups();
@@ -157,7 +165,7 @@ if (typeof window !== 'undefined') (async function spotifu() {
     nativePlayer.play=async function(target, context, options) {
         const mapped=mappings[target?.uri];
         const next=mapped?{...target,uri:mapped.uri}:target;
-        const local=next?.uri?.startsWith('spotify:local:') || Object.values(groups).some(g=>g.playlist===next?.uri);
+        const local=next?.uri?.startsWith('spotify:local:') || next?.uri?.includes('local-files') || options?.skipTo?.uri?.startsWith('spotify:local:') || Object.values(groups).some(g=>g.playlist===next?.uri);
         if(local && Spicetify.Platform.ConnectAPI.getState().activeDevice?.isLocal!==true) {
             await Spicetify.Platform.ConnectAPI.pullToLocal({interactionId:'spotifu-local-play'});
         }
