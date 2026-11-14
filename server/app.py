@@ -21,7 +21,11 @@ TOKEN = os.environ.get("SPOTIFU_TOKEN", "")
 JOBS = {}
 LOCK = threading.Lock()
 SLOTS = threading.BoundedSemaphore(2)
-LIBRARY = ROOT / "library"
+SETTINGS = ROOT / "settings.json"
+try:
+    LIBRARY = Path(json.loads(SETTINGS.read_text())["library"]).expanduser()
+except (OSError, ValueError, KeyError):
+    LIBRARY = ROOT / "library"
 LIBRARY.mkdir(exist_ok=True)
 
 def probe_audio(path, expected_duration):
@@ -137,6 +141,29 @@ class Handler(BaseHTTPRequestHandler):
             if not 0 < length <= 16384:
                 raise ValueError("Invalid request size")
             request = json.loads(self.rfile.read(length))
+            if self.path == "/choose-library":
+                global LIBRARY
+                with LOCK:
+                    if any(j["status"] == "working" for j in JOBS.values()):
+                        raise ValueError("Дождись завершения загрузок перед сменой папки")
+                    chosen = subprocess.run(["osascript", "-e", 'POSIX path of (choose folder with prompt "Папка загрузок Spotifu")'], capture_output=True, text=True)
+                    if chosen.returncode:
+                        return self.send_json({"cancelled": True})
+                    destination = Path(chosen.stdout.strip()).resolve() / "Spotifu"
+                    destination.mkdir(parents=True, exist_ok=True)
+                    if destination != LIBRARY.resolve():
+                        for metadata in LIBRARY.glob("*.json"):
+                            track_id = metadata.stem
+                            if not track_id.isascii() or not track_id.isalnum(): continue
+                            for suffix in (".m4a", ".json"):
+                                source = LIBRARY / (track_id + suffix)
+                                target = destination / source.name
+                                if source.is_file() and not target.exists(): shutil.copy2(source, target)
+                        temporary = SETTINGS.with_suffix(".tmp")
+                        temporary.write_text(json.dumps({"library": str(destination)}))
+                        os.replace(temporary, SETTINGS)
+                        LIBRARY = destination
+                return self.send_json({"folder": str(LIBRARY)})
             if self.path == "/remove-download":
                 track_id = request.get("id")
                 if not isinstance(track_id, str) or not track_id.isascii() or not track_id.isalnum() or len(track_id) > 128:

@@ -22,6 +22,10 @@ if (typeof window !== 'undefined') (async function spotifu() {
     }
     const configuration = window.SPOTIFU_CONFIG;
     if (!configuration?.token) { Spicetify.showNotification('Spotifu: сервер загрузки ещё не настроен', true); return; }
+    new Spicetify.Menu.Item('Spotifu: выбрать папку загрузок…',false,async()=>{
+        try { const result=await api('/choose-library',{}); if(!result.cancelled){await indexLibrary();Spicetify.showNotification('Папка Spotifu: '+result.folder);} }
+        catch(error){Spicetify.showNotification(error.message,true);}
+    },'folder').register();
     const localAPI = Spicetify.Platform.LocalFilesAPI;
     const allLocalTracks=localAPI.getTracks.bind(localAPI);
     function isDownloaded(uri){return !!mappings[uri] || Object.values(mappings).some(m=>m.uri===uri);}
@@ -212,7 +216,7 @@ if (typeof window !== 'undefined') (async function spotifu() {
         if(local && Spicetify.Platform.ConnectAPI.getState().activeDevice?.isLocal!==true) {
             await Spicetify.Platform.ConnectAPI.pullToLocal({interactionId:'spotifu-local-play'});
         }
-        return originalPlay(next,context,options);
+        return originalPlay(next,mapped ? undefined : context,mapped ? undefined : options);
     };
     const button = new Spicetify.Playbar.Button('Скачать', 'download', () => {
         const uri=Spicetify.Player.data?.item?.uri;
@@ -256,7 +260,7 @@ if (typeof window !== 'undefined') (async function spotifu() {
         if (!mapping) return;
         try {
             redirecting = true;
-            await Spicetify.Player.playUri(mapping.uri);
+            await nativePlayer.play({uri:mapping.uri});
         } catch (error) { Spicetify.showNotification('Spotifu: локальное воспроизведение недоступно', true); }
         finally { redirecting = false; }
     });
